@@ -19,28 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"peterwangll.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="The record of learning JavaScript 记一些重点，后续排版会重新调，顺便熟练Markdown语法  一些简单特性，过一遍就好，函数式编程已经很熟悉啦  分号自动插入 use strict 严格模式 variable（变量），let&#x2F;const null表示空，undefined表示未分配 交互，prompt，confirm，alert产生模态框 运算符，循环">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://peterwangll.github.io/2024/08/31/hello-world/index.html">
-<meta property="og:site_name" content="网站标题还没想好">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:title" content="learn javascript">
+<meta property="og:url" content="http://peterwangll.github.io/2024/09/03/learn-javascript/index.html">
+<meta property="og:site_name" content="PeterWang&#39;s Knowledge Plant">
+<meta property="og:description" content="The record of learning JavaScript 记一些重点，后续排版会重新调，顺便熟练Markdown语法  一些简单特性，过一遍就好，函数式编程已经很熟悉啦  分号自动插入 use strict 严格模式 variable（变量），let&#x2F;const null表示空，undefined表示未分配 交互，prompt，confirm，alert产生模态框 运算符，循环">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-08-31T10:56:02.908Z">
-<meta property="article:modified_time" content="2024-08-31T10:56:02.908Z">
+<meta property="article:published_time" content="2024-09-03T06:38:04.000Z">
+<meta property="article:modified_time" content="2024-09-03T06:38:04.121Z">
 <meta property="article:author" content="Peter Wang">
-<meta property="article:tag" content="关键词在哪里呀">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://peterwangll.github.io/2024/08/31/hello-world/">
+<link rel="canonical" href="http://peterwangll.github.io/2024/09/03/learn-javascript/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/08/31/hello-world/","path":"2024/08/31/hello-world/","title":"Hello World"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/09/03/learn-javascript/","path":"2024/09/03/learn-javascript/","title":"learn javascript"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hello World | 网站标题还没想好</title>
+<title>learn javascript | PeterWang's Knowledge Plant</title>
   
 
 
@@ -70,10 +69,9 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">网站标题还没想好</p>
+      <p class="site-title">PeterWang's Knowledge Plant</p>
       <i class="logo-line"></i>
     </a>
-      <p class="site-subtitle" itemprop="description">副标题</p>
   </div>
 
   <div class="site-nav-right">
@@ -106,20 +104,20 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-record-of-learning-JavaScript"><span class="nav-number">1.</span> <span class="nav-text">The record of learning JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Object"><span class="nav-number">1.1.</span> <span class="nav-text">Object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6"><span class="nav-number">1.2.</span> <span class="nav-text">函数进阶</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Peter Wang</p>
-  <div class="site-description" itemprop="description">描述description</div>
+  <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -147,7 +145,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/08/31/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/03/learn-javascript/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -155,17 +153,17 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="网站标题还没想好">
-      <meta itemprop="description" content="描述description">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hello World | 网站标题还没想好">
+      <meta itemprop="name" content="learn javascript | PeterWang's Knowledge Plant">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          learn javascript
         </h1>
 
         <div class="post-meta-container">
@@ -176,7 +174,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-08-31 18:56:02" itemprop="dateCreated datePublished" datetime="2024-08-31T18:56:02+08:00">2024-08-31</time>
+      <time title="Created: 2024-09-03 14:38:04" itemprop="dateCreated datePublished" datetime="2024-09-03T14:38:04+08:00">2024-09-03</time>
     </span>
 
   
@@ -188,19 +186,33 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="The-record-of-learning-JavaScript"><a href="#The-record-of-learning-JavaScript" class="headerlink" title="The record of learning JavaScript"></a>The record of learning JavaScript</h1><blockquote>
+<p>记一些重点，后续排版会重新调，顺便熟练Markdown语法</p>
+</blockquote>
+<p>一些简单特性，过一遍就好，函数式编程已经很熟悉啦</p>
+<ol>
+<li>分号自动插入</li>
+<li>use strict 严格模式</li>
+<li>variable（变量），let&#x2F;const</li>
+<li>null表示空，undefined表示未分配</li>
+<li>交互，prompt，confirm，alert产生模态框</li>
+<li>运算符，循环。。。</li>
+<li>函数声明、函数表达式、箭头函数</li>
+</ol>
+<h2 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h2><ol>
+<li><code>let user = new Object()</code><br> <code>let user = &#123;&#125;字面量</code></li>
+<li>点操作、方括号访问对象属性</li>
+<li>属性名简写</li>
+<li>delete，in，for</li>
+<li>对象引用和复制</li>
+<li>浅拷贝<code>Object.assign</code></li>
+<li>深拷贝lodash库的<code>_.cloneDeep(obj)</code></li>
+<li>垃圾回收，可达性分析，分代收集、增量收集、闲时收集</li>
+<li><code>this</code>，作为方法调用可以访问该对象，而作为函数调用仅是<code>undefined</code></li>
+<li>可选链<code>?.</code>解决嵌套为空返回undefined而不是报错</li>
+<li><code>symbol</code>带有可选描述的“原始唯一值”：“隐藏对象属性”</li>
+</ol>
+<h2 id="函数进阶"><a href="#函数进阶" class="headerlink" title="函数进阶"></a>函数进阶</h2><p>巴拉巴拉</p>
 
     </div>
 
@@ -212,6 +224,15 @@
 
         
 
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/08/31/redis1/" rel="prev" title="Redis为什么那么快？">
+                  <i class="fa fa-angle-left"></i> Redis为什么那么快？
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
