@@ -19,23 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"peterwangll.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="PeterWang&#39;s Knowledge Plant">
-<meta property="og:url" content="http://peterwangll.github.io/categories/redis/index.html">
+    <meta name="description" content="多版本并发控制，在事务开启时，构建Read View——逻辑上的一致性视图。 通过行记录上的隐藏字段db_roll_ptr(指向undo)和db_trx_id(对该行记录最后操作的事务ID)，以及在创建事务的那一时刻，未提交但活跃的事务数来实现MVCC。 事务创建时只需要新增对应的未提交但活跃的事务数组，最底位、最高位(事务id时递增的)，来实现秒级创建。db_roll_ptr维护了一个undo的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multi-Versioned Concurrency Control">
+<meta property="og:url" content="http://peterwangll.github.io/2024/09/09/mysql-2/index.html">
 <meta property="og:site_name" content="PeterWang&#39;s Knowledge Plant">
+<meta property="og:description" content="多版本并发控制，在事务开启时，构建Read View——逻辑上的一致性视图。 通过行记录上的隐藏字段db_roll_ptr(指向undo)和db_trx_id(对该行记录最后操作的事务ID)，以及在创建事务的那一时刻，未提交但活跃的事务数来实现MVCC。 事务创建时只需要新增对应的未提交但活跃的事务数组，最底位、最高位(事务id时递增的)，来实现秒级创建。db_roll_ptr维护了一个undo的">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-09-09T09:52:19.000Z">
+<meta property="article:modified_time" content="2024-09-09T10:05:26.035Z">
 <meta property="article:author" content="Peter Wang">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://peterwangll.github.io/categories/redis/">
+<link rel="canonical" href="http://peterwangll.github.io/2024/09/09/mysql-2/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":"","permalink":"","path":"categories/redis/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/09/09/mysql-2/","path":"2024/09/09/mysql-2/","title":"Multi-Versioned Concurrency Control"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Category: Redis | PeterWang's Knowledge Plant</title>
+<title>Multi-Versioned Concurrency Control | PeterWang's Knowledge Plant</title>
   
 
 
@@ -141,50 +145,102 @@
 
     </div>
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">Redis
-          <small>Category</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/09/mysql-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Multi-Versioned Concurrency Control | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Multi-Versioned Concurrency Control
         </h1>
-      </div>
 
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
+
+      <time title="Created: 2024-09-09 17:52:19 / Modified: 18:05:26" itemprop="dateCreated datePublished" datetime="2024-09-09T17:52:19+08:00">2024-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>多版本并发控制，在事务开启时，构建Read View——逻辑上的一致性视图。</p>
+<p>通过行记录上的隐藏字段db_roll_ptr(指向undo)和db_trx_id(对该行记录最后操作的事务ID)，以及在创建事务的那一时刻，未提交但活跃的事务数来实现MVCC。</p>
+<p>事务创建时只需要新增对应的未提交但活跃的事务数组，最底位、最高位(事务id时递增的)，来实现秒级创建。db_roll_ptr维护了一个undo的链式结构，通过它可以找到对应时刻的行记录。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-08-31T18:56:02+08:00"
-              content="2024-08-31">
-          08-31
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/08/31/redis_1/" itemprop="url">
-            <span itemprop="name">Why is Redis so fast?</span>
-          </a>
-      </div>
+    <footer class="post-footer">
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/07/mysql-1/" rel="prev" title="Overview of MySQL">
+                  <i class="fa fa-angle-left"></i> Overview of MySQL
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/09/11/jdk-1/" rel="next" title="AbstractQueuedSynchronizer">
+                  AbstractQueuedSynchronizer <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
