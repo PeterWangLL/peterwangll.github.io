@@ -119,7 +119,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -247,6 +247,99 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/13/jdk-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/13/jdk-3/" class="post-title-link" itemprop="url">ThreadLocal</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-09-13 09:30:57 / Modified: 20:37:32" itemprop="dateCreated datePublished" datetime="2024-09-13T09:30:57+08:00">2024-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JDK/" itemprop="url" rel="index"><span itemprop="name">JDK</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><code>Provide thread-local variables, wish to associate state with a thread(e.g., a user ID or Transaction ID).</code></p>
+<p>每个Thread拥有一个ThreadLocalMap，实际是一个<code>Entry[] table</code>，Entry是一个key-value结构，key是一个弱引用。所以get()或set()时，是通过CurrentThread得到ThreadLocalMap，然后以this为key操作的过程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Entry</span> <span class="keyword">extends</span> <span class="title class_">WeakReference</span>&lt;ThreadLocal&lt;?&gt;&gt; &#123;</span><br><span class="line">    Object value;</span><br><span class="line">    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">        <span class="built_in">super</span>(k);</span><br><span class="line">        value = v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先来看下get():</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> T <span class="title function_">get</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line">    <span class="comment">// 拿到对应currentThread的map数组</span></span><br><span class="line">    <span class="type">ThreadLocalMap</span> <span class="variable">map</span> <span class="operator">=</span> getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="literal">null</span>) &#123;</span><br><span class="line">        ThreadLocalMap.<span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> map.getEntry(<span class="built_in">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">            <span class="type">T</span> <span class="variable">result</span> <span class="operator">=</span> (T)e.value;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 初始化map数组</span></span><br><span class="line">    <span class="keyword">return</span> setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进入getEntry():</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Entry <span class="title function_">getEntry</span><span class="params">(ThreadLocal&lt;?&gt; key)</span> &#123;</span><br><span class="line">    <span class="comment">// threadLocalHashCode很神奇的数字</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> key.threadLocalHashCode &amp; (table.length - <span class="number">1</span>);</span><br><span class="line">    <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> table[i];</span><br><span class="line">    <span class="keyword">if</span> (e != <span class="literal">null</span> &amp;&amp; e.get() == key)</span><br><span class="line">        <span class="keyword">return</span> e;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">// 因为是线性探测，第一下可能没找到，往后接着找</span></span><br><span class="line">        <span class="keyword">return</span> getEntryAfterMiss(key, i, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>set()相对复杂一点:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(T value)</span> &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line">    <span class="type">ThreadLocalMap</span> <span class="variable">map</span> <span class="operator">=</span> getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="literal">null</span>) &#123;</span><br><span class="line">        map.set(<span class="built_in">this</span>, value);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化map并把第一个value放进去，这时候不会冲突</span></span><br><span class="line">        createMap(t, value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详细看下set(key,value):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(ThreadLocal&lt;?&gt; key, Object value)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We don&#x27;t use a fast path as with get() because it is at</span></span><br><span class="line">    <span class="comment">// least as common to use set() to create new entries as</span></span><br><span class="line">    <span class="comment">// it is to replace existing ones, in which case, a fast</span></span><br><span class="line">    <span class="comment">// path would fail more often than not.</span></span><br><span class="line"></span><br><span class="line">    Entry[] tab = table;</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> tab.length;</span><br><span class="line">    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> key.threadLocalHashCode &amp; (len-<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 往后找到第一个为null的位置</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> tab[i];</span><br><span class="line">            e != <span class="literal">null</span>;</span><br><span class="line">            e = tab[i = nextIndex(i, len)]) &#123;</span><br><span class="line">        ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line">        <span class="comment">// 如果key相同，直接替换</span></span><br><span class="line">        <span class="keyword">if</span> (k == key) &#123;</span><br><span class="line">            e.value = value;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果这个位置key为null，说明它被GC了，需要做一个清理</span></span><br><span class="line">        <span class="keyword">if</span> (k == <span class="literal">null</span>) &#123;</span><br><span class="line">            replaceStaleEntry(key, value, i);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tab[i] = <span class="keyword">new</span> <span class="title class_">Entry</span>(key, value);</span><br><span class="line">    <span class="type">int</span> <span class="variable">sz</span> <span class="operator">=</span> ++size;</span><br><span class="line">    <span class="comment">// re-pack and/or re-size the table</span></span><br><span class="line">    <span class="keyword">if</span> (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;= threshold)</span><br><span class="line">        rehash();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每个ThreadLocal对象都有一个threadLocalHashCode，每次获取都是增加<code>0x61c88647</code>，通过它获得的散列分布特别好，是个神奇的数字。这样一来哈希冲突的可能性大大降低，然后这里JDK使用的是线性探测法解决冲突。</p>
+<p>接着是为什么要使用弱引用，这是为了有效回收没用的ThreadLocal，因为线程池中线程长时间不会销毁，如果是强引用的话线程的ThreadLocal占的内存就一直不会释放。</p>
+<p>还有一个问题：当弱引用被GC后，value和Entry还在会造成内存泄漏，ThreadLocal在设计上考虑到了这种情况，这也是为什么在set过程中扫描到key为null需要去做清理。但在实际使用中，在ThreadLocal使用前后都调用remove清理，同时对异常情况也要在finally中清理。这样可以有效避免内存泄漏，以及业务上的逻辑问题。</p>
+<p>另一个问题是常常声明为static：我的理解是ThreadLocal本质是一个key，对于不同的Thread过来会有相应的Map对应，使用的时候要注意remove，static的话避免资源浪费。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/11/jdk-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -277,7 +370,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-09-11 14:32:56 / Modified: 16:59:48" itemprop="dateCreated datePublished" datetime="2024-09-11T14:32:56+08:00">2024-09-11</time>
+      <time title="Created: 2024-09-11 14:32:56 / Modified: 17:04:39" itemprop="dateCreated datePublished" datetime="2024-09-11T14:32:56+08:00">2024-09-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -299,7 +392,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="runState-workerCount"><a href="#runState-workerCount" class="headerlink" title="runState&amp;workerCount"></a>runState&amp;workerCount</h3><p><code>private final AtomicInteger ctl</code>: the main pool control state, 高3位用来表示线程池的runState，底29位用来表示线程数workCount。这种思想让我联想到了SDS中header的sdshdr5结构，flags低3位保存type，高5位在type&#x3D;sdshdr5时表示len。</p>
+          <h3 id="runState-workerCount"><a href="#runState-workerCount" class="headerlink" title="runState&amp;workerCount"></a>runState&amp;workerCount</h3><p><code>private final AtomicInteger ctl</code>: the main pool control state, 高3位用来表示线程池的runState，底29位用来表示线程数workCount。这种思想让我联想到了SDS中header的sdshdr5结构，flags低3位保存type，高5位在<code>type=sdshdr5</code>时表示len。</p>
 <h3 id="execute"><a href="#execute" class="headerlink" title="execute()"></a>execute()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(Runnable command)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">    <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123;</span><br><span class="line">        <span class="comment">// try to start a new thread with the given command as its first task</span></span><br><span class="line">        <span class="keyword">if</span> (addWorker(command, <span class="literal">true</span>))</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        c = ctl.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">        <span class="comment">// if a task can be successfully queued, then we still need to double-check whether we should have added a thread</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">recheck</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">        <span class="comment">// if neccessary roll back the enqueuing if stopped</span></span><br><span class="line">        <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">            reject(command);</span><br><span class="line">        <span class="comment">// or start a new thread if there are none</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">            addWorker(<span class="literal">null</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// if we cannot queue task, then we try to add a new thread. If it fails, we know we are shut down or saturated and so reject the task.</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="literal">false</span>))</span><br><span class="line">        reject(command);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看出<code>execute()</code>方法会根据线程池现有的状态来决定<code>addWorker()</code>or<code>reject()</code></p>
 <p>这涉及到线程池的几个关键参数，corePoolSize，maximumPoolSize，workQueue，剩下还有threadFactory，rejectedExecutionHandler，keepAliveTime。</p>
@@ -318,8 +411,8 @@
 <h3 id="runWorker"><a href="#runWorker" class="headerlink" title="runWorker()"></a>runWorker()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Repeatedly gets tasks from queue and executes them</span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">runWorker</span><span class="params">(Worker w)</span> &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">wt</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line">    <span class="type">Runnable</span> <span class="variable">task</span> <span class="operator">=</span> w.firstTask;</span><br><span class="line">    w.firstTask = <span class="literal">null</span>;</span><br><span class="line">    w.unlock(); <span class="comment">// allow interrupts</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">completedAbruptly</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (task != <span class="literal">null</span> || (task = getTask()) != <span class="literal">null</span>) &#123;</span><br><span class="line">            w.lock();</span><br><span class="line">            <span class="comment">// If pool is stopping, ensure thread is interrupted;</span></span><br><span class="line">            <span class="comment">// if not, ensure thread is not interrupted.  This</span></span><br><span class="line">            <span class="comment">// requires a recheck in second case to deal with</span></span><br><span class="line">            <span class="comment">// shutdownNow race while clearing interrupt</span></span><br><span class="line">            <span class="keyword">if</span> ((runStateAtLeast(ctl.get(), STOP) ||</span><br><span class="line">                    (Thread.interrupted() &amp;&amp;</span><br><span class="line">                    runStateAtLeast(ctl.get(), STOP))) &amp;&amp;</span><br><span class="line">                !wt.isInterrupted())</span><br><span class="line">                wt.interrupt();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                beforeExecute(wt, task);</span><br><span class="line">                <span class="type">Throwable</span> <span class="variable">thrown</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    task.run();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (RuntimeException x) &#123;</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> x;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Error x) &#123;</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> x;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Throwable x) &#123;</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(x);</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    afterExecute(task, thrown);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                task = <span class="literal">null</span>;</span><br><span class="line">                w.completedTasks++;</span><br><span class="line">                w.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        completedAbruptly = <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        processWorkerExit(w, completedAbruptly);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>主要是getTask()和task.run()，Repeatedly gets tasks from queue and executes them.</p>
 <p>Before running any task, the lock is acquired to prevent other pool interrupts while the task is executing.</p>
-<p>另外提供<code>beforeExecute()</code>和<code>afterExecute()</code>两个钩子方法</p>
-<h3 id="用到的锁"><a href="#用到的锁" class="headerlink" title="用到的锁"></a>用到的锁</h3><p>两个地方用到了锁，对works(HashSet<Worker>)的操作都需要获取mainLock(ReentrantLock),因为HashSet是线程不安全的，至于为什么不用并发安全的Set，是为了避免中断风暴的风险，shutdown()会调用interruptIdleWorkers()，不用mainLock会导致对正在中断中的中断，发起中断。具体可以看<a target="_blank" rel="noopener" href="https://www.cnblogs.com/thisiswhy/p/15493027.html">https://www.cnblogs.com/thisiswhy/p/15493027.html</a><br>还有是在线程处理任务时，需要获取锁，这是通过继承AQS实现的不可重入锁，为了防止被中断。</Worker></p>
+<p>另外提供<code>beforeExecute()</code>和<code>afterExecute()</code>两个钩子方法。</p>
+<h3 id="用到的锁"><a href="#用到的锁" class="headerlink" title="用到的锁"></a>用到的锁</h3><p>两个地方用到了锁，对works(HashSet<Worker>)的操作都需要获取mainLock(ReentrantLock),因为HashSet是线程不安全的，至于为什么不用并发安全的Set，是为了避免中断风暴的风险，shutdown()会调用interruptIdleWorkers()，不用mainLock会导致对正在中断中的中断，发起中断。具体可以看<a target="_blank" rel="noopener" href="https://www.cnblogs.com/thisiswhy/p/15493027.html">https://www.cnblogs.com/thisiswhy/p/15493027.html</a>.<br>还有是在线程处理任务时，需要获取锁，这是通过继承AQS实现的不可重入锁，为了防止被中断。</Worker></p>
 
       
     </div>
@@ -376,7 +469,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-09-11 08:45:48 / Modified: 15:05:04" itemprop="dateCreated datePublished" datetime="2024-09-11T08:45:48+08:00">2024-09-11</time>
+      <time title="Created: 2024-09-11 08:45:48 / Modified: 17:04:41" itemprop="dateCreated datePublished" datetime="2024-09-11T08:45:48+08:00">2024-09-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
