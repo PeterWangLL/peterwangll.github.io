@@ -119,13 +119,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -247,6 +247,276 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/07/log_of_install_mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/07/log_of_install_mysql/" class="post-title-link" itemprop="url">Homebrew安装Mysql踩坑记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-07 21:39:58 / Modified: 22:16:54" itemprop="dateCreated datePublished" datetime="2024-10-07T21:39:58+08:00">2024-10-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Else/" itemprop="url" rel="index"><span itemprop="name">Else</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>原来用Homebrew安装过<a href="mailto:&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;">&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;</a>和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><ol>
+<li>查看日志，在<code>/usr/local/var/mysql/xxx.err</code>的错误日志文件报错信息为：Failed to find valid data directory.</li>
+<li>以此为线索查看解决方案：<code>mysqld --initialize</code>，This shall initialse the data directory in the path where you have installed MySql server.</li>
+<li><code>command not found: mysqld</code>，查看mysql安装路径为<code>/usr/local/opt/mysql/bin/</code>，注意mysql需要加上具体的版本号，比如<code>/usr/local/opt/mysql@8.0/bin/</code>，发现是有<code>mysqld</code>的，需要在<code>~/.zshrc</code>中添加对应的路径。</li>
+<li>此时重新运行<code>mysqld --initialize</code>，依然失败，报错信息提示<code>/usr/local/var/mysql</code>已经存在，使用<code>sudo rm -rf /usr/local/var/mysql</code>删除后重新执行，成功。<br><img src="/2024/10/07/log_of_install_mysql/log1.png" alt="图1"></li>
+<li>记住保存好临时的密码，重新启动mysql服务，成功。</li>
+<li><code>mysql -u root -p</code>,然后输入刚刚的临时密码，执行<code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;</code>，执行<code>FLUSH PRIVILEGES;</code>使密码修改生效。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/24/algorithm-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/24/algorithm-2/" class="post-title-link" itemprop="url">骰子的点数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-24 21:17:26" itemprop="dateCreated datePublished" datetime="2024-09-24T21:17:26+08:00">2024-09-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-09-25 14:36:47" itemprop="dateModified" datetime="2024-09-25T14:36:47+08:00">2024-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algroithm/" itemprop="url" rel="index"><span itemprop="name">Algroithm</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="description"><a href="#description" class="headerlink" title="description"></a>description</h3><p>链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/76/">https://www.acwing.com/problem/content/76/</a><br>将一个骰子投掷n次，获得的总点数为s，s的可能范围为n～6n。求出投掷n次，掷出n～6n<br>点分别有多少种掷法。</p>
+<h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><p>拿到题目我首先想到的是回溯：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        dfs(n,<span class="number">0</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">N</span> <span class="operator">=</span> n*<span class="number">6</span>-n+<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span>[] result = <span class="keyword">new</span> <span class="title class_">int</span>[N];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">            result[i]=map.get(n+i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> temp)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            map.put(temp,map.getOrDefault(temp,<span class="number">0</span>)+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">6</span>;i++)&#123;</span><br><span class="line">            dfs(n-<span class="number">1</span>,temp+i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/80458/">https://www.acwing.com/solution/content/80458/</a><br>后面看到递归的写法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] dict;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        List&lt;Integer&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=n;i&lt;=<span class="number">6</span>*n;i++)&#123;</span><br><span class="line">            result.add(dfs(n,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result.stream().mapToInt(Integer::intValue).toArray();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> sum)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum&lt;<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> sum==<span class="number">0</span>?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">6</span>;i++)&#123;</span><br><span class="line">            ans+=dfs(n-<span class="number">1</span>,sum-i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] dict;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        dict = <span class="keyword">new</span> <span class="title class_">int</span>[n+<span class="number">1</span>][<span class="number">6</span>*n+<span class="number">1</span>];</span><br><span class="line">        List&lt;Integer&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span>[] row:dict)&#123;</span><br><span class="line">            Arrays.fill(row,-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=n;i&lt;=<span class="number">6</span>*n;i++)&#123;</span><br><span class="line">            result.add(dfs(n,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result.stream().mapToInt(Integer::intValue).toArray();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> sum)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum&lt;<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> sum==<span class="number">0</span>?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(dict[n][sum]!=-<span class="number">1</span>)<span class="keyword">return</span> dict[n][sum];</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">6</span>;i++)&#123;</span><br><span class="line">            ans+=dfs(n-<span class="number">1</span>,sum-i);</span><br><span class="line">        &#125;</span><br><span class="line">        dict[n][sum]=ans;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>dp写法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[n+<span class="number">1</span>][<span class="number">6</span>*n+<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 投掷次数从1开始</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="comment">// sum为0不存在，所以从1开始</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">6</span>*n;j++)&#123;</span><br><span class="line">                <span class="comment">// 有1~6个点数</span></span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">1</span>;k&lt;=<span class="number">6</span>;k++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(j&gt;=k)&#123;</span><br><span class="line">                        dp[i][j]=dp[i][j]+dp[i-<span class="number">1</span>][j-k];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] result = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">6</span>*n-n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=n;i&lt;=<span class="number">6</span>*n;i++)&#123;</span><br><span class="line">            result[i-n]=dp[n][i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="summery"><a href="#summery" class="headerlink" title="summery"></a>summery</h3><ol>
+<li>经典的递归优化</li>
+<li>List转int[]可以使用这种写法：<code>list.stream().mapToInt(Integer::intValue).toArray()</code></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/22/algorithm-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/22/algorithm-1/" class="post-title-link" itemprop="url">全排列去重</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-22 19:12:09" itemprop="dateCreated datePublished" datetime="2024-09-22T19:12:09+08:00">2024-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-09-24 21:21:08" itemprop="dateModified" datetime="2024-09-24T21:21:08+08:00">2024-09-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algroithm/" itemprop="url" rel="index"><span itemprop="name">Algroithm</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/47/">https://www.acwing.com/problem/content/47/</a><br>输入一组数字（可能包含重复数字），输出其所有的排列方式。</p>
+<p>如果是不重复的，就是一个常规的深度优先遍历，当可重复时，我们需要人为的区分重复数字，做法是指定重复数字首次要放入某个框位时，只使用重复数字的第一个。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">permutation</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="comment">// 排序</span></span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">boolean</span>[] used = <span class="keyword">new</span> <span class="title class_">boolean</span>[n];</span><br><span class="line">        List&lt;Integer&gt; temp = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        dfs(nums,used,<span class="number">0</span>,temp);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">boolean</span>[] used,<span class="type">int</span> index,List&lt;Integer&gt; temp)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="keyword">if</span>(index==n)&#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="comment">// 过滤</span></span><br><span class="line">            <span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;nums[i]==nums[i-<span class="number">1</span>]&amp;&amp;!used[i-<span class="number">1</span>])<span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(!used[i])&#123;</span><br><span class="line">                temp.add(nums[i]);</span><br><span class="line">                used[i]=<span class="literal">true</span>;</span><br><span class="line">                dfs(nums,used,index+<span class="number">1</span>,temp);</span><br><span class="line">                temp.remove(temp.size()-<span class="number">1</span>);</span><br><span class="line">                used[i]=<span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/13/jdk-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -277,7 +547,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-09-13 09:30:57 / Modified: 20:37:32" itemprop="dateCreated datePublished" datetime="2024-09-13T09:30:57+08:00">2024-09-13</time>
+      <time title="Created: 2024-09-13 09:30:57 / Modified: 20:39:03" itemprop="dateCreated datePublished" datetime="2024-09-13T09:30:57+08:00">2024-09-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
