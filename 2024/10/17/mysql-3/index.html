@@ -19,27 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"peterwangll.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="步骤 hexo new page categories生成source&#x2F;categories&#x2F;index.md 在新生成的index.md中front-matter添加type: categories 在_config.yml中开启，搜索menu，去掉categories前的# 在博客的front-matter中添加categories: 任意名称  附录 next theme已经写好了categ">
+    <meta name="description" content="12select* from article LIMIT 1,3select * from article LIMIT 3 OFFSET 1 上面两种写法都表示取第2,3,4三条数据。 limit的偏移量越大，执行时间越长。 原因分析eg. user表有id,name,sex,age字段，其中id为主键，age为普通索引。当执行select * from user where age &gt; 1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo添加分类不生效">
-<meta property="og:url" content="http://peterwangll.github.io/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/index.html">
+<meta property="og:title" content="Limit&amp;Offset——分页慢查询优化">
+<meta property="og:url" content="http://peterwangll.github.io/2024/10/17/mysql-3/index.html">
 <meta property="og:site_name" content="PeterWang&#39;s Knowledge Plant">
-<meta property="og:description" content="步骤 hexo new page categories生成source&#x2F;categories&#x2F;index.md 在新生成的index.md中front-matter添加type: categories 在_config.yml中开启，搜索menu，去掉categories前的# 在博客的front-matter中添加categories: 任意名称  附录 next theme已经写好了categ">
+<meta property="og:description" content="12select* from article LIMIT 1,3select * from article LIMIT 3 OFFSET 1 上面两种写法都表示取第2,3,4三条数据。 limit的偏移量越大，执行时间越长。 原因分析eg. user表有id,name,sex,age字段，其中id为主键，age为普通索引。当执行select * from user where age &gt; 1">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-09-06T06:51:02.000Z">
-<meta property="article:modified_time" content="2024-09-06T07:26:12.615Z">
+<meta property="article:published_time" content="2024-10-17T08:25:33.000Z">
+<meta property="article:modified_time" content="2024-10-17T08:26:29.985Z">
 <meta property="article:author" content="Peter Wang">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://peterwangll.github.io/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/">
+<link rel="canonical" href="http://peterwangll.github.io/2024/10/17/mysql-3/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/","path":"2024/09/06/Hexo添加分类不生效/","title":"Hexo添加分类不生效"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/10/17/mysql-3/","path":"2024/10/17/mysql-3/","title":"Limit&Offset——分页慢查询优化"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo添加分类不生效 | PeterWang's Knowledge Plant</title>
+<title>Limit&Offset——分页慢查询优化 | PeterWang's Knowledge Plant</title>
   
 
 
@@ -111,7 +111,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">优化</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -157,7 +157,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/17/mysql-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -170,12 +170,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hexo添加分类不生效 | PeterWang's Knowledge Plant">
+      <meta itemprop="name" content="Limit&Offset——分页慢查询优化 | PeterWang's Knowledge Plant">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo添加分类不生效
+          Limit&Offset——分页慢查询优化
         </h1>
 
         <div class="post-meta-container">
@@ -187,7 +187,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-09-06 14:51:02 / Modified: 15:26:12" itemprop="dateCreated datePublished" datetime="2024-09-06T14:51:02+08:00">2024-09-06</time>
+      <time title="Created: 2024-10-17 16:25:33 / Modified: 16:26:29" itemprop="dateCreated datePublished" datetime="2024-10-17T16:25:33+08:00">2024-10-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -195,7 +195,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Else/" itemprop="url" rel="index"><span itemprop="name">Else</span></a>
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
         </span>
     </span>
 
@@ -208,16 +208,19 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
-<li><code>hexo new page categories</code><br>生成<code>source/categories/index.md</code></li>
-<li>在新生成的index.md中front-matter添加type: categories</li>
-<li>在_config.yml中开启，搜索menu，去掉categories前的#</li>
-<li>在博客的front-matter中添加categories: 任意名称</li>
+    <div class="post-body" itemprop="articleBody"><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span><span class="operator">*</span> <span class="keyword">from</span> article LIMIT <span class="number">1</span>,<span class="number">3</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> article LIMIT <span class="number">3</span> <span class="keyword">OFFSET</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>上面两种写法都表示取第2,3,4三条数据。</p>
+<p>limit的偏移量越大，执行时间越长。</p>
+<h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>eg. user表有id,name,sex,age字段，其中id为主键，age为普通索引。当执行<code>select * from user where age &gt; 10 limit 1000000,10</code>时：</p>
+<ol>
+<li>首先SQL的执行顺序是：from-&gt;join-&gt;where-&gt;group by-&gt;having-&gt;select-&gt;distinct-&gt;order by-&gt;limit.</li>
+<li>由于age是普通索引，而select的是*，所以需要回表。</li>
+<li>limit是在最后执行的，所以需要进行1000010次回表，然后把前1000000条数据抛弃，取后10条数据。<br>由此可见造成上述情况的罪魁祸首是<code>回表</code>。</li>
 </ol>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><ol>
-<li>next theme已经写好了categories的样式，在配置中去掉#是为了开启它，于是new page必须是categories，来配合配置中的路径，同理在配置中的其他选项如果要用它，也要new对应名称的page，比如tags，就是<code>hexo new page tags</code>。</li>
-<li>每篇博客categories只能有一个，tags可以有多个。</li>
-<li>我自己在配置的时候使用vscode下的终端运行的hexo command，会出现改完categories后不生效的情况，换成本地终端就解决了，不是很懂。</li>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><ol>
+<li>可以通过子查询或覆盖索引来减少回表，根据业务来决定。</li>
+<li>order by和limit结合使用。</li>
+<li>主键直接定位(ID需有序)，分步查询&#x2F;程序记录上一页最大主键ID。</li>
 </ol>
 
     </div>
@@ -232,13 +235,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/08/31/redis_1/" rel="prev" title="Why is Redis so fast?">
-                  <i class="fa fa-angle-left"></i> Why is Redis so fast?
+                <a href="/2024/10/09/lottery-1/" rel="prev" title="Lottery Summery">
+                  <i class="fa fa-angle-left"></i> Lottery Summery
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/09/07/mysql-1/" rel="next" title="Overview of MySQL">
-                  Overview of MySQL <i class="fa fa-angle-right"></i>
+                <a href="/2024/10/17/network-knowledge-1/" rel="next" title="Network-Knowledge-TCP">
+                  Network-Knowledge-TCP <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>

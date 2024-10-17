@@ -19,16 +19,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"peterwangll.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="起因原来用Homebrew安装过&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。 解决 查看日志，在&#x2F;usr&#x2F;local&#x2F;var&#x2F;mysql">
+    <meta name="description" content="起因原来用Homebrew安装过&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。 解决 查看日志，在&#x2F;usr&#x2F;local&#x2F;var&#x2F;mysq">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Homebrew安装Mysql踩坑记录">
+<meta property="og:title" content="Homebrew启动Mysql踩坑记录">
 <meta property="og:url" content="http://peterwangll.github.io/2024/10/07/log_of_install_mysql/index.html">
 <meta property="og:site_name" content="PeterWang&#39;s Knowledge Plant">
-<meta property="og:description" content="起因原来用Homebrew安装过&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。 解决 查看日志，在&#x2F;usr&#x2F;local&#x2F;var&#x2F;mysql">
+<meta property="og:description" content="起因原来用Homebrew安装过&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。 解决 查看日志，在&#x2F;usr&#x2F;local&#x2F;var&#x2F;mysq">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://peterwangll.github.io/2024/10/07/log_of_install_mysql/log1.png">
 <meta property="article:published_time" content="2024-10-07T13:39:58.000Z">
-<meta property="article:modified_time" content="2024-10-07T14:16:54.422Z">
+<meta property="article:modified_time" content="2024-10-07T14:17:54.571Z">
 <meta property="article:author" content="Peter Wang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://peterwangll.github.io/2024/10/07/log_of_install_mysql/log1.png">
@@ -38,10 +38,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/10/07/log_of_install_mysql/","path":"2024/10/07/log_of_install_mysql/","title":"Homebrew安装Mysql踩坑记录"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/10/07/log_of_install_mysql/","path":"2024/10/07/log_of_install_mysql/","title":"Homebrew启动Mysql踩坑记录"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Homebrew安装Mysql踩坑记录 | PeterWang's Knowledge Plant</title>
+<title>Homebrew启动Mysql踩坑记录 | PeterWang's Knowledge Plant</title>
   
 
 
@@ -126,13 +126,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -172,12 +172,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Homebrew安装Mysql踩坑记录 | PeterWang's Knowledge Plant">
+      <meta itemprop="name" content="Homebrew启动Mysql踩坑记录 | PeterWang's Knowledge Plant">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Homebrew安装Mysql踩坑记录
+          Homebrew启动Mysql踩坑记录
         </h1>
 
         <div class="post-meta-container">
@@ -189,7 +189,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-10-07 21:39:58 / Modified: 22:16:54" itemprop="dateCreated datePublished" datetime="2024-10-07T21:39:58+08:00">2024-10-07</time>
+      <time title="Created: 2024-10-07 21:39:58 / Modified: 22:17:54" itemprop="dateCreated datePublished" datetime="2024-10-07T21:39:58+08:00">2024-10-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -210,7 +210,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>原来用Homebrew安装过<a href="mailto:&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;">&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;</a>和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
+    <div class="post-body" itemprop="articleBody"><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>原来用Homebrew安装过<a href="mailto:&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;">&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;</a>和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><ol>
 <li>查看日志，在<code>/usr/local/var/mysql/xxx.err</code>的错误日志文件报错信息为：Failed to find valid data directory.</li>
 <li>以此为线索查看解决方案：<code>mysqld --initialize</code>，This shall initialse the data directory in the path where you have installed MySql server.</li>
@@ -237,6 +237,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2024/10/08/algorithm-3/" rel="next" title="后序遍历的魅力">
+                  后序遍历的魅力 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

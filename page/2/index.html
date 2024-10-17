@@ -19,27 +19,23 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"peterwangll.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Provides a framework for implementing blocking locks and related synchronizers (semaphores, events, etc) that rely on first-in-first-out (FIFO) wait queues. 该抽象队列同步器通过依赖FIFO的队列同步器来实现阻塞式的锁机制。 1234567st">
-<meta property="og:type" content="article">
-<meta property="og:title" content="AbstractQueuedSynchronizer">
-<meta property="og:url" content="http://peterwangll.github.io/2024/09/11/jdk-1/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="PeterWang&#39;s Knowledge Plant">
+<meta property="og:url" content="http://peterwangll.github.io/page/2/index.html">
 <meta property="og:site_name" content="PeterWang&#39;s Knowledge Plant">
-<meta property="og:description" content="Provides a framework for implementing blocking locks and related synchronizers (semaphores, events, etc) that rely on first-in-first-out (FIFO) wait queues. 该抽象队列同步器通过依赖FIFO的队列同步器来实现阻塞式的锁机制。 1234567st">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-09-11T00:45:48.000Z">
-<meta property="article:modified_time" content="2024-09-11T09:04:41.430Z">
 <meta property="article:author" content="Peter Wang">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://peterwangll.github.io/2024/09/11/jdk-1/">
+<link rel="canonical" href="http://peterwangll.github.io/page/2/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://peterwangll.github.io/2024/09/11/jdk-1/","path":"2024/09/11/jdk-1/","title":"AbstractQueuedSynchronizer"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>AbstractQueuedSynchronizer | PeterWang's Knowledge Plant</title>
+<title>PeterWang's Knowledge Plant</title>
   
 
 
@@ -72,7 +68,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">PeterWang's Knowledge Plant</p>
+      <h1 class="site-title">PeterWang's Knowledge Plant</h1>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -145,17 +141,16 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner index posts-expand">
 
-
-  
+    
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/11/jdk-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -169,13 +164,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="AbstractQueuedSynchronizer | PeterWang's Knowledge Plant">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          AbstractQueuedSynchronizer
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/11/jdk-1/" class="post-title-link" itemprop="url">AbstractQueuedSynchronizer</a>
+        </h2>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -207,7 +202,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><code>Provides a framework for implementing blocking locks and related synchronizers (semaphores, events, etc) that rely on first-in-first-out (FIFO) wait queues.</code></p>
+    <div class="post-body" itemprop="articleBody">
+          <p><code>Provides a framework for implementing blocking locks and related synchronizers (semaphores, events, etc) that rely on first-in-first-out (FIFO) wait queues.</code></p>
 <p>该抽象队列同步器通过依赖FIFO的队列同步器来实现阻塞式的锁机制。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Node</span>&#123;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">int</span> waitStatus;</span><br><span class="line">    <span class="keyword">volatile</span> Node prev;</span><br><span class="line">    <span class="keyword">volatile</span> Node next;</span><br><span class="line">    <span class="keyword">volatile</span> Thread thread;</span><br><span class="line">    Node nextWaiter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实际上维护了一个共享变量<code>state</code>和一个双向链表，链表节点除了prev, next, 还有<code>waitStatus</code>:</p>
@@ -235,6 +231,7 @@
 <li>CANCELLED(1): due to timeout or interrupt,so <code>shouldParkAfterFailedAcquire</code>要从后向前删除<code>waitStatus&gt;0</code>的节点</li>
 </ol>
 
+      
     </div>
 
     
@@ -242,21 +239,8 @@
     
 
     <footer class="post-footer">
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2024/09/09/mysql-2/" rel="prev" title="Multi-Versioned Concurrency Control">
-                  <i class="fa fa-angle-left"></i> Multi-Versioned Concurrency Control
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2024/09/11/jdk-2/" rel="next" title="ThreadPoolExecutor">
-                  ThreadPoolExecutor <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
+        <div class="post-eof"></div>
+      
     </footer>
   </article>
 </div>
@@ -264,7 +248,275 @@
 
 
 
+    
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/09/mysql-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/09/mysql-2/" class="post-title-link" itemprop="url">Multi-Versioned Concurrency Control</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-09 17:52:19" itemprop="dateCreated datePublished" datetime="2024-09-09T17:52:19+08:00">2024-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-17 15:38:53" itemprop="dateModified" datetime="2024-10-17T15:38:53+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>多版本并发控制，在事务开启时，构建Read View——逻辑上的一致性视图。</p>
+<p>通过行记录上的隐藏字段db_roll_ptr(指向undo)和db_trx_id(对该行记录最后操作的事务ID)，以及在创建事务的那一时刻，未提交但活跃的事务数来实现MVCC。</p>
+<p>事务创建时只需要新增对应的未提交但活跃的事务数组，最底位、最高位(事务id时递增的)，来实现秒级创建。db_roll_ptr维护了一个undo的链式结构，通过它可以找到对应时刻的行记录。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/07/mysql-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/07/mysql-1/" class="post-title-link" itemprop="url">Overview of MySQL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-09-07 10:18:53 / Modified: 11:29:11" itemprop="dateCreated datePublished" datetime="2024-09-07T10:18:53+08:00">2024-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>从一条SQL语句的执行出发</p>
+<ol>
+<li>Server：连接-分析-优化-执行，重点是优化器</li>
+<li>执行器与InnDB的交互，索引下推</li>
+<li>B+Tree</li>
+<li>Buffer Pool</li>
+<li>log</li>
+<li>MVCC</li>
+<li>锁机制</li>
+</ol>
+<p>从架构的角度看，Server+Engine，Server层看优化器的原理，执行器承担的是调用存储引擎接口，过滤组装的工作。<br>由于InnoDB索引存储的特点，MySQL5.6支持索引下推，当命中联合索引时，将筛选过程下推至存储引擎，从而减轻执行器的压力。<br>InnoDB对数据的操作都是在Buffer Pool中的，以页为单位与物理磁盘交互，构建出逻辑表空间，当在内存中对数据进行操作前，先记录undo log，完成后记录redo log，bin log，这涉及两阶段提交，当事务提交后，不管修改的页是否刷盘，理论上都能保证能够查到数据，但还要看redo log刷盘策略。<br>MVCC的实现基于undo log和行记录的隐藏字段的，通过构建Read View来描述事务可见性。<br>在更新或者当前读时，要求数据是最新的，因而需要锁机制：加锁的粒度、S｜X锁、MDL，最终是对索引加锁。</p>
+<p>这是我目前对MySQL全貌的认识，执行器、InnoDB层面都大量地使用了内存，对于Buffer Pool，redo log等日志分别对应了不同的刷盘策略；从SQL执行的过程来看优化，其实就是通过高效的索引模型，以最精简的结构返回数据，不要粗暴地把事情全部交给MySQL去做。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/" class="post-title-link" itemprop="url">Hexo添加分类不生效</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-09-06 14:51:02 / Modified: 15:26:12" itemprop="dateCreated datePublished" datetime="2024-09-06T14:51:02+08:00">2024-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Else/" itemprop="url" rel="index"><span itemprop="name">Else</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><code>hexo new page categories</code><br>生成<code>source/categories/index.md</code></li>
+<li>在新生成的index.md中front-matter添加type: categories</li>
+<li>在_config.yml中开启，搜索menu，去掉categories前的#</li>
+<li>在博客的front-matter中添加categories: 任意名称</li>
+</ol>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><ol>
+<li>next theme已经写好了categories的样式，在配置中去掉#是为了开启它，于是new page必须是categories，来配合配置中的路径，同理在配置中的其他选项如果要用它，也要new对应名称的page，比如tags，就是<code>hexo new page tags</code>。</li>
+<li>每篇博客categories只能有一个，tags可以有多个。</li>
+<li>我自己在配置的时候使用vscode下的终端运行的hexo command，会出现改完categories后不生效的情况，换成本地终端就解决了，不是很懂。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 </div>
   </main>

@@ -119,13 +119,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
   </nav>
@@ -247,6 +247,367 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/17/network-knowledge-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/17/network-knowledge-1/" class="post-title-link" itemprop="url">Network-Knowledge-TCP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-10-17 19:42:10" itemprop="dateCreated datePublished" datetime="2024-10-17T19:42:10+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Network/" itemprop="url" rel="index"><span itemprop="name">Network</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>It’s a Q&amp;A about network.</p>
+<h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><p>TCP是一个工作在传输层的可靠数据传输的服务，它确保接受端接受端网络包是无损坏、无间隔、非冗余和按序的。</p>
+<p>TCP是面向连接的、可靠的、基于字节流的传输层通信协议。基于字节流导致了TCP会有粘包和半包的问题。Nagle算法为了提高网络传输效率，会将多个小的数据包合并发送。</p>
+<p>HTTP通过<code>\r\n</code>确定header和body的边界，然后可以通过content-length来确</p>
+<h3 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h3><p>用于保证可靠性和流量控制维护的某些状态信息的组合，包括Socket、序列号和窗口大小称为连接。</p>
+<ul>
+<li>Socket：由IP地址和端口组成</li>
+<li>序列号：用来解决乱序问题</li>
+<li>窗口大小：用来做流量控制</li>
+</ul>
+<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><ol>
+<li>第一次握手：SYN&#x3D;1，随机初始化序号</li>
+<li>第二次握手：SYN&#x3D;1，ACK&#x3D;1，确认序号&#x3D;第一次握手的序号+1,随机初始化序号</li>
+<li>第三次握手：ACK&#x3D;1，确认序号&#x3D;第二次握手的序号+1</li>
+</ol>
+<h3 id="为什么是三次握手"><a href="#为什么是三次握手" class="headerlink" title="为什么是三次握手"></a>为什么是三次握手</h3><ol>
+<li>避免「历史连接」初始化了连接，如果客户端重启，旧的第二次握手先到，客户端通过上下文比较可以发起RST报文中止连接。如果在两次握手的情况下，服务端没有中间状态给客户端来组织历史连接，导致服务端可能建立一个历史连接，造成资源浪费。</li>
+<li>同步双方初始序列号，第一、二次握手同步客户端的初始序列号，第二、三次握手同步服务端的初始序列号。</li>
+</ol>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>每个方向都需要一个FIN和一个ACK，只有主动关闭连接的，才有TIME_WAIT状态。</p>
+<h3 id="为什么TIME-WAIT等待的时间是2MSL"><a href="#为什么TIME-WAIT等待的时间是2MSL" class="headerlink" title="为什么TIME_WAIT等待的时间是2MSL"></a>为什么TIME_WAIT等待的时间是2MSL</h3><p>MSL是报文最大生存时间，TTL是经过路由跳数，TTL的值一般是64，Linux将MSL设置为30s。2MSL时长是从客户端接受到FIN后发送ACK开始计时的，相当于至少允许报文丢失一次。</p>
+<h3 id="为什么需要TIME-WAIT状态"><a href="#为什么需要TIME-WAIT状态" class="headerlink" title="为什么需要TIME_WAIT状态"></a>为什么需要TIME_WAIT状态</h3><ol>
+<li>防止历史连接中的数据，被后面相同四元组的连接错误的接收（ISN随机生成也是为了避免这个）</li>
+<li>保证「被动关闭连接」的一方，能被正确地关闭。<br>Tips：如果服务端要避免过多的TIME_WAIT状态的连接，就不要主动断开连接，让客户端去断开，由分布在各处的客户端去承受TIME_WAIT。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/17/mysql-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/17/mysql-3/" class="post-title-link" itemprop="url">Limit&Offset——分页慢查询优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-17 16:25:33 / Modified: 16:26:29" itemprop="dateCreated datePublished" datetime="2024-10-17T16:25:33+08:00">2024-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span><span class="operator">*</span> <span class="keyword">from</span> article LIMIT <span class="number">1</span>,<span class="number">3</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> article LIMIT <span class="number">3</span> <span class="keyword">OFFSET</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>上面两种写法都表示取第2,3,4三条数据。</p>
+<p>limit的偏移量越大，执行时间越长。</p>
+<h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>eg. user表有id,name,sex,age字段，其中id为主键，age为普通索引。当执行<code>select * from user where age &gt; 10 limit 1000000,10</code>时：</p>
+<ol>
+<li>首先SQL的执行顺序是：from-&gt;join-&gt;where-&gt;group by-&gt;having-&gt;select-&gt;distinct-&gt;order by-&gt;limit.</li>
+<li>由于age是普通索引，而select的是*，所以需要回表。</li>
+<li>limit是在最后执行的，所以需要进行1000010次回表，然后把前1000000条数据抛弃，取后10条数据。<br>由此可见造成上述情况的罪魁祸首是<code>回表</code>。</li>
+</ol>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><ol>
+<li>可以通过子查询或覆盖索引来减少回表，根据业务来决定。</li>
+<li>order by和limit结合使用。</li>
+<li>主键直接定位(ID需有序)，分步查询&#x2F;程序记录上一页最大主键ID。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/09/lottery-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/09/lottery-1/" class="post-title-link" itemprop="url">Lottery Summery</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-09 10:28:46 / Modified: 13:47:55" itemprop="dateCreated datePublished" datetime="2024-10-09T10:28:46+08:00">2024-10-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Project/" itemprop="url" rel="index"><span itemprop="name">Project</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="抽奖模块"><a href="#抽奖模块" class="headerlink" title="抽奖模块"></a>抽奖模块</h3><p>提供服务的基础模块，调用方(其他模块，比如营销模块)生成奖品并选择抽奖策略，然后调用抽奖模块的接口，抽奖模块根据策略抽奖，返回中奖的奖品。</p>
+<ol>
+<li>奖品信息装载</li>
+<li>抽奖前的校验</li>
+<li>执行抽奖</li>
+<li>中奖奖品的分发</li>
+</ol>
+<h5 id="抽奖算法"><a href="#抽奖算法" class="headerlink" title="抽奖算法"></a>抽奖算法</h5><p>根据奖品设置的中奖概率，通过斐波那契散列到一个Map中，然后生成随机数找到对应的奖品，时间复杂度降到O(1)；当奖品的概率分布差距很大时，可以对概率极小的奖品做Map方案，而其他奖品采用逐个遍历的方案，平衡时间和空间的消耗。</p>
+<h5 id="库存扣减"><a href="#库存扣减" class="headerlink" title="库存扣减"></a>库存扣减</h5>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/08/algorithm-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Peter Wang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/08/algorithm-3/" class="post-title-link" itemprop="url">后序遍历的魅力</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-10-08 15:26:27 / Modified: 15:38:03" itemprop="dateCreated datePublished" datetime="2024-10-08T15:26:27+08:00">2024-10-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algroithm/" itemprop="url" rel="index"><span itemprop="name">Algroithm</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>两道题都是递归做后面的事情，再来处理当下的事情，很值得思考。</p>
+<h3 id="树中两个结点的最低公共祖先"><a href="#树中两个结点的最低公共祖先" class="headerlink" title="树中两个结点的最低公共祖先"></a>树中两个结点的最低公共祖先</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> TreeNode <span class="title function_">lowestCommonAncestor</span><span class="params">(TreeNode root, TreeNode p, TreeNode q)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">null</span> || root == p || root == q)</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    <span class="type">TreeNode</span> <span class="variable">left</span> <span class="operator">=</span> lowestCommonAncestor(root.left, p, q);</span><br><span class="line">    <span class="type">TreeNode</span> <span class="variable">right</span> <span class="operator">=</span> lowestCommonAncestor(root.right, p, q);</span><br><span class="line">    <span class="keyword">if</span> (left != <span class="literal">null</span> &amp;&amp; right != <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    <span class="keyword">return</span> left == <span class="literal">null</span> ? right : left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="从尾到头打印链表-递归实现"><a href="#从尾到头打印链表-递归实现" class="headerlink" title="从尾到头打印链表(递归实现)"></a>从尾到头打印链表(递归实现)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">printListReversingly</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; res = printListReversingly(head.next);</span><br><span class="line">    res.add(head.val);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/07/log_of_install_mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -265,7 +626,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/07/log_of_install_mysql/" class="post-title-link" itemprop="url">Homebrew安装Mysql踩坑记录</a>
+          <a href="/2024/10/07/log_of_install_mysql/" class="post-title-link" itemprop="url">Homebrew启动Mysql踩坑记录</a>
         </h2>
 
         <div class="post-meta-container">
@@ -277,7 +638,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-10-07 21:39:58 / Modified: 22:16:54" itemprop="dateCreated datePublished" datetime="2024-10-07T21:39:58+08:00">2024-10-07</time>
+      <time title="Created: 2024-10-07 21:39:58 / Modified: 22:17:54" itemprop="dateCreated datePublished" datetime="2024-10-07T21:39:58+08:00">2024-10-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -299,7 +660,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>原来用Homebrew安装过<a href="mailto:&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;">&#109;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#46;&#x30;</a>和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
+          <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>原来用Homebrew安装过<a href="mailto:&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;">&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;</a>和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><ol>
 <li>查看日志，在<code>/usr/local/var/mysql/xxx.err</code>的错误日志文件报错信息为：Failed to find valid data directory.</li>
 <li>以此为线索查看解决方案：<code>mysqld --initialize</code>，This shall initialse the data directory in the path where you have installed MySql server.</li>
@@ -370,7 +731,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-09-25 14:36:47" itemprop="dateModified" datetime="2024-09-25T14:36:47+08:00">2024-09-25</time>
+      <time title="Modified: 2024-09-25 14:37:54" itemprop="dateModified" datetime="2024-09-25T14:37:54+08:00">2024-09-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -701,371 +1062,9 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/11/jdk-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/11/jdk-1/" class="post-title-link" itemprop="url">AbstractQueuedSynchronizer</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-09-11 08:45:48 / Modified: 17:04:41" itemprop="dateCreated datePublished" datetime="2024-09-11T08:45:48+08:00">2024-09-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/JDK/" itemprop="url" rel="index"><span itemprop="name">JDK</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>Provides a framework for implementing blocking locks and related synchronizers (semaphores, events, etc) that rely on first-in-first-out (FIFO) wait queues.</code></p>
-<p>该抽象队列同步器通过依赖FIFO的队列同步器来实现阻塞式的锁机制。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Node</span>&#123;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">int</span> waitStatus;</span><br><span class="line">    <span class="keyword">volatile</span> Node prev;</span><br><span class="line">    <span class="keyword">volatile</span> Node next;</span><br><span class="line">    <span class="keyword">volatile</span> Thread thread;</span><br><span class="line">    Node nextWaiter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>实际上维护了一个共享变量<code>state</code>和一个双向链表，链表节点除了prev, next, 还有<code>waitStatus</code>:</p>
-<p><code>Status field, taking on only the values:SIGNAL, The successor of this node is (or will soon be) blocked (via park), so the current node must unpark its successor when it releases or cancels.</code></p>
-<p>这里有两个点：SIGNAL和successor(继任者)</p>
-<p><code>Thread</code>和<code>nextWaiter</code>后面再说。</p>
-<p>独占模式下:<code>acquire</code>和<code>release</code>两个方法:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">acquire</span><span class="params">(<span class="type">int</span> arg)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!tryAcquire(arg) &amp;&amp;</span><br><span class="line">        acquireQueued(addWaiter(Node.EXCLUSIVE), arg))</span><br><span class="line">    selfInterrupt();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>tryAcquire</code>交给子类实现，从命名中就可以看出是尝试去获取锁，从ReentrantLock的实现中：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="type">Thread</span> <span class="variable">current</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line"><span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> getState();</span><br><span class="line"><span class="keyword">if</span> (c == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, acquires)) &#123;</span><br><span class="line">        setExclusiveOwnerThread(current);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看出尝试获取锁的逻辑就是通过改变state的值来实现的，同时将<code>exclusiveOwnerThread</code>设置为当前线程。这里的<code>setExclusiveOwnerThread</code>是AQS的父类方法。</p>
-<p>回到<code>acquire</code>方法，当获取锁失败，则进行入队操作:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Creates and enqueues node for current thread and given mode.</span></span><br><span class="line"><span class="keyword">private</span> Node <span class="title function_">addWaiter</span><span class="params">(Node mode)</span> &#123;</span><br><span class="line">    <span class="type">Node</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(Thread.currentThread(), mode);</span><br><span class="line">    <span class="type">Node</span> <span class="variable">pred</span> <span class="operator">=</span> tail;</span><br><span class="line">    <span class="keyword">if</span> (pred != <span class="literal">null</span>) &#123;</span><br><span class="line">        node.prev = pred;</span><br><span class="line">        <span class="keyword">if</span> (compareAndSetTail(pred, node)) &#123;</span><br><span class="line">            pred.next = node;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    enq(node);</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>enq</code>之前，先尝试将节点添加到末尾，如果失败（并发），则一直重试直到成功。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="type">boolean</span> <span class="title function_">acquireQueued</span><span class="params">(<span class="keyword">final</span> Node node, <span class="type">int</span> arg)</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">failed</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">interrupted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">Node</span> <span class="variable">p</span> <span class="operator">=</span> node.predecessor();</span><br><span class="line">            <span class="keyword">if</span> (p == head &amp;&amp; tryAcquire(arg)) &#123;</span><br><span class="line">                setHead(node);</span><br><span class="line">                p.next = <span class="literal">null</span>; <span class="comment">// help GC</span></span><br><span class="line">                failed = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">return</span> interrupted;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (shouldParkAfterFailedAcquire(p, node) &amp;&amp;</span><br><span class="line">                parkAndCheckInterrupt())</span><br><span class="line">                interrupted = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (failed)</span><br><span class="line">            cancelAcquire(node);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>node就是刚刚入队的节点，当prev是head节点时才去尝试获取锁，如果失败<code>shouldParkAfterFailedAcquire</code>去设置前一个节点waitStatus为SIGNAL，然后<code>parkAndCheckInterrupt</code>就是去挂起当前线程。</p>
-<p>有意思的是，<code>shouldParkAfterFailedAcquire</code>当<code>prev.waitStatus&gt;0</code>时，会先从后往前删去这些大于0的节点，等下一轮循环再去设置SIGNAL值。</p>
-<hr>
-<p><code>release</code>比较简单，因为是独占式的，尝试释放锁，unpark下一个节点。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">unparkSuccessor</span><span class="params">(Node node)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">ws</span> <span class="operator">=</span> node.waitStatus;</span><br><span class="line">    <span class="keyword">if</span> (ws &lt; <span class="number">0</span>)</span><br><span class="line">        compareAndSetWaitStatus(node, ws, <span class="number">0</span>);</span><br><span class="line">    <span class="type">Node</span> <span class="variable">s</span> <span class="operator">=</span> node.next;</span><br><span class="line">    <span class="keyword">if</span> (s == <span class="literal">null</span> || s.waitStatus &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        s = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">Node</span> <span class="variable">t</span> <span class="operator">=</span> tail; t != <span class="literal">null</span> &amp;&amp; t != node; t = t.prev)</span><br><span class="line">            <span class="keyword">if</span> (t.waitStatus &lt;= <span class="number">0</span>)</span><br><span class="line">                s = t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (s != <span class="literal">null</span>)</span><br><span class="line">        LockSupport.unpark(s.thread);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里如果next为空则从后往前遍历找到下一个唤醒的线程，由于并发问题，<code>addWaiter()</code>入队操作和<code>cancelAcquire()</code>取消排队操作都会造成next链的不一致，而prev链是强一致的，所以这时从后往前找是最安全的。</p>
-<p>waitStatus有5个状态，这里只讲2个:</p>
-<ol>
-<li>SIGNAL(-1): to avoid races, acquire methods must first indicate they need a signal, 从<code>unparkSuccessor</code>中可以看到当<code>waitStatus&lt;0</code>时去unpark</li>
-<li>CANCELLED(1): due to timeout or interrupt,so <code>shouldParkAfterFailedAcquire</code>要从后向前删除<code>waitStatus&gt;0</code>的节点</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/09/mysql-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/09/mysql-2/" class="post-title-link" itemprop="url">Multi-Versioned Concurrency Control</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-09-09 17:52:19 / Modified: 18:05:26" itemprop="dateCreated datePublished" datetime="2024-09-09T17:52:19+08:00">2024-09-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>多版本并发控制，在事务开启时，构建Read View——逻辑上的一致性视图。</p>
-<p>通过行记录上的隐藏字段db_roll_ptr(指向undo)和db_trx_id(对该行记录最后操作的事务ID)，以及在创建事务的那一时刻，未提交但活跃的事务数来实现MVCC。</p>
-<p>事务创建时只需要新增对应的未提交但活跃的事务数组，最底位、最高位(事务id时递增的)，来实现秒级创建。db_roll_ptr维护了一个undo的链式结构，通过它可以找到对应时刻的行记录。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/07/mysql-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/07/mysql-1/" class="post-title-link" itemprop="url">Overview of MySQL</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-09-07 10:18:53 / Modified: 11:29:11" itemprop="dateCreated datePublished" datetime="2024-09-07T10:18:53+08:00">2024-09-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>从一条SQL语句的执行出发</p>
-<ol>
-<li>Server：连接-分析-优化-执行，重点是优化器</li>
-<li>执行器与InnDB的交互，索引下推</li>
-<li>B+Tree</li>
-<li>Buffer Pool</li>
-<li>log</li>
-<li>MVCC</li>
-<li>锁机制</li>
-</ol>
-<p>从架构的角度看，Server+Engine，Server层看优化器的原理，执行器承担的是调用存储引擎接口，过滤组装的工作。<br>由于InnoDB索引存储的特点，MySQL5.6支持索引下推，当命中联合索引时，将筛选过程下推至存储引擎，从而减轻执行器的压力。<br>InnoDB对数据的操作都是在Buffer Pool中的，以页为单位与物理磁盘交互，构建出逻辑表空间，当在内存中对数据进行操作前，先记录undo log，完成后记录redo log，bin log，这涉及两阶段提交，当事务提交后，不管修改的页是否刷盘，理论上都能保证能够查到数据，但还要看redo log刷盘策略。<br>MVCC的实现基于undo log和行记录的隐藏字段的，通过构建Read View来描述事务可见性。<br>在更新或者当前读时，要求数据是最新的，因而需要锁机制：加锁的粒度、S｜X锁、MDL，最终是对索引加锁。</p>
-<p>这是我目前对MySQL全貌的认识，执行器、InnoDB层面都大量地使用了内存，对于Buffer Pool，redo log等日志分别对应了不同的刷盘策略；从SQL执行的过程来看优化，其实就是通过高效的索引模型，以最精简的结构返回数据，不要粗暴地把事情全部交给MySQL去做。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/06/Hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/" class="post-title-link" itemprop="url">Hexo添加分类不生效</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-09-06 14:51:02 / Modified: 15:26:12" itemprop="dateCreated datePublished" datetime="2024-09-06T14:51:02+08:00">2024-09-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Else/" itemprop="url" rel="index"><span itemprop="name">Else</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
-<li><code>hexo new page categories</code><br>生成<code>source/categories/index.md</code></li>
-<li>在新生成的index.md中front-matter添加type: categories</li>
-<li>在_config.yml中开启，搜索menu，去掉categories前的#</li>
-<li>在博客的front-matter中添加categories: 任意名称</li>
-</ol>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><ol>
-<li>next theme已经写好了categories的样式，在配置中去掉#是为了开启它，于是new page必须是categories，来配合配置中的路径，同理在配置中的其他选项如果要用它，也要new对应名称的page，比如tags，就是<code>hexo new page tags</code>。</li>
-<li>每篇博客categories只能有一个，tags可以有多个。</li>
-<li>我自己在配置的时候使用vscode下的终端运行的hexo command，会出现改完categories后不生效的情况，换成本地终端就解决了，不是很懂。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
 
 </div>
   </main>
