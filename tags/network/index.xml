@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NetWork on PeterWang&#39;s Blog</title>
+    <link>http://localhost:1313/tags/network/</link>
+    <description>Recent content in NetWork on PeterWang&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 17 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Network-Knowledge-TCP</title>
+      <link>http://localhost:1313/posts/network/network-knowledge-1/</link>
+      <pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/network/network-knowledge-1/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s a Q&amp;amp;A about TCP.&lt;/p&gt;&#xA;&lt;h3 id=&#34;什么是tcp&#34;&gt;什么是TCP&lt;/h3&gt;&#xA;&lt;p&gt;TCP是一个工作在传输层的可靠数据传输的服务，它确保接受端接受端网络包是无损坏、无间隔、非冗余和按序的。&lt;/p&gt;&#xA;&lt;p&gt;TCP是面向连接的、可靠的、基于字节流的传输层通信协议。基于字节流导致了TCP会有粘包和半包的问题。Nagle算法为了提高网络传输效率，会将多个小的数据包合并发送。&lt;/p&gt;&#xA;&lt;p&gt;HTTP通过&lt;code&gt;\r\n&lt;/code&gt;确定header和body的边界，然后可以通过content-length来确&lt;/p&gt;&#xA;&lt;h3 id=&#34;tcp连接&#34;&gt;TCP连接&lt;/h3&gt;&#xA;&lt;p&gt;用于保证可靠性和流量控制维护的某些状态信息的组合，包括Socket、序列号和窗口大小称为连接。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Socket：由IP地址和端口组成&lt;/li&gt;&#xA;&lt;li&gt;序列号：用来解决乱序问题&lt;/li&gt;&#xA;&lt;li&gt;窗口大小：用来做流量控制&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;三次握手&#34;&gt;三次握手&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;第一次握手：SYN=1，随机初始化序号&lt;/li&gt;&#xA;&lt;li&gt;第二次握手：SYN=1，ACK=1，确认序号=第一次握手的序号+1,随机初始化序号&lt;/li&gt;&#xA;&lt;li&gt;第三次握手：ACK=1，确认序号=第二次握手的序号+1&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;为什么是三次握手&#34;&gt;为什么是三次握手&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;避免「历史连接」初始化了连接，如果客户端重启，旧的第二次握手先到，客户端通过上下文比较可以发起RST报文中止连接。如果在两次握手的情况下，服务端没有中间状态给客户端来组织历史连接，导致服务端可能建立一个历史连接，造成资源浪费。&lt;/li&gt;&#xA;&lt;li&gt;同步双方初始序列号，第一、二次握手同步客户端的初始序列号，第二、三次握手同步服务端的初始序列号。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;四次挥手&#34;&gt;四次挥手&lt;/h3&gt;&#xA;&lt;p&gt;每个方向都需要一个FIN和一个ACK，只有主动关闭连接的，才有TIME_WAIT状态。&lt;/p&gt;&#xA;&lt;h3 id=&#34;为什么time_wait等待的时间是2msl&#34;&gt;为什么TIME_WAIT等待的时间是2MSL&lt;/h3&gt;&#xA;&lt;p&gt;MSL是报文最大生存时间，TTL是经过路由跳数，TTL的值一般是64，Linux将MSL设置为30s。2MSL时长是从客户端接受到FIN后发送ACK开始计时的，相当于至少允许报文丢失一次。&lt;/p&gt;&#xA;&lt;h3 id=&#34;为什么需要time_wait状态&#34;&gt;为什么需要TIME_WAIT状态&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;防止历史连接中的数据，被后面相同四元组的连接错误的接收（ISN随机生成也是为了避免这个）&lt;/li&gt;&#xA;&lt;li&gt;保证「被动关闭连接」的一方，能被正确地关闭。&#xA;Tips：如果服务端要避免过多的TIME_WAIT状态的连接，就不要主动断开连接，让客户端去断开，由分布在各处的客户端去承受TIME_WAIT。&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
+    </item>
+  </channel>
+</rss>

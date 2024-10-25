@@ -1,42 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+<html lang="en"
+  x-data
+  :class="$store.darkMode.class()"
+  :data-theme="$store.darkMode.theme()">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | PeterWang&#39;s Blog</title>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    
 
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"peterwangll.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-
-    <meta property="og:type" content="website">
-<meta property="og:title" content="PeterWang&#39;s Knowledge Plant">
-<meta property="og:url" content="http://peterwangll.github.io/index.html">
-<meta property="og:site_name" content="PeterWang&#39;s Knowledge Plant">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="Peter Wang">
-<meta name="twitter:card" content="summary">
-
-
-<link rel="canonical" href="http://peterwangll.github.io/">
+<link rel="canonical" href="http://localhost:1313/" />
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<meta name="author" content="Peter Wang" />
+<meta name="description" content="description" />
 
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>PeterWang's Knowledge Plant</title>
+
+
+<meta name="generator" content="Hugo 0.136.5">
+
+
+<meta property="og:url" content="http://localhost:1313/">
+  <meta property="og:site_name" content="PeterWang&#39;s Blog">
+  <meta property="og:title" content="PeterWang&#39;s Blog">
+  <meta property="og:description" content="description">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+
+
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PeterWang&#39;s Blog">
+  <meta name="twitter:description" content="description">
+
+
+
+
+<link rel="stylesheet" href="/css/output.css" />
+
+
+
+
+     
+
+    
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+    <div id="dream-global-bg"></div>
+
+    
+<nav class="mt-4 lg:mt-8 py-4">
+
   
+  <div class="container flex justify-between max-w-[65ch] mx-auto px-4 md:px-0">
+  
+    <section class="flex items-center gap-4">
+      <div class="avatar cursor-pointer hover:online" @click="flip = !flip" title="Flip it!">
+        <div class="h-10 rounded-full">
+          <img src="/img/avator.jpg" alt="PeterWang&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="http://localhost:1313/" class="text-lg font-semibold cursor-pointer">
+          PeterWang&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">No time to sorrow, we&#39;re building tomorrow</div>
+        
+      </div>
+      
+    </section>
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul class="dropdown-content menu w-36 bg-base-100 rounded-box z-[1] shadow-md">
+        
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="About">
+    <ion-icon name="information-circle"></ion-icon>About</div>
+</li>
 
 
 
@@ -45,1080 +104,384 @@
 
 
 
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
 
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+
+
+
+
+
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="Archives">
+    <ion-icon name="archive"></ion-icon>
+    Archives
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="All Categories">
+    <ion-icon name="grid"></ion-icon>
+    All Categories
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="All Tags">
+    <ion-icon name="pricetags"></ion-icon>
+    All Tags
+  </a>
+</li>
+
+
+
+
+
+
+      </ul>
     </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+      
+      
+      <div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="About">About</div>
+      
+      
+
+      
+      
+
+      
+
+      
+      
+
+
+
+
+
+      
+      
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/posts" title="Archives">
+  <ion-icon class="group-hover:text-primary-content" name="archive"></ion-icon>
+</a>
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/categories" title="All Categories">
+  <ion-icon class="group-hover:text-primary-content" name="grid"></ion-icon>
+</a>
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/tags" title="All Tags">
+  <ion-icon class="group-hover:text-primary-content" name="pricetags"></ion-icon>
+</a>
+
+
+      
+
+      
+
+      
+    </section>
   </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">PeterWang's Knowledge Plant</h1>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
-  </ul>
 </nav>
 
 
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
 
 
-</header>
-        
+
+
+<div class="dream-zen-posts max-w-[65ch] mt-8 mx-auto px-4 space-y-8">
+
+  <a class="flex justify-between items-center gap-4" href="/posts/algorithm/algorithm-4/">
+  <div>
+    <h2 class="text-lg font-medium underline">排序链表</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Monday, Oct 21, 2024
+    
+    </span>
+  </div>
+
   
-  <aside class="sidebar">
+</a>
 
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
 
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-        </div>
-        <!--/noindex-->
+  <a class="flex justify-between items-center gap-4" href="/posts/operating-system/zero-copy/">
+  <div>
+    <h2 class="text-lg font-medium underline">零拷贝</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Saturday, Oct 19, 2024
+    
+    </span>
+  </div>
 
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Peter Wang</p>
-  <div class="site-description" itemprop="description"></div>
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/operating-system/process-communication/">
+  <div>
+    <h2 class="text-lg font-medium underline">Process Communication</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Friday, Oct 18, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/operating-system/process-thread/">
+  <div>
+    <h2 class="text-lg font-medium underline">Process&amp;Thread</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Friday, Oct 18, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/redis/redis-2/">
+  <div>
+    <h2 class="text-lg font-medium underline">Redis发布订阅</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Friday, Oct 18, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/mysql/mysql-3/">
+  <div>
+    <h2 class="text-lg font-medium underline">Limit&amp;Offset——分页慢查询优化</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Thursday, Oct 17, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/network/network-knowledge-1/">
+  <div>
+    <h2 class="text-lg font-medium underline">Network-Knowledge-TCP</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Thursday, Oct 17, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/redis/redis_1/">
+  <div>
+    <h2 class="text-lg font-medium underline">Why is Redis so fast?</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Wednesday, Oct 9, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/algorithm/algorithm-3/">
+  <div>
+    <h2 class="text-lg font-medium underline">后序遍历的魅力</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Tuesday, Oct 8, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
+  <a class="flex justify-between items-center gap-4" href="/posts/debug/log_of_install_mysql/">
+  <div>
+    <h2 class="text-lg font-medium underline">Homebrew启动Mysql踩坑记录</h2>
+    <span class="date text-base-content/60 text-sm">
+    
+      Monday, Oct 7, 2024
+    
+    </span>
+  </div>
+
+  
+</a>
+
+
 </div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">14</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
+
+
+
+<div class="flex justify-center mt-8">
+  <div class="join grid grid-cols-2">
+  
+  <button class="join-item btn btn-outline btn-sm" disabled>
+    Previous page
+  </button>
+  
+  
+  <a href="/page/2/" title="Next page" class="join-item btn btn-outline btn-sm">
+    Next page
+  </a>
+  
+</div>
+
+</div>
+
+
+
+
+            
+            <footer class="flex justify-between items-center gap-2 max-w-[65ch] mx-auto px-4 md:px-0 py-12">
+            
+              <div>
+  
+  <p>
+    © 2024 PeterWang&#39;s Blog
+  </p>
+  
+
+  
+  <p>footerBottomText</p>
+  
+</div>
+
+              <div
+  x-data="{ icons: [
+    { name: 'moon', status: 'y' },
+    { name: 'sunny', status: 'n' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center h-[32px] px-2 gap-2 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+            </footer>
+          </div>
+        </div>
+        <div class="back">
+          <div class="container">
+            
+            <div class="max-w-[65ch] mt-8 mx-auto px-4">
+  
+  
+  
+  <div>
+    <div class="mb-4 text-lg font-medium">Me</div>
+
+    <div class="prose dark:prose-invert">
+      <p>to be continue&hellip;</p>
+
+    </div>
+  </div>
+  <div class="divider divider-vertical"></div>
+  
+  
+
+  
+
+  
+</div>
+
+            
+          </div>
+        </div>
       </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-  </nav>
-</div>
-
-        </div>
-      </div>
     </div>
 
-    
-  </aside>
-
-
-    </div>
-
-    <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/08/31/redis_1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/31/redis_1/" class="post-title-link" itemprop="url">Why is Redis so fast?</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-08-31 18:56:02" itemprop="dateCreated datePublished" datetime="2024-08-31T18:56:02+08:00">2024-08-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-09-06 15:26:10" itemprop="dateModified" datetime="2024-09-06T15:26:10+08:00">2024-09-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文会从以手稿+文字的形式说明，仅为个人总结。<br>本文会讲述上半部分：包括数据结构、单线程模型、IO多路复用三个方面阐明Redis为什么那么快？</p>
-<p>首先Redis基于内存存储。这是一个前提，下面会谈到正是基于内存，Redis才会采用某某设计，而不是另外的那些。</p>
-<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>SDS，Dict（Hash），ZipList，SkipList，QuickList，ListPack。</p>
-<p><img src="/2024/08/31/redis_1/redis_sds.png" alt="图1"><br>SDS详细的可以看<a target="_blank" rel="noopener" href="http://zhangtielei.com/posts/blog-redis-sds.html">http://zhangtielei.com/posts/blog-redis-sds.html</a><br>通过header维护了一个len，alloc，flags，buf[]的头信息，len取代了<code>‘\0’</code>发挥的作用，因此SDS是二进制安全的，获取len复杂度是O(1)的，再因为会在拼接时检查(dsMakeRoomFor)，所以它没有缓冲区溢出的风险。</p>
-<p><img src="/2024/08/31/redis_1/redis_zipList.png" alt="图2"><br>Hash使用拉链法，看过JDK HashMap实现就问题不大。扩容机制不太一样，Dict维护两个Hash表，当触发rehash阈值后，只有对某个桶进行增删改查操作后，才会将该桶对应的key-value迁移到另外一个Hash表中，通过这种渐进式的做法防止一次性rehash带来的阻塞问题。</p>
-<p>ZipList压缩链表是一种对空间的极致利用，在头里面会存节点熟练，尾部偏移等字段，entry节点有prevlen，encoding和data，prevlen用于记录前一个节点的长度，方便从后向前遍历，成也萧何败也萧何，当插入节点后导致prevlen变化，会发生连锁更新。同样由于自身存储结构限制，压缩链表不能存储太多的元素，在Redis ZSet实现中，当元素个数小于128个并且每个元素的值小于64字节时会使用ZipList。</p>
-<p>QuickList通过双向链表模式，维护的节点变成了一个个压缩链表，通过控制每个节点压缩链表的大小来规避潜在的连锁更新风险。</p>
-<p>ListPack重新设计了压缩链表，将prevlen字段去除彻底解决了连锁更新问题，而从后向前遍历的功能没有丢失，详细的算法可以看<a target="_blank" rel="noopener" href="https://github.com/antirez/listpack/blob/master/listpack.c">https://github.com/antirez/listpack/blob/master/listpack.c</a>中的IpDecodeBacklen函数。</p>
-<p><img src="/2024/08/31/redis_1/redis_skipList.png" alt="图3"><br>SkipList跳表，层级结构和skipListNode节点如上，通过随机数保持相邻两层节点个数比2:1。</p>
-<p>会有人拿它和B+Tree比较，InnoDB就是基于B+Tree实现的，它的前提的磁盘，意味要最大限度减少磁盘IO，由此B+Tree矮胖的特点良好的适应了这种需求，而SkipList在相同数据量下明显比B+Tree层数多，Why？上面提到了Redis基于内存这一前提，层数多一些又何妨，况且跳表比B+Tree少了维护树的成本，实现起来也简单，何乐不为呢。</p>
-<h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p><img src="/2024/08/31/redis_1/IO_data_stream.png" alt="图4"><br>从计算机视角看，IO实际上是数据在内存和外部设备（磁盘、网络）之间的流动。<br>如果是一次Input，数据会从外部存储流入内核缓冲区（下面统称为A过程），再从内核缓冲区流入用户进程缓冲区（下面统称为B过程），Output相反。<br>IO多路复用是对传统NIO模型的改进，BIO对于从A过程是阻塞的状态，而NIO通过轮询的方式查看A过程是否完成，于是IO多路复用更进一步，将这一轮询查看的工作统一交给一个线程去做，从宏观的角度看复用了这条IO。<br>于是不得不提到select&#x2F;epoll，简单来说select就是一个数组轮询，poll用链表替代了数组，本质仍是轮询，epoll通过事件驱动机制进一步提升了效率。Reactor模式就是这种思想。</p>
-<h2 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h2><p>通过优秀的数据结构，IO多路复用，内存，Redis的高性能瓶颈并非CPU，可能是机器的内存或网络带宽，因此单线程足矣，美中不足无法利用CPU多核优势，可以在一台机器上启动多个节点或采用分片集群的方式。<br>Redis6.0引入多线程，目的是处理网络IO，因为随着网络硬件性能的提升，Redis的性能瓶颈有时会出现在网络IO上。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/17/network-knowledge-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/17/network-knowledge-1/" class="post-title-link" itemprop="url">Network-Knowledge-TCP</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-10-17 19:42:10" itemprop="dateCreated datePublished" datetime="2024-10-17T19:42:10+08:00">2024-10-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Network/" itemprop="url" rel="index"><span itemprop="name">Network</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>It’s a Q&amp;A about network.</p>
-<h3 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h3><p>TCP是一个工作在传输层的可靠数据传输的服务，它确保接受端接受端网络包是无损坏、无间隔、非冗余和按序的。</p>
-<p>TCP是面向连接的、可靠的、基于字节流的传输层通信协议。基于字节流导致了TCP会有粘包和半包的问题。Nagle算法为了提高网络传输效率，会将多个小的数据包合并发送。</p>
-<p>HTTP通过<code>\r\n</code>确定header和body的边界，然后可以通过content-length来确</p>
-<h3 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h3><p>用于保证可靠性和流量控制维护的某些状态信息的组合，包括Socket、序列号和窗口大小称为连接。</p>
-<ul>
-<li>Socket：由IP地址和端口组成</li>
-<li>序列号：用来解决乱序问题</li>
-<li>窗口大小：用来做流量控制</li>
-</ul>
-<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><ol>
-<li>第一次握手：SYN&#x3D;1，随机初始化序号</li>
-<li>第二次握手：SYN&#x3D;1，ACK&#x3D;1，确认序号&#x3D;第一次握手的序号+1,随机初始化序号</li>
-<li>第三次握手：ACK&#x3D;1，确认序号&#x3D;第二次握手的序号+1</li>
-</ol>
-<h3 id="为什么是三次握手"><a href="#为什么是三次握手" class="headerlink" title="为什么是三次握手"></a>为什么是三次握手</h3><ol>
-<li>避免「历史连接」初始化了连接，如果客户端重启，旧的第二次握手先到，客户端通过上下文比较可以发起RST报文中止连接。如果在两次握手的情况下，服务端没有中间状态给客户端来组织历史连接，导致服务端可能建立一个历史连接，造成资源浪费。</li>
-<li>同步双方初始序列号，第一、二次握手同步客户端的初始序列号，第二、三次握手同步服务端的初始序列号。</li>
-</ol>
-<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>每个方向都需要一个FIN和一个ACK，只有主动关闭连接的，才有TIME_WAIT状态。</p>
-<h3 id="为什么TIME-WAIT等待的时间是2MSL"><a href="#为什么TIME-WAIT等待的时间是2MSL" class="headerlink" title="为什么TIME_WAIT等待的时间是2MSL"></a>为什么TIME_WAIT等待的时间是2MSL</h3><p>MSL是报文最大生存时间，TTL是经过路由跳数，TTL的值一般是64，Linux将MSL设置为30s。2MSL时长是从客户端接受到FIN后发送ACK开始计时的，相当于至少允许报文丢失一次。</p>
-<h3 id="为什么需要TIME-WAIT状态"><a href="#为什么需要TIME-WAIT状态" class="headerlink" title="为什么需要TIME_WAIT状态"></a>为什么需要TIME_WAIT状态</h3><ol>
-<li>防止历史连接中的数据，被后面相同四元组的连接错误的接收（ISN随机生成也是为了避免这个）</li>
-<li>保证「被动关闭连接」的一方，能被正确地关闭。<br>Tips：如果服务端要避免过多的TIME_WAIT状态的连接，就不要主动断开连接，让客户端去断开，由分布在各处的客户端去承受TIME_WAIT。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/17/mysql-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/17/mysql-3/" class="post-title-link" itemprop="url">Limit&Offset——分页慢查询优化</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-10-17 16:25:33 / Modified: 16:26:29" itemprop="dateCreated datePublished" datetime="2024-10-17T16:25:33+08:00">2024-10-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span><span class="operator">*</span> <span class="keyword">from</span> article LIMIT <span class="number">1</span>,<span class="number">3</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> article LIMIT <span class="number">3</span> <span class="keyword">OFFSET</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>上面两种写法都表示取第2,3,4三条数据。</p>
-<p>limit的偏移量越大，执行时间越长。</p>
-<h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>eg. user表有id,name,sex,age字段，其中id为主键，age为普通索引。当执行<code>select * from user where age &gt; 10 limit 1000000,10</code>时：</p>
-<ol>
-<li>首先SQL的执行顺序是：from-&gt;join-&gt;where-&gt;group by-&gt;having-&gt;select-&gt;distinct-&gt;order by-&gt;limit.</li>
-<li>由于age是普通索引，而select的是*，所以需要回表。</li>
-<li>limit是在最后执行的，所以需要进行1000010次回表，然后把前1000000条数据抛弃，取后10条数据。<br>由此可见造成上述情况的罪魁祸首是<code>回表</code>。</li>
-</ol>
-<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><ol>
-<li>可以通过子查询或覆盖索引来减少回表，根据业务来决定。</li>
-<li>order by和limit结合使用。</li>
-<li>主键直接定位(ID需有序)，分步查询&#x2F;程序记录上一页最大主键ID。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/09/lottery-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/09/lottery-1/" class="post-title-link" itemprop="url">Lottery Summery</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-10-09 10:28:46 / Modified: 13:47:55" itemprop="dateCreated datePublished" datetime="2024-10-09T10:28:46+08:00">2024-10-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Project/" itemprop="url" rel="index"><span itemprop="name">Project</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="抽奖模块"><a href="#抽奖模块" class="headerlink" title="抽奖模块"></a>抽奖模块</h3><p>提供服务的基础模块，调用方(其他模块，比如营销模块)生成奖品并选择抽奖策略，然后调用抽奖模块的接口，抽奖模块根据策略抽奖，返回中奖的奖品。</p>
-<ol>
-<li>奖品信息装载</li>
-<li>抽奖前的校验</li>
-<li>执行抽奖</li>
-<li>中奖奖品的分发</li>
-</ol>
-<h5 id="抽奖算法"><a href="#抽奖算法" class="headerlink" title="抽奖算法"></a>抽奖算法</h5><p>根据奖品设置的中奖概率，通过斐波那契散列到一个Map中，然后生成随机数找到对应的奖品，时间复杂度降到O(1)；当奖品的概率分布差距很大时，可以对概率极小的奖品做Map方案，而其他奖品采用逐个遍历的方案，平衡时间和空间的消耗。</p>
-<h5 id="库存扣减"><a href="#库存扣减" class="headerlink" title="库存扣减"></a>库存扣减</h5>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/08/algorithm-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/08/algorithm-3/" class="post-title-link" itemprop="url">后序遍历的魅力</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-10-08 15:26:27 / Modified: 15:38:03" itemprop="dateCreated datePublished" datetime="2024-10-08T15:26:27+08:00">2024-10-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Algroithm/" itemprop="url" rel="index"><span itemprop="name">Algroithm</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>两道题都是递归做后面的事情，再来处理当下的事情，很值得思考。</p>
-<h3 id="树中两个结点的最低公共祖先"><a href="#树中两个结点的最低公共祖先" class="headerlink" title="树中两个结点的最低公共祖先"></a>树中两个结点的最低公共祖先</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> TreeNode <span class="title function_">lowestCommonAncestor</span><span class="params">(TreeNode root, TreeNode p, TreeNode q)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">null</span> || root == p || root == q)</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    <span class="type">TreeNode</span> <span class="variable">left</span> <span class="operator">=</span> lowestCommonAncestor(root.left, p, q);</span><br><span class="line">    <span class="type">TreeNode</span> <span class="variable">right</span> <span class="operator">=</span> lowestCommonAncestor(root.right, p, q);</span><br><span class="line">    <span class="keyword">if</span> (left != <span class="literal">null</span> &amp;&amp; right != <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    <span class="keyword">return</span> left == <span class="literal">null</span> ? right : left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="从尾到头打印链表-递归实现"><a href="#从尾到头打印链表-递归实现" class="headerlink" title="从尾到头打印链表(递归实现)"></a>从尾到头打印链表(递归实现)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title function_">printListReversingly</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; res = printListReversingly(head.next);</span><br><span class="line">    res.add(head.val);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
+    <script>
+  window.lightTheme = "emerald"
+  window.darkTheme = "forest"
+</script>
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/10/07/log_of_install_mysql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/07/log_of_install_mysql/" class="post-title-link" itemprop="url">Homebrew启动Mysql踩坑记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-10-07 21:39:58 / Modified: 22:17:54" itemprop="dateCreated datePublished" datetime="2024-10-07T21:39:58+08:00">2024-10-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Else/" itemprop="url" rel="index"><span itemprop="name">Else</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>原来用Homebrew安装过<a href="mailto:&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;">&#x6d;&#121;&#115;&#x71;&#x6c;&#x40;&#x38;&#x2e;&#x30;</a>和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><ol>
-<li>查看日志，在<code>/usr/local/var/mysql/xxx.err</code>的错误日志文件报错信息为：Failed to find valid data directory.</li>
-<li>以此为线索查看解决方案：<code>mysqld --initialize</code>，This shall initialse the data directory in the path where you have installed MySql server.</li>
-<li><code>command not found: mysqld</code>，查看mysql安装路径为<code>/usr/local/opt/mysql/bin/</code>，注意mysql需要加上具体的版本号，比如<code>/usr/local/opt/mysql@8.0/bin/</code>，发现是有<code>mysqld</code>的，需要在<code>~/.zshrc</code>中添加对应的路径。</li>
-<li>此时重新运行<code>mysqld --initialize</code>，依然失败，报错信息提示<code>/usr/local/var/mysql</code>已经存在，使用<code>sudo rm -rf /usr/local/var/mysql</code>删除后重新执行，成功。<br><img src="/2024/10/07/log_of_install_mysql/log1.png" alt="图1"></li>
-<li>记住保存好临时的密码，重新启动mysql服务，成功。</li>
-<li><code>mysql -u root -p</code>,然后输入刚刚的临时密码，执行<code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;</code>，执行<code>FLUSH PRIVILEGES;</code>使密码修改生效。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/24/algorithm-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/24/algorithm-2/" class="post-title-link" itemprop="url">骰子的点数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-09-24 21:17:26" itemprop="dateCreated datePublished" datetime="2024-09-24T21:17:26+08:00">2024-09-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-09-25 14:37:54" itemprop="dateModified" datetime="2024-09-25T14:37:54+08:00">2024-09-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Algroithm/" itemprop="url" rel="index"><span itemprop="name">Algroithm</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="description"><a href="#description" class="headerlink" title="description"></a>description</h3><p>链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/76/">https://www.acwing.com/problem/content/76/</a><br>将一个骰子投掷n次，获得的总点数为s，s的可能范围为n～6n。求出投掷n次，掷出n～6n<br>点分别有多少种掷法。</p>
-<h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><p>拿到题目我首先想到的是回溯：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        dfs(n,<span class="number">0</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">N</span> <span class="operator">=</span> n*<span class="number">6</span>-n+<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span>[] result = <span class="keyword">new</span> <span class="title class_">int</span>[N];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;N;i++)&#123;</span><br><span class="line">            result[i]=map.get(n+i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> temp)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            map.put(temp,map.getOrDefault(temp,<span class="number">0</span>)+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">6</span>;i++)&#123;</span><br><span class="line">            dfs(n-<span class="number">1</span>,temp+i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/solution/content/80458/">https://www.acwing.com/solution/content/80458/</a><br>后面看到递归的写法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] dict;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        List&lt;Integer&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=n;i&lt;=<span class="number">6</span>*n;i++)&#123;</span><br><span class="line">            result.add(dfs(n,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result.stream().mapToInt(Integer::intValue).toArray();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> sum)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum&lt;<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> sum==<span class="number">0</span>?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">6</span>;i++)&#123;</span><br><span class="line">            ans+=dfs(n-<span class="number">1</span>,sum-i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] dict;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        dict = <span class="keyword">new</span> <span class="title class_">int</span>[n+<span class="number">1</span>][<span class="number">6</span>*n+<span class="number">1</span>];</span><br><span class="line">        List&lt;Integer&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span>[] row:dict)&#123;</span><br><span class="line">            Arrays.fill(row,-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=n;i&lt;=<span class="number">6</span>*n;i++)&#123;</span><br><span class="line">            result.add(dfs(n,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result.stream().mapToInt(Integer::intValue).toArray();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> sum)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum&lt;<span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> sum==<span class="number">0</span>?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(dict[n][sum]!=-<span class="number">1</span>)<span class="keyword">return</span> dict[n][sum];</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">6</span>;i++)&#123;</span><br><span class="line">            ans+=dfs(n-<span class="number">1</span>,sum-i);</span><br><span class="line">        &#125;</span><br><span class="line">        dict[n][sum]=ans;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>dp写法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] numberOfDice(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[n+<span class="number">1</span>][<span class="number">6</span>*n+<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 投掷次数从1开始</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="comment">// sum为0不存在，所以从1开始</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">6</span>*n;j++)&#123;</span><br><span class="line">                <span class="comment">// 有1~6个点数</span></span><br><span class="line">                <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">1</span>;k&lt;=<span class="number">6</span>;k++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(j&gt;=k)&#123;</span><br><span class="line">                        dp[i][j]=dp[i][j]+dp[i-<span class="number">1</span>][j-k];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span>[] result = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">6</span>*n-n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=n;i&lt;=<span class="number">6</span>*n;i++)&#123;</span><br><span class="line">            result[i-n]=dp[n][i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="summery"><a href="#summery" class="headerlink" title="summery"></a>summery</h3><ol>
-<li>经典的递归优化</li>
-<li>List转int[]可以使用这种写法：<code>list.stream().mapToInt(Integer::intValue).toArray()</code></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/22/algorithm-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/22/algorithm-1/" class="post-title-link" itemprop="url">全排列去重</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-09-22 19:12:09" itemprop="dateCreated datePublished" datetime="2024-09-22T19:12:09+08:00">2024-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-09-24 21:21:08" itemprop="dateModified" datetime="2024-09-24T21:21:08+08:00">2024-09-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Algroithm/" itemprop="url" rel="index"><span itemprop="name">Algroithm</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>链接：<a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/47/">https://www.acwing.com/problem/content/47/</a><br>输入一组数字（可能包含重复数字），输出其所有的排列方式。</p>
-<p>如果是不重复的，就是一个常规的深度优先遍历，当可重复时，我们需要人为的区分重复数字，做法是指定重复数字首次要放入某个框位时，只使用重复数字的第一个。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">permutation</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="comment">// 排序</span></span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">boolean</span>[] used = <span class="keyword">new</span> <span class="title class_">boolean</span>[n];</span><br><span class="line">        List&lt;Integer&gt; temp = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        dfs(nums,used,<span class="number">0</span>,temp);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">boolean</span>[] used,<span class="type">int</span> index,List&lt;Integer&gt; temp)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="keyword">if</span>(index==n)&#123;</span><br><span class="line">            result.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="comment">// 过滤</span></span><br><span class="line">            <span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;nums[i]==nums[i-<span class="number">1</span>]&amp;&amp;!used[i-<span class="number">1</span>])<span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(!used[i])&#123;</span><br><span class="line">                temp.add(nums[i]);</span><br><span class="line">                used[i]=<span class="literal">true</span>;</span><br><span class="line">                dfs(nums,used,index+<span class="number">1</span>,temp);</span><br><span class="line">                temp.remove(temp.size()-<span class="number">1</span>);</span><br><span class="line">                used[i]=<span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/13/jdk-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/13/jdk-3/" class="post-title-link" itemprop="url">ThreadLocal</a>
-        </h2>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-09-13 09:30:57 / Modified: 20:39:03" itemprop="dateCreated datePublished" datetime="2024-09-13T09:30:57+08:00">2024-09-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/JDK/" itemprop="url" rel="index"><span itemprop="name">JDK</span></a>
-        </span>
-    </span>
 
-  
-</div>
+<script src="/js/main.js"></script>
 
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>Provide thread-local variables, wish to associate state with a thread(e.g., a user ID or Transaction ID).</code></p>
-<p>每个Thread拥有一个ThreadLocalMap，实际是一个<code>Entry[] table</code>，Entry是一个key-value结构，key是一个弱引用。所以get()或set()时，是通过CurrentThread得到ThreadLocalMap，然后以this为key操作的过程。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Entry</span> <span class="keyword">extends</span> <span class="title class_">WeakReference</span>&lt;ThreadLocal&lt;?&gt;&gt; &#123;</span><br><span class="line">    Object value;</span><br><span class="line">    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">        <span class="built_in">super</span>(k);</span><br><span class="line">        value = v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先来看下get():</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> T <span class="title function_">get</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line">    <span class="comment">// 拿到对应currentThread的map数组</span></span><br><span class="line">    <span class="type">ThreadLocalMap</span> <span class="variable">map</span> <span class="operator">=</span> getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="literal">null</span>) &#123;</span><br><span class="line">        ThreadLocalMap.<span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> map.getEntry(<span class="built_in">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">            <span class="type">T</span> <span class="variable">result</span> <span class="operator">=</span> (T)e.value;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 初始化map数组</span></span><br><span class="line">    <span class="keyword">return</span> setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>进入getEntry():</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Entry <span class="title function_">getEntry</span><span class="params">(ThreadLocal&lt;?&gt; key)</span> &#123;</span><br><span class="line">    <span class="comment">// threadLocalHashCode很神奇的数字</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> key.threadLocalHashCode &amp; (table.length - <span class="number">1</span>);</span><br><span class="line">    <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> table[i];</span><br><span class="line">    <span class="keyword">if</span> (e != <span class="literal">null</span> &amp;&amp; e.get() == key)</span><br><span class="line">        <span class="keyword">return</span> e;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">// 因为是线性探测，第一下可能没找到，往后接着找</span></span><br><span class="line">        <span class="keyword">return</span> getEntryAfterMiss(key, i, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>set()相对复杂一点:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(T value)</span> &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line">    <span class="type">ThreadLocalMap</span> <span class="variable">map</span> <span class="operator">=</span> getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="literal">null</span>) &#123;</span><br><span class="line">        map.set(<span class="built_in">this</span>, value);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化map并把第一个value放进去，这时候不会冲突</span></span><br><span class="line">        createMap(t, value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>详细看下set(key,value):</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(ThreadLocal&lt;?&gt; key, Object value)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We don&#x27;t use a fast path as with get() because it is at</span></span><br><span class="line">    <span class="comment">// least as common to use set() to create new entries as</span></span><br><span class="line">    <span class="comment">// it is to replace existing ones, in which case, a fast</span></span><br><span class="line">    <span class="comment">// path would fail more often than not.</span></span><br><span class="line"></span><br><span class="line">    Entry[] tab = table;</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> tab.length;</span><br><span class="line">    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> key.threadLocalHashCode &amp; (len-<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 往后找到第一个为null的位置</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> tab[i];</span><br><span class="line">            e != <span class="literal">null</span>;</span><br><span class="line">            e = tab[i = nextIndex(i, len)]) &#123;</span><br><span class="line">        ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line">        <span class="comment">// 如果key相同，直接替换</span></span><br><span class="line">        <span class="keyword">if</span> (k == key) &#123;</span><br><span class="line">            e.value = value;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果这个位置key为null，说明它被GC了，需要做一个清理</span></span><br><span class="line">        <span class="keyword">if</span> (k == <span class="literal">null</span>) &#123;</span><br><span class="line">            replaceStaleEntry(key, value, i);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    tab[i] = <span class="keyword">new</span> <span class="title class_">Entry</span>(key, value);</span><br><span class="line">    <span class="type">int</span> <span class="variable">sz</span> <span class="operator">=</span> ++size;</span><br><span class="line">    <span class="comment">// re-pack and/or re-size the table</span></span><br><span class="line">    <span class="keyword">if</span> (!cleanSomeSlots(i, sz) &amp;&amp; sz &gt;= threshold)</span><br><span class="line">        rehash();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>每个ThreadLocal对象都有一个threadLocalHashCode，每次获取都是增加<code>0x61c88647</code>，通过它获得的散列分布特别好，是个神奇的数字。这样一来哈希冲突的可能性大大降低，然后这里JDK使用的是线性探测法解决冲突。</p>
-<p>接着是为什么要使用弱引用，这是为了有效回收没用的ThreadLocal，因为线程池中线程长时间不会销毁，如果是强引用的话线程的ThreadLocal占的内存就一直不会释放。</p>
-<p>还有一个问题：当弱引用被GC后，value和Entry还在会造成内存泄漏，ThreadLocal在设计上考虑到了这种情况，这也是为什么在set过程中扫描到key为null需要去做清理。但在实际使用中，在ThreadLocal使用前后都调用remove清理，同时对异常情况也要在finally中清理。这样可以有效避免内存泄漏，以及业务上的逻辑问题。</p>
-<p>另一个问题是常常声明为static：我的理解是ThreadLocal本质是一个key，对于不同的Thread过来会有相应的Map对应，使用的时候要注意remove，static的话避免资源浪费。</p>
-
-      
-    </div>
-
-    
-    
     
 
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
 
     
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://peterwangll.github.io/2024/09/11/jdk-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Peter Wang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | PeterWang's Knowledge Plant">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/09/11/jdk-2/" class="post-title-link" itemprop="url">ThreadPoolExecutor</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2024-09-11 14:32:56 / Modified: 17:04:39" itemprop="dateCreated datePublished" datetime="2024-09-11T14:32:56+08:00">2024-09-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/JDK/" itemprop="url" rel="index"><span itemprop="name">JDK</span></a>
-        </span>
-    </span>
 
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
     
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="runState-workerCount"><a href="#runState-workerCount" class="headerlink" title="runState&amp;workerCount"></a>runState&amp;workerCount</h3><p><code>private final AtomicInteger ctl</code>: the main pool control state, 高3位用来表示线程池的runState，底29位用来表示线程数workCount。这种思想让我联想到了SDS中header的sdshdr5结构，flags低3位保存type，高5位在<code>type=sdshdr5</code>时表示len。</p>
-<h3 id="execute"><a href="#execute" class="headerlink" title="execute()"></a>execute()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(Runnable command)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (command == <span class="literal">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>();</span><br><span class="line">    <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">    <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123;</span><br><span class="line">        <span class="comment">// try to start a new thread with the given command as its first task</span></span><br><span class="line">        <span class="keyword">if</span> (addWorker(command, <span class="literal">true</span>))</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        c = ctl.get();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">        <span class="comment">// if a task can be successfully queued, then we still need to double-check whether we should have added a thread</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">recheck</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">        <span class="comment">// if neccessary roll back the enqueuing if stopped</span></span><br><span class="line">        <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">            reject(command);</span><br><span class="line">        <span class="comment">// or start a new thread if there are none</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">            addWorker(<span class="literal">null</span>, <span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// if we cannot queue task, then we try to add a new thread. If it fails, we know we are shut down or saturated and so reject the task.</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="literal">false</span>))</span><br><span class="line">        reject(command);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看出<code>execute()</code>方法会根据线程池现有的状态来决定<code>addWorker()</code>or<code>reject()</code></p>
-<p>这涉及到线程池的几个关键参数，corePoolSize，maximumPoolSize，workQueue，剩下还有threadFactory，rejectedExecutionHandler，keepAliveTime。</p>
-<h3 id="addWorker"><a href="#addWorker" class="headerlink" title="addWorker()"></a>addWorker()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">addWorker</span><span class="params">(Runnable firstTask, <span class="type">boolean</span> core)</span> &#123;</span><br><span class="line">    retry:</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> ctl.get();</span><br><span class="line">        <span class="type">int</span> <span class="variable">rs</span> <span class="operator">=</span> runStateOf(c);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Check if queue empty only if necessary.</span></span><br><span class="line">        <span class="keyword">if</span> (rs &gt;= SHUTDOWN &amp;&amp;</span><br><span class="line">            ! (rs == SHUTDOWN &amp;&amp;</span><br><span class="line">                firstTask == <span class="literal">null</span> &amp;&amp;</span><br><span class="line">                ! workQueue.isEmpty()))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自旋workerCount+1</span></span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">wc</span> <span class="operator">=</span> workerCountOf(c);</span><br><span class="line">            <span class="keyword">if</span> (wc &gt;= CAPACITY ||</span><br><span class="line">                wc &gt;= (core ? corePoolSize : maximumPoolSize))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (compareAndIncrementWorkerCount(c))</span><br><span class="line">                <span class="keyword">break</span> retry;</span><br><span class="line">            c = ctl.get();  <span class="comment">// Re-read ctl</span></span><br><span class="line">            <span class="keyword">if</span> (runStateOf(c) != rs)</span><br><span class="line">                <span class="keyword">continue</span> retry;</span><br><span class="line">            <span class="comment">// else CAS failed due to workerCount change; retry inner loop</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">workerStarted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="type">boolean</span> <span class="variable">workerAdded</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="type">Worker</span> <span class="variable">w</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// creates with given first task and thread from ThreadFactory</span></span><br><span class="line">        w = <span class="keyword">new</span> <span class="title class_">Worker</span>(firstTask);</span><br><span class="line">        <span class="keyword">final</span> <span class="type">Thread</span> <span class="variable">t</span> <span class="operator">=</span> w.thread;</span><br><span class="line">        <span class="keyword">if</span> (t != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ReentrantLock</span> <span class="variable">mainLock</span> <span class="operator">=</span> <span class="built_in">this</span>.mainLock;</span><br><span class="line">            mainLock.lock();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// Recheck while holding lock.</span></span><br><span class="line">                <span class="comment">// Back out on ThreadFactory failure or if</span></span><br><span class="line">                <span class="comment">// shut down before lock acquired.</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">rs</span> <span class="operator">=</span> runStateOf(ctl.get());</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (rs &lt; SHUTDOWN ||</span><br><span class="line">                    (rs == SHUTDOWN &amp;&amp; firstTask == <span class="literal">null</span>)) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (t.isAlive()) <span class="comment">// precheck that t is startable</span></span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalThreadStateException</span>();</span><br><span class="line">                    <span class="comment">// HashSet&lt;Worker&gt;</span></span><br><span class="line">                    workers.add(w);</span><br><span class="line">                    <span class="type">int</span> <span class="variable">s</span> <span class="operator">=</span> workers.size();</span><br><span class="line">                    <span class="keyword">if</span> (s &gt; largestPoolSize)</span><br><span class="line">                        largestPoolSize = s;</span><br><span class="line">                    workerAdded = <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                mainLock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (workerAdded) &#123;</span><br><span class="line">                t.start();</span><br><span class="line">                workerStarted = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (! workerStarted)</span><br><span class="line">            addWorkerFailed(w);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> workerStarted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>addWorker</code>主要做了以下几件事：</p>
-<ol>
-<li>CAS workerCount+1</li>
-<li>w &#x3D; new Worker(firstTask);&#x2F;&#x2F; 创建线程，在构造方法中由threadFactory创建</li>
-<li>workers.add(w);&#x2F;&#x2F; 获取mainLock添加worker到HashSet</li>
-<li>t.start();&#x2F;&#x2F; 开启线程</li>
-</ol>
-<h3 id="Worker"><a href="#Worker" class="headerlink" title="Worker"></a>Worker</h3><p>Class Worker mainly maintains interrupt state for threads running tasks.extends AQS(实现了一个不可重入锁). This protects against interrupts that are intended to wake up a worker thread waiting for a task from instead interrupting a task being run. </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Worker</span></span><br><span class="line">    <span class="keyword">extends</span> <span class="title class_">AbstractQueuedSynchronizer</span></span><br><span class="line">    <span class="keyword">implements</span> <span class="title class_">Runnable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">final</span> Thread thread;</span><br><span class="line">    Runnable firstTask;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">long</span> completedTasks;</span><br><span class="line">    Worker(Runnable firstTask) &#123;</span><br><span class="line">        setState(-<span class="number">1</span>); <span class="comment">// inhibit interrupts until runWorker</span></span><br><span class="line">        <span class="built_in">this</span>.firstTask = firstTask;</span><br><span class="line">        <span class="built_in">this</span>.thread = getThreadFactory().newThread(<span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        runWorker(<span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>由于<code>implements Runnable</code>，当上面第四步<code>t.start()</code>开启线程后，去执行<code>runWorker()</code></p>
-<h3 id="runWorker"><a href="#runWorker" class="headerlink" title="runWorker()"></a>runWorker()</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Repeatedly gets tasks from queue and executes them</span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">runWorker</span><span class="params">(Worker w)</span> &#123;</span><br><span class="line">    <span class="type">Thread</span> <span class="variable">wt</span> <span class="operator">=</span> Thread.currentThread();</span><br><span class="line">    <span class="type">Runnable</span> <span class="variable">task</span> <span class="operator">=</span> w.firstTask;</span><br><span class="line">    w.firstTask = <span class="literal">null</span>;</span><br><span class="line">    w.unlock(); <span class="comment">// allow interrupts</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">completedAbruptly</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (task != <span class="literal">null</span> || (task = getTask()) != <span class="literal">null</span>) &#123;</span><br><span class="line">            w.lock();</span><br><span class="line">            <span class="comment">// If pool is stopping, ensure thread is interrupted;</span></span><br><span class="line">            <span class="comment">// if not, ensure thread is not interrupted.  This</span></span><br><span class="line">            <span class="comment">// requires a recheck in second case to deal with</span></span><br><span class="line">            <span class="comment">// shutdownNow race while clearing interrupt</span></span><br><span class="line">            <span class="keyword">if</span> ((runStateAtLeast(ctl.get(), STOP) ||</span><br><span class="line">                    (Thread.interrupted() &amp;&amp;</span><br><span class="line">                    runStateAtLeast(ctl.get(), STOP))) &amp;&amp;</span><br><span class="line">                !wt.isInterrupted())</span><br><span class="line">                wt.interrupt();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                beforeExecute(wt, task);</span><br><span class="line">                <span class="type">Throwable</span> <span class="variable">thrown</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    task.run();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (RuntimeException x) &#123;</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> x;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Error x) &#123;</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> x;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Throwable x) &#123;</span><br><span class="line">                    thrown = x; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(x);</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    afterExecute(task, thrown);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                task = <span class="literal">null</span>;</span><br><span class="line">                w.completedTasks++;</span><br><span class="line">                w.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        completedAbruptly = <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        processWorkerExit(w, completedAbruptly);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>主要是getTask()和task.run()，Repeatedly gets tasks from queue and executes them.</p>
-<p>Before running any task, the lock is acquired to prevent other pool interrupts while the task is executing.</p>
-<p>另外提供<code>beforeExecute()</code>和<code>afterExecute()</code>两个钩子方法。</p>
-<h3 id="用到的锁"><a href="#用到的锁" class="headerlink" title="用到的锁"></a>用到的锁</h3><p>两个地方用到了锁，对works(HashSet<Worker>)的操作都需要获取mainLock(ReentrantLock),因为HashSet是线程不安全的，至于为什么不用并发安全的Set，是为了避免中断风暴的风险，shutdown()会调用interruptIdleWorkers()，不用mainLock会导致对正在中断中的中断，发起中断。具体可以看<a target="_blank" rel="noopener" href="https://www.cnblogs.com/thisiswhy/p/15493027.html">https://www.cnblogs.com/thisiswhy/p/15493027.html</a>.<br>还有是在线程处理任务时，需要获取锁，这是通过继承AQS实现的不可重入锁，为了防止被中断。</Worker></p>
-
-      
-    </div>
-
-    
-    
     
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-  <div class="copyright">
-    &copy; 
-    <span itemprop="copyrightYear">2024</span>
-    <span class="with-love">
-      <i class="fa fa-heart"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">Peter Wang</span>
-  </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-    </div>
-  </footer>
-
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-  <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
-
-  
-
-
-
-
-
-
-  
-
-
-
-
 
-</body>
+    <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+  </body>
 </html>
