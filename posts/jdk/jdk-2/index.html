@@ -60,10 +60,17 @@ execute() public void execute(Runnable command) { if (command == null) throw new
     
 
 
+<link rel="stylesheet" data-custom-syntax-highlighting />
 <style>
-  pre {
+  .chroma {
     padding: 1em;
+    background-color: var(--dream-pre-bg, #f5f5f5);
+    border-radius: .5em;
     overflow: auto;
+  }
+
+  html.dark .chroma {
+    background-color: var(--dream-pre-bg-dark, #262626);
   }
 </style>
 
@@ -344,103 +351,103 @@ execute() public void execute(Runnable command) { if (command == null) throw new
       <h3 id="runstateworkercount">runState&amp;workerCount</h3>
 <p><code>private final AtomicInteger ctl</code>: the main pool control state, 高3位用来表示线程池的runState，底29位用来表示线程数workCount。这种思想让我联想到了SDS中header的sdshdr5结构，flags低3位保存type，高5位在<code>type=sdshdr5</code>时表示len。</p>
 <h3 id="execute">execute()</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">execute</span>(Runnable command) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (command <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> NullPointerException();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> ctl.<span style="color:#a6e22e">get</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (workerCountOf(c) <span style="color:#f92672">&lt;</span> corePoolSize) {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// try to start a new thread with the given command as its first task</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (addWorker(command, <span style="color:#66d9ef">true</span>))
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span>        c <span style="color:#f92672">=</span> ctl.<span style="color:#a6e22e">get</span>();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (isRunning(c) <span style="color:#f92672">&amp;&amp;</span> workQueue.<span style="color:#a6e22e">offer</span>(command)) {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// if a task can be successfully queued, then we still need to double-check whether we should have added a thread</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> recheck <span style="color:#f92672">=</span> ctl.<span style="color:#a6e22e">get</span>();
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// if neccessary roll back the enqueuing if stopped</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span> isRunning(recheck) <span style="color:#f92672">&amp;&amp;</span> remove(command))
-</span></span><span style="display:flex;"><span>            reject(command);
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// or start a new thread if there are none</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (workerCountOf(recheck) <span style="color:#f92672">==</span> 0)
-</span></span><span style="display:flex;"><span>            addWorker(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">false</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// if we cannot queue task, then we try to add a new thread. If it fails, we know we are shut down or saturated and so reject the task.</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>addWorker(command, <span style="color:#66d9ef">false</span>))
-</span></span><span style="display:flex;"><span>        reject(command);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>可以看出<code>execute()</code>方法会根据线程池现有的状态来决定<code>addWorker()</code>or<code>reject()</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="n">Runnable</span><span class="w"> </span><span class="n">command</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">command</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NullPointerException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">workerCountOf</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">corePoolSize</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// try to start a new thread with the given command as its first task</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">addWorker</span><span class="p">(</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isRunning</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">workQueue</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="n">command</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// if a task can be successfully queued, then we still need to double-check whether we should have added a thread</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">recheck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// if neccessary roll back the enqueuing if stopped</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="w"> </span><span class="n">isRunning</span><span class="p">(</span><span class="n">recheck</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">remove</span><span class="p">(</span><span class="n">command</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">reject</span><span class="p">(</span><span class="n">command</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// or start a new thread if there are none</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">workerCountOf</span><span class="p">(</span><span class="n">recheck</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">0</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">addWorker</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// if we cannot queue task, then we try to add a new thread. If it fails, we know we are shut down or saturated and so reject the task.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">addWorker</span><span class="p">(</span><span class="n">command</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">reject</span><span class="p">(</span><span class="n">command</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>可以看出<code>execute()</code>方法会根据线程池现有的状态来决定<code>addWorker()</code>or<code>reject()</code></p>
 <p>这涉及到线程池的几个关键参数，corePoolSize，maximumPoolSize，workQueue，剩下还有threadFactory，rejectedExecutionHandler，keepAliveTime。</p>
 <h3 id="addworker">addWorker()</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">addWorker</span>(Runnable firstTask, <span style="color:#66d9ef">boolean</span> core) {
-</span></span><span style="display:flex;"><span>    retry:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> ctl.<span style="color:#a6e22e">get</span>();
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> rs <span style="color:#f92672">=</span> runStateOf(c);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Check if queue empty only if necessary.</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (rs <span style="color:#f92672">&gt;=</span> SHUTDOWN <span style="color:#f92672">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">!</span> (rs <span style="color:#f92672">==</span> SHUTDOWN <span style="color:#f92672">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>                firstTask <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">!</span> workQueue.<span style="color:#a6e22e">isEmpty</span>()))
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 自旋workerCount+1</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (;;) {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> wc <span style="color:#f92672">=</span> workerCountOf(c);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (wc <span style="color:#f92672">&gt;=</span> CAPACITY <span style="color:#f92672">||</span>
-</span></span><span style="display:flex;"><span>                wc <span style="color:#f92672">&gt;=</span> (core <span style="color:#f92672">?</span> corePoolSize : maximumPoolSize))
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (compareAndIncrementWorkerCount(c))
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span> retry;
-</span></span><span style="display:flex;"><span>            c <span style="color:#f92672">=</span> ctl.<span style="color:#a6e22e">get</span>();  <span style="color:#75715e">// Re-read ctl</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (runStateOf(c) <span style="color:#f92672">!=</span> rs)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span> retry;
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// else CAS failed due to workerCount change; retry inner loop</span>
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> workerStarted <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> workerAdded <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>    Worker w <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// creates with given first task and thread from ThreadFactory</span>
-</span></span><span style="display:flex;"><span>        w <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Worker(firstTask);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">final</span> Thread t <span style="color:#f92672">=</span> w.<span style="color:#a6e22e">thread</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">final</span> ReentrantLock mainLock <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">mainLock</span>;
-</span></span><span style="display:flex;"><span>            mainLock.<span style="color:#a6e22e">lock</span>();
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Recheck while holding lock.</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Back out on ThreadFactory failure or if</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// shut down before lock acquired.</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">int</span> rs <span style="color:#f92672">=</span> runStateOf(ctl.<span style="color:#a6e22e">get</span>());
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (rs <span style="color:#f92672">&lt;</span> SHUTDOWN <span style="color:#f92672">||</span>
-</span></span><span style="display:flex;"><span>                    (rs <span style="color:#f92672">==</span> SHUTDOWN <span style="color:#f92672">&amp;&amp;</span> firstTask <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>)) {
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (t.<span style="color:#a6e22e">isAlive</span>()) <span style="color:#75715e">// precheck that t is startable</span>
-</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalThreadStateException();
-</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// HashSet&lt;Worker&gt;</span>
-</span></span><span style="display:flex;"><span>                    workers.<span style="color:#a6e22e">add</span>(w);
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">int</span> s <span style="color:#f92672">=</span> workers.<span style="color:#a6e22e">size</span>();
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (s <span style="color:#f92672">&gt;</span> largestPoolSize)
-</span></span><span style="display:flex;"><span>                        largestPoolSize <span style="color:#f92672">=</span> s;
-</span></span><span style="display:flex;"><span>                    workerAdded <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">finally</span> {
-</span></span><span style="display:flex;"><span>                mainLock.<span style="color:#a6e22e">unlock</span>();
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (workerAdded) {
-</span></span><span style="display:flex;"><span>                t.<span style="color:#a6e22e">start</span>();
-</span></span><span style="display:flex;"><span>                workerStarted <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">finally</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span> workerStarted)
-</span></span><span style="display:flex;"><span>            addWorkerFailed(w);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> workerStarted;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><code>addWorker</code>主要做了以下几件事：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">addWorker</span><span class="p">(</span><span class="n">Runnable</span><span class="w"> </span><span class="n">firstTask</span><span class="p">,</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">core</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">retry</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runStateOf</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Check if queue empty only if necessary.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">SHUTDOWN</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">!</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SHUTDOWN</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">firstTask</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="o">!</span><span class="w"> </span><span class="n">workQueue</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 自旋workerCount+1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">wc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">workerCountOf</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wc</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">CAPACITY</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">wc</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="p">(</span><span class="n">core</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">corePoolSize</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">maximumPoolSize</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">compareAndIncrementWorkerCount</span><span class="p">(</span><span class="n">c</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">break</span><span class="w"> </span><span class="n">retry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">  </span><span class="c1">// Re-read ctl</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">runStateOf</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">rs</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">continue</span><span class="w"> </span><span class="n">retry</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// else CAS failed due to workerCount change; retry inner loop</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">workerStarted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">workerAdded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Worker</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// creates with given first task and thread from ThreadFactory</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Worker</span><span class="p">(</span><span class="n">firstTask</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">final</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">.</span><span class="na">thread</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">final</span><span class="w"> </span><span class="n">ReentrantLock</span><span class="w"> </span><span class="n">mainLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">mainLock</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">mainLock</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// Recheck while holding lock.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// Back out on ThreadFactory failure or if</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// shut down before lock acquired.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">rs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runStateOf</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rs</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">SHUTDOWN</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">(</span><span class="n">rs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">SHUTDOWN</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">firstTask</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="na">isAlive</span><span class="p">())</span><span class="w"> </span><span class="c1">// precheck that t is startable</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalThreadStateException</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="c1">// HashSet&lt;Worker&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">workers</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">w</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">workers</span><span class="p">.</span><span class="na">size</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">largestPoolSize</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">largestPoolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">workerAdded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">mainLock</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">workerAdded</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">workerStarted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="w"> </span><span class="n">workerStarted</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">addWorkerFailed</span><span class="p">(</span><span class="n">w</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">workerStarted</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p><code>addWorker</code>主要做了以下几件事：</p>
 <ol>
 <li>CAS workerCount+1</li>
 <li>w = new Worker(firstTask);// 创建线程，在构造方法中由threadFactory创建</li>
@@ -449,69 +456,69 @@ execute() public void execute(Runnable command) { if (command == null) throw new
 </ol>
 <h3 id="worker">Worker</h3>
 <p>Class Worker mainly maintains interrupt state for threads running tasks.extends AQS(实现了一个不可重入锁). This protects against interrupts that are intended to wake up a worker thread waiting for a task from instead interrupting a task being run.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Worker</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">extends</span> AbstractQueuedSynchronizer
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">implements</span> Runnable
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">final</span> Thread thread;
-</span></span><span style="display:flex;"><span>    Runnable firstTask;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">volatile</span> <span style="color:#66d9ef">long</span> completedTasks;
-</span></span><span style="display:flex;"><span>    Worker(Runnable firstTask) {
-</span></span><span style="display:flex;"><span>        setState(<span style="color:#f92672">-</span>1); <span style="color:#75715e">// inhibit interrupts until runWorker</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstTask</span> <span style="color:#f92672">=</span> firstTask;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">thread</span> <span style="color:#f92672">=</span> getThreadFactory().<span style="color:#a6e22e">newThread</span>(<span style="color:#66d9ef">this</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">run</span>() {
-</span></span><span style="display:flex;"><span>        runWorker(<span style="color:#66d9ef">this</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>由于<code>implements Runnable</code>，当上面第四步<code>t.start()</code>开启线程后，去执行<code>runWorker()</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Worker</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">extends</span><span class="w"> </span><span class="n">AbstractQueuedSynchronizer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">final</span><span class="w"> </span><span class="n">Thread</span><span class="w"> </span><span class="n">thread</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Runnable</span><span class="w"> </span><span class="n">firstTask</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">volatile</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">completedTasks</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Worker</span><span class="p">(</span><span class="n">Runnable</span><span class="w"> </span><span class="n">firstTask</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">setState</span><span class="p">(</span><span class="o">-</span><span class="n">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// inhibit interrupts until runWorker</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">firstTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstTask</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">thread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getThreadFactory</span><span class="p">().</span><span class="na">newThread</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">runWorker</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>由于<code>implements Runnable</code>，当上面第四步<code>t.start()</code>开启线程后，去执行<code>runWorker()</code></p>
 <h3 id="runworker">runWorker()</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// Repeatedly gets tasks from queue and executes them</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">runWorker</span>(Worker w) {
-</span></span><span style="display:flex;"><span>    Thread wt <span style="color:#f92672">=</span> Thread.<span style="color:#a6e22e">currentThread</span>();
-</span></span><span style="display:flex;"><span>    Runnable task <span style="color:#f92672">=</span> w.<span style="color:#a6e22e">firstTask</span>;
-</span></span><span style="display:flex;"><span>    w.<span style="color:#a6e22e">firstTask</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>    w.<span style="color:#a6e22e">unlock</span>(); <span style="color:#75715e">// allow interrupts</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">boolean</span> completedAbruptly <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (task <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">||</span> (task <span style="color:#f92672">=</span> getTask()) <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
-</span></span><span style="display:flex;"><span>            w.<span style="color:#a6e22e">lock</span>();
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// If pool is stopping, ensure thread is interrupted;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// if not, ensure thread is not interrupted.  This</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// requires a recheck in second case to deal with</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// shutdownNow race while clearing interrupt</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> ((runStateAtLeast(ctl.<span style="color:#a6e22e">get</span>(), STOP) <span style="color:#f92672">||</span>
-</span></span><span style="display:flex;"><span>                    (Thread.<span style="color:#a6e22e">interrupted</span>() <span style="color:#f92672">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>                    runStateAtLeast(ctl.<span style="color:#a6e22e">get</span>(), STOP))) <span style="color:#f92672">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">!</span>wt.<span style="color:#a6e22e">isInterrupted</span>())
-</span></span><span style="display:flex;"><span>                wt.<span style="color:#a6e22e">interrupt</span>();
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>                beforeExecute(wt, task);
-</span></span><span style="display:flex;"><span>                Throwable thrown <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>                    task.<span style="color:#a6e22e">run</span>();
-</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (RuntimeException x) {
-</span></span><span style="display:flex;"><span>                    thrown <span style="color:#f92672">=</span> x; <span style="color:#66d9ef">throw</span> x;
-</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (Error x) {
-</span></span><span style="display:flex;"><span>                    thrown <span style="color:#f92672">=</span> x; <span style="color:#66d9ef">throw</span> x;
-</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (Throwable x) {
-</span></span><span style="display:flex;"><span>                    thrown <span style="color:#f92672">=</span> x; <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(x);
-</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">finally</span> {
-</span></span><span style="display:flex;"><span>                    afterExecute(task, thrown);
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">finally</span> {
-</span></span><span style="display:flex;"><span>                task <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>                w.<span style="color:#a6e22e">completedTasks</span><span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>                w.<span style="color:#a6e22e">unlock</span>();
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        completedAbruptly <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">finally</span> {
-</span></span><span style="display:flex;"><span>        processWorkerExit(w, completedAbruptly);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>主要是getTask()和task.run()，Repeatedly gets tasks from queue and executes them.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// Repeatedly gets tasks from queue and executes them</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">runWorker</span><span class="p">(</span><span class="n">Worker</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Thread</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Runnable</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">.</span><span class="na">firstTask</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">w</span><span class="p">.</span><span class="na">firstTask</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">w</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w"> </span><span class="c1">// allow interrupts</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">boolean</span><span class="w"> </span><span class="n">completedAbruptly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getTask</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">w</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// If pool is stopping, ensure thread is interrupted;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// if not, ensure thread is not interrupted.  This</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// requires a recheck in second case to deal with</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// shutdownNow race while clearing interrupt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">runStateAtLeast</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">(),</span><span class="w"> </span><span class="n">STOP</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">(</span><span class="n">Thread</span><span class="p">.</span><span class="na">interrupted</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">runStateAtLeast</span><span class="p">(</span><span class="n">ctl</span><span class="p">.</span><span class="na">get</span><span class="p">(),</span><span class="w"> </span><span class="n">STOP</span><span class="p">)))</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="o">!</span><span class="n">wt</span><span class="p">.</span><span class="na">isInterrupted</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">wt</span><span class="p">.</span><span class="na">interrupt</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">beforeExecute</span><span class="p">(</span><span class="n">wt</span><span class="p">,</span><span class="w"> </span><span class="n">task</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Throwable</span><span class="w"> </span><span class="n">thrown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">task</span><span class="p">.</span><span class="na">run</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">RuntimeException</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">thrown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Error</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">thrown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Throwable</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">thrown</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Error</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">afterExecute</span><span class="p">(</span><span class="n">task</span><span class="p">,</span><span class="w"> </span><span class="n">thrown</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">w</span><span class="p">.</span><span class="na">completedTasks</span><span class="o">++</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">w</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">completedAbruptly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">processWorkerExit</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="n">completedAbruptly</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>主要是getTask()和task.run()，Repeatedly gets tasks from queue and executes them.</p>
 <p>Before running any task, the lock is acquired to prevent other pool interrupts while the task is executing.</p>
 <p>另外提供<code>beforeExecute()</code>和<code>afterExecute()</code>两个钩子方法。</p>
 <h3 id="用到的锁">用到的锁</h3>
@@ -637,13 +644,20 @@ execute() public void execute(Runnable command) { if (command == null) throw new
 <img style="display: inline-block;margin:0;" alt="Visual Studio Code" src="https://img.shields.io/badge/-Visual_Studio_Code-43853d?style=flat-square" />
 <p>
 <ul>
-<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="./img/Penguin.png" alt="Penguin" width="15%" /><br></li>
+<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="/img/Penguin.png" alt="Penguin" width="15%" /><br></li>
 <li>🗺️ I&rsquo;m fond of exploring and transcending my own boundaries. <br></li>
 <li>📚 Reading is my favorite thing to do. <br></li>
 <li>📨 Find me through E-mail: <strong><a href="mailto:18136892032@163.com">18136892032@163.com</a></strong><br></li>
 <li>💛 My motto: No time to sorrow, we&rsquo;re building tomorrow.<br></li>
 </ul>
-
+<div align="center">
+<p><strong>Code Cycle</strong><br></p>
+<img style="display: inline-block;margin:0;" src="/img/Face with Spiral Eyes.png" width="10%" alt="Broken system!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Relieved Face.png" width="10%" alt="It's working!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Astonished Face.png" width="10%" alt="It's working but you don't know how!"/><br>
+</div>  
     </div>
   </div>
   <div class="divider divider-vertical"></div>
@@ -678,6 +692,21 @@ execute() public void execute(Runnable command) { if (command == null) throw new
 
 
 
+<script>
+  window.customSyntaxHighlighting = {
+    light: "/css/syntax-light.min.css",
+    dark: "/css/syntax-dark.min.css"
+  }
+
+  document.addEventListener('alpine:initialized', () => {
+    var isDark = Alpine.store('darkMode').isDark()
+    var customSyntaxHighlightingUrl = isDark ? window.customSyntaxHighlighting.dark : window.customSyntaxHighlighting.light
+
+    document
+      .querySelector('link[data-custom-syntax-highlighting]')
+      .setAttribute('href', customSyntaxHighlightingUrl)
+  })
+</script>
 
 
 

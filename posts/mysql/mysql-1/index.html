@@ -75,10 +75,17 @@ MVCC的实现基于undo log和行记录的隐藏字段的，通过构建Read Vie
     
 
 
+<link rel="stylesheet" data-custom-syntax-highlighting />
 <style>
-  pre {
+  .chroma {
     padding: 1em;
+    background-color: var(--dream-pre-bg, #f5f5f5);
+    border-radius: .5em;
     overflow: auto;
+  }
+
+  html.dark .chroma {
+    background-color: var(--dream-pre-bg-dark, #262626);
   }
 </style>
 
@@ -380,7 +387,7 @@ MVCC的实现基于undo log和行记录的隐藏字段的，通过构建Read Vie
         
 
         
-        <a class="group btn btn-outline" href="/posts/debug/hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/" title="Hexo添加分类不生效">
+        <a class="group btn btn-outline" href="/posts/problem-solving/hexo%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E4%B8%8D%E7%94%9F%E6%95%88/" title="Hexo添加分类不生效">
           <div class="inline-flex flex-col items-end">
             <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">Next page</span>
             <span class="max-w-48 truncate">Hexo添加分类不生效</span>
@@ -484,13 +491,20 @@ MVCC的实现基于undo log和行记录的隐藏字段的，通过构建Read Vie
 <img style="display: inline-block;margin:0;" alt="Visual Studio Code" src="https://img.shields.io/badge/-Visual_Studio_Code-43853d?style=flat-square" />
 <p>
 <ul>
-<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="./img/Penguin.png" alt="Penguin" width="15%" /><br></li>
+<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="/img/Penguin.png" alt="Penguin" width="15%" /><br></li>
 <li>🗺️ I&rsquo;m fond of exploring and transcending my own boundaries. <br></li>
 <li>📚 Reading is my favorite thing to do. <br></li>
 <li>📨 Find me through E-mail: <strong><a href="mailto:18136892032@163.com">18136892032@163.com</a></strong><br></li>
 <li>💛 My motto: No time to sorrow, we&rsquo;re building tomorrow.<br></li>
 </ul>
-
+<div align="center">
+<p><strong>Code Cycle</strong><br></p>
+<img style="display: inline-block;margin:0;" src="/img/Face with Spiral Eyes.png" width="10%" alt="Broken system!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Relieved Face.png" width="10%" alt="It's working!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Astonished Face.png" width="10%" alt="It's working but you don't know how!"/><br>
+</div>  
     </div>
   </div>
   <div class="divider divider-vertical"></div>
@@ -525,6 +539,21 @@ MVCC的实现基于undo log和行记录的隐藏字段的，通过构建Read Vie
 
 
 
+<script>
+  window.customSyntaxHighlighting = {
+    light: "/css/syntax-light.min.css",
+    dark: "/css/syntax-dark.min.css"
+  }
+
+  document.addEventListener('alpine:initialized', () => {
+    var isDark = Alpine.store('darkMode').isDark()
+    var customSyntaxHighlightingUrl = isDark ? window.customSyntaxHighlighting.dark : window.customSyntaxHighlighting.light
+
+    document
+      .querySelector('link[data-custom-syntax-highlighting]')
+      .setAttribute('href', customSyntaxHighlightingUrl)
+  })
+</script>
 
 
 

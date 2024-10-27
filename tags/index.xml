@@ -6,8 +6,15 @@
     <description>Recent content in Tags on PeterWang&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 19 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Oct 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://peterwangll.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ProblemSloving</title>
+      <link>https://peterwangll.github.io/tags/problemsloving/</link>
+      <pubDate>Sun, 27 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>https://peterwangll.github.io/tags/problemsloving/</guid>
+      <description></description>
+    </item>
     <item>
       <title>OS</title>
       <link>https://peterwangll.github.io/tags/os/</link>
@@ -34,13 +41,6 @@
       <link>https://peterwangll.github.io/tags/network/</link>
       <pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate>
       <guid>https://peterwangll.github.io/tags/network/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Debug</title>
-      <link>https://peterwangll.github.io/tags/debug/</link>
-      <pubDate>Mon, 07 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>https://peterwangll.github.io/tags/debug/</guid>
       <description></description>
     </item>
     <item>

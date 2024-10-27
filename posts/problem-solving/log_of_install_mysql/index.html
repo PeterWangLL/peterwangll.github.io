@@ -6,48 +6,45 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redis发布订阅 | PeterWang&#39;s Blog</title>
+    <title>Homebrew启动Mysql踩坑记录 | PeterWang&#39;s Blog</title>
 
     
 
-<link rel="canonical" href="https://peterwangll.github.io/posts/redis/redis-2/" />
+<link rel="canonical" href="https://peterwangll.github.io/posts/problem-solving/log_of_install_mysql/" />
 
 
 
 <meta name="author" content="Peter Wang" />
-<meta name="description" content="简介 Redis通过SUBSCRIBE和PUBLISH实现发布订阅。主要由三部分组成：「Subscriber」、「Publisher」、「Channel」。通过Pattern模式可以实现订阅多个前缀相同的频道。
-原理 Redis使用pubsub_channels字典来保存订阅频道的信息(value是一个链表)
-缺点 发布的消息并不会持久化，消息发布之后新订阅的客户端只能接收后续发布到该频道的消息。 不支持ACK机制，无法保证消息的可靠性。 " />
+<meta name="description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。 " />
 
 
-<meta name="keywords" content="Redis">
+<meta name="keywords" content="ProblemSloving">
 
 
 
 <meta name="generator" content="Hugo 0.136.5">
 
 
-<meta property="og:url" content="https://peterwangll.github.io/posts/redis/redis-2/">
+<meta property="og:url" content="https://peterwangll.github.io/posts/problem-solving/log_of_install_mysql/">
   <meta property="og:site_name" content="PeterWang&#39;s Blog">
-  <meta property="og:title" content="Redis发布订阅">
-  <meta property="og:description" content="简介 Redis通过SUBSCRIBE和PUBLISH实现发布订阅。主要由三部分组成：「Subscriber」、「Publisher」、「Channel」。通过Pattern模式可以实现订阅多个前缀相同的频道。
-原理 Redis使用pubsub_channels字典来保存订阅频道的信息(value是一个链表)
-缺点 发布的消息并不会持久化，消息发布之后新订阅的客户端只能接收后续发布到该频道的消息。 不支持ACK机制，无法保证消息的可靠性。">
+  <meta property="og:title" content="Homebrew启动Mysql踩坑记录">
+  <meta property="og:description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-10-18T00:00:00+00:00">
-    <meta property="article:modified_time" content="2024-10-18T00:00:00+00:00">
-    <meta property="article:tag" content="Redis">
+    <meta property="article:published_time" content="2024-10-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-10-07T00:00:00+00:00">
+    <meta property="article:tag" content="ProblemSloving">
 
 
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Redis发布订阅">
-  <meta name="twitter:description" content="简介 Redis通过SUBSCRIBE和PUBLISH实现发布订阅。主要由三部分组成：「Subscriber」、「Publisher」、「Channel」。通过Pattern模式可以实现订阅多个前缀相同的频道。
-原理 Redis使用pubsub_channels字典来保存订阅频道的信息(value是一个链表)
-缺点 发布的消息并不会持久化，消息发布之后新订阅的客户端只能接收后续发布到该频道的消息。 不支持ACK机制，无法保证消息的可靠性。">
+  <meta name="twitter:title" content="Homebrew启动Mysql踩坑记录">
+  <meta name="twitter:description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。">
 
 
 
@@ -262,9 +259,8 @@
   <ul>
     <li>
       <ul>
-        <li><a href="#简介">简介</a></li>
-        <li><a href="#原理">原理</a></li>
-        <li><a href="#缺点">缺点</a></li>
+        <li><a href="#起因">起因</a></li>
+        <li><a href="#解决">解决</a></li>
       </ul>
     </li>
   </ul>
@@ -277,20 +273,19 @@
     
     <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
       
-  <meta itemprop="name" content="Redis发布订阅">
-  <meta itemprop="description" content="简介 Redis通过SUBSCRIBE和PUBLISH实现发布订阅。主要由三部分组成：「Subscriber」、「Publisher」、「Channel」。通过Pattern模式可以实现订阅多个前缀相同的频道。
-原理 Redis使用pubsub_channels字典来保存订阅频道的信息(value是一个链表)
-缺点 发布的消息并不会持久化，消息发布之后新订阅的客户端只能接收后续发布到该频道的消息。 不支持ACK机制，无法保证消息的可靠性。">
-  <meta itemprop="datePublished" content="2024-10-18T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-10-18T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7">
-  <meta itemprop="keywords" content="Redis">
+  <meta itemprop="name" content="Homebrew启动Mysql踩坑记录">
+  <meta itemprop="description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。">
+  <meta itemprop="datePublished" content="2024-10-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-10-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="50">
+  <meta itemprop="keywords" content="ProblemSloving">
 
       <header>
-        <h1 itemprop="headline">Redis发布订阅</h1>
+        <h1 itemprop="headline">Homebrew启动Mysql踩坑记录</h1>
         <p class="text-sm">
           
-            Friday, Oct 18, 2024
+            Monday, Oct 7, 2024
           
 
           | <span>1 minute read</span>
@@ -321,19 +316,19 @@
   
   
     <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
-      href="https://x.com/intent/post?text=Redis%e5%8f%91%e5%b8%83%e8%ae%a2%e9%98%85&amp;url=https://peterwangll.github.io/posts/redis/redis-2/" target="_blank" rel="noopener noreferrer"
+      href="https://x.com/intent/post?text=Homebrew%e5%90%af%e5%8a%a8Mysql%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95&amp;url=https://peterwangll.github.io/posts/problem-solving/log_of_install_mysql/" target="_blank" rel="noopener noreferrer"
       title="Share on X">
       <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
     </a>
   
     <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
-      href="https://facebook.com/sharer/sharer.php?u=https://peterwangll.github.io/posts/redis/redis-2/" target="_blank" rel="noopener noreferrer"
+      href="https://facebook.com/sharer/sharer.php?u=https://peterwangll.github.io/posts/problem-solving/log_of_install_mysql/" target="_blank" rel="noopener noreferrer"
       title="Share on Facebook">
       <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
     </a>
   
     <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
-      href="https://wa.me/?text=Redis%e5%8f%91%e5%b8%83%e8%ae%a2%e9%98%85%20https://peterwangll.github.io/posts/redis/redis-2/" target="_blank" rel="noopener noreferrer"
+      href="https://wa.me/?text=Homebrew%e5%90%af%e5%8a%a8Mysql%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95%20https://peterwangll.github.io/posts/problem-solving/log_of_install_mysql/" target="_blank" rel="noopener noreferrer"
       title="Share on WhatsApp">
       <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
     </a>
@@ -348,14 +343,16 @@
 
       
 
-      <h3 id="简介">简介</h3>
-<p>Redis通过<code>SUBSCRIBE</code>和<code>PUBLISH</code>实现发布订阅。主要由三部分组成：「Subscriber」、「Publisher」、「Channel」。通过Pattern模式可以实现订阅多个前缀相同的频道。</p>
-<h3 id="原理">原理</h3>
-<p>Redis使用pubsub_channels字典来保存订阅频道的信息(value是一个链表)</p>
-<h3 id="缺点">缺点</h3>
+      <h3 id="起因">起因</h3>
+<p>原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
+<h3 id="解决">解决</h3>
 <ol>
-<li>发布的消息并不会持久化，消息发布之后新订阅的客户端只能接收后续发布到该频道的消息。</li>
-<li>不支持ACK机制，无法保证消息的可靠性。</li>
+<li>查看日志，在<code>/usr/local/var/mysql/xxx.err</code>的错误日志文件报错信息为：Failed to find valid data directory.</li>
+<li>以此为线索查看解决方案：<code>mysqld --initialize</code>，This shall initialse the data directory in the path where you have installed MySql server.</li>
+<li><code>command not found: mysqld</code>，查看mysql安装路径为<code>/usr/local/opt/mysql/bin/</code>，注意mysql需要加上具体的版本号，比如<code>/usr/local/opt/mysql@8.0/bin/</code>，发现是有<code>mysqld</code>的，需要在<code>~/.zshrc</code>中添加对应的路径。</li>
+<li>此时重新运行<code>mysqld --initialize</code>，依然失败，报错信息提示<code>/usr/local/var/mysql</code>已经存在，使用<code>sudo rm -rf /usr/local/var/mysql</code>删除后重新执行，成功。</li>
+<li>记住保存好临时的密码，重新启动mysql服务，成功。</li>
+<li><code>mysql -u root -p</code>,然后输入刚刚的临时密码，执行<code>ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpassword';</code>，执行<code>FLUSH PRIVILEGES;</code>使密码修改生效。</li>
 </ol>
 
 
@@ -363,20 +360,20 @@
       <div class="divider"></div>
       <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
         
-        <a class="group btn btn-outline" href="/posts/operating-system/process-thread/" title="Process&amp;Thread">
+        <a class="group btn btn-outline" href="/posts/algorithm/algorithm-3/" title="后序遍历的魅力">
           <ion-icon name="chevron-back"></ion-icon>
           <div class="inline-flex flex-col items-start">
             <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">Previous page</span>
-            <span class="max-w-48 truncate">Process&amp;Thread</span>
+            <span class="max-w-48 truncate">后序遍历的魅力</span>
           </div>
         </a>
         
 
         
-        <a class="group btn btn-outline" href="/posts/mysql/mysql-3/" title="Limit&amp;Offset——分页慢查询优化">
+        <a class="group btn btn-outline" href="/posts/algorithm/algorithm-2/" title="骰子的点数">
           <div class="inline-flex flex-col items-end">
             <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">Next page</span>
-            <span class="max-w-48 truncate">Limit&amp;Offset——分页慢查询优化</span>
+            <span class="max-w-48 truncate">骰子的点数</span>
           </div>
           <ion-icon name="chevron-forward"></ion-icon>
         </a>

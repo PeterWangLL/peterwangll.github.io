@@ -18,7 +18,6 @@
 <meta name="description" content="description 链接：https://www.acwing.com/problem/content/76/ 将一个骰子投掷n次，获得的总点数为s，s的可能范围为n～6n。求出投掷n次，掷出n～6n 点分别有多少种掷法。
 code 拿到题目我首先想到的是回溯：
 class Solution { public Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); public int[] numberOfDice(int n) { int index = 0; dfs(n,0); int N = n*6-n&#43;1; int[] result = new int[N]; for(int i=0;i&lt;N;i&#43;&#43;){ result[i]=map.get(n&#43;i); } return result; } public void dfs(int n,int temp){ if(n==0){ map.put(temp,map.getOrDefault(temp,0)&#43;1); return; } for(int i=1;i&lt;=6;i&#43;&#43;){ dfs(n-1,temp&#43;i); } } } 链接：https://www.acwing.com/solution/content/80458/ 后面看到递归的写法：
-class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt;Integer&gt; result = new ArrayList&lt;&gt;(); for(int i=n;i&lt;=6*n;i&#43;&#43;){ result.add(dfs(n,i)); } return result.stream().mapToInt(Integer::intValue).toArray(); } public int dfs(int n,int sum){ if(sum&lt;0)return 0; if(n==0){ return sum==0?1:0; } int ans = 0; for(int i=1;i&lt;=6;i&#43;&#43;){ ans&#43;=dfs(n-1,sum-i); } return ans; } } 上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：
 " />
 
 
@@ -34,8 +33,7 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
   <meta property="og:title" content="骰子的点数">
   <meta property="og:description" content="description 链接：https://www.acwing.com/problem/content/76/ 将一个骰子投掷n次，获得的总点数为s，s的可能范围为n～6n。求出投掷n次，掷出n～6n 点分别有多少种掷法。
 code 拿到题目我首先想到的是回溯：
-class Solution { public Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); public int[] numberOfDice(int n) { int index = 0; dfs(n,0); int N = n*6-n&#43;1; int[] result = new int[N]; for(int i=0;i&lt;N;i&#43;&#43;){ result[i]=map.get(n&#43;i); } return result; } public void dfs(int n,int temp){ if(n==0){ map.put(temp,map.getOrDefault(temp,0)&#43;1); return; } for(int i=1;i&lt;=6;i&#43;&#43;){ dfs(n-1,temp&#43;i); } } } 链接：https://www.acwing.com/solution/content/80458/ 后面看到递归的写法：
-class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt;Integer&gt; result = new ArrayList&lt;&gt;(); for(int i=n;i&lt;=6*n;i&#43;&#43;){ result.add(dfs(n,i)); } return result.stream().mapToInt(Integer::intValue).toArray(); } public int dfs(int n,int sum){ if(sum&lt;0)return 0; if(n==0){ return sum==0?1:0; } int ans = 0; for(int i=1;i&lt;=6;i&#43;&#43;){ ans&#43;=dfs(n-1,sum-i); } return ans; } } 上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：">
+class Solution { public Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); public int[] numberOfDice(int n) { int index = 0; dfs(n,0); int N = n*6-n&#43;1; int[] result = new int[N]; for(int i=0;i&lt;N;i&#43;&#43;){ result[i]=map.get(n&#43;i); } return result; } public void dfs(int n,int temp){ if(n==0){ map.put(temp,map.getOrDefault(temp,0)&#43;1); return; } for(int i=1;i&lt;=6;i&#43;&#43;){ dfs(n-1,temp&#43;i); } } } 链接：https://www.acwing.com/solution/content/80458/ 后面看到递归的写法：">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -49,8 +47,7 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
   <meta name="twitter:title" content="骰子的点数">
   <meta name="twitter:description" content="description 链接：https://www.acwing.com/problem/content/76/ 将一个骰子投掷n次，获得的总点数为s，s的可能范围为n～6n。求出投掷n次，掷出n～6n 点分别有多少种掷法。
 code 拿到题目我首先想到的是回溯：
-class Solution { public Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); public int[] numberOfDice(int n) { int index = 0; dfs(n,0); int N = n*6-n&#43;1; int[] result = new int[N]; for(int i=0;i&lt;N;i&#43;&#43;){ result[i]=map.get(n&#43;i); } return result; } public void dfs(int n,int temp){ if(n==0){ map.put(temp,map.getOrDefault(temp,0)&#43;1); return; } for(int i=1;i&lt;=6;i&#43;&#43;){ dfs(n-1,temp&#43;i); } } } 链接：https://www.acwing.com/solution/content/80458/ 后面看到递归的写法：
-class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt;Integer&gt; result = new ArrayList&lt;&gt;(); for(int i=n;i&lt;=6*n;i&#43;&#43;){ result.add(dfs(n,i)); } return result.stream().mapToInt(Integer::intValue).toArray(); } public int dfs(int n,int sum){ if(sum&lt;0)return 0; if(n==0){ return sum==0?1:0; } int ans = 0; for(int i=1;i&lt;=6;i&#43;&#43;){ ans&#43;=dfs(n-1,sum-i); } return ans; } } 上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：">
+class Solution { public Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); public int[] numberOfDice(int n) { int index = 0; dfs(n,0); int N = n*6-n&#43;1; int[] result = new int[N]; for(int i=0;i&lt;N;i&#43;&#43;){ result[i]=map.get(n&#43;i); } return result; } public void dfs(int n,int temp){ if(n==0){ map.put(temp,map.getOrDefault(temp,0)&#43;1); return; } for(int i=1;i&lt;=6;i&#43;&#43;){ dfs(n-1,temp&#43;i); } } } 链接：https://www.acwing.com/solution/content/80458/ 后面看到递归的写法：">
 
 
 
@@ -65,10 +62,17 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
     
 
 
+<link rel="stylesheet" data-custom-syntax-highlighting />
 <style>
-  pre {
+  .chroma {
     padding: 1em;
+    background-color: var(--dream-pre-bg, #f5f5f5);
+    border-radius: .5em;
     overflow: auto;
+  }
+
+  html.dark .chroma {
+    background-color: var(--dream-pre-bg-dark, #262626);
   }
 </style>
 
@@ -276,8 +280,7 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
   <meta itemprop="name" content="骰子的点数">
   <meta itemprop="description" content="description 链接：https://www.acwing.com/problem/content/76/ 将一个骰子投掷n次，获得的总点数为s，s的可能范围为n～6n。求出投掷n次，掷出n～6n 点分别有多少种掷法。
 code 拿到题目我首先想到的是回溯：
-class Solution { public Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); public int[] numberOfDice(int n) { int index = 0; dfs(n,0); int N = n*6-n&#43;1; int[] result = new int[N]; for(int i=0;i&lt;N;i&#43;&#43;){ result[i]=map.get(n&#43;i); } return result; } public void dfs(int n,int temp){ if(n==0){ map.put(temp,map.getOrDefault(temp,0)&#43;1); return; } for(int i=1;i&lt;=6;i&#43;&#43;){ dfs(n-1,temp&#43;i); } } } 链接：https://www.acwing.com/solution/content/80458/ 后面看到递归的写法：
-class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt;Integer&gt; result = new ArrayList&lt;&gt;(); for(int i=n;i&lt;=6*n;i&#43;&#43;){ result.add(dfs(n,i)); } return result.stream().mapToInt(Integer::intValue).toArray(); } public int dfs(int n,int sum){ if(sum&lt;0)return 0; if(n==0){ return sum==0?1:0; } int ans = 0; for(int i=1;i&lt;=6;i&#43;&#43;){ ans&#43;=dfs(n-1,sum-i); } return ans; } } 上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：">
+class Solution { public Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); public int[] numberOfDice(int n) { int index = 0; dfs(n,0); int N = n*6-n&#43;1; int[] result = new int[N]; for(int i=0;i&lt;N;i&#43;&#43;){ result[i]=map.get(n&#43;i); } return result; } public void dfs(int n,int temp){ if(n==0){ map.put(temp,map.getOrDefault(temp,0)&#43;1); return; } for(int i=1;i&lt;=6;i&#43;&#43;){ dfs(n-1,temp&#43;i); } } } 链接：https://www.acwing.com/solution/content/80458/ 后面看到递归的写法：">
   <meta itemprop="datePublished" content="2024-09-24T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-09-24T00:00:00+00:00">
   <meta itemprop="wordCount" content="211">
@@ -351,104 +354,104 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
 点分别有多少种掷法。</p>
 <h3 id="code">code</h3>
 <p>拿到题目我首先想到的是回溯：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Map<span style="color:#f92672">&lt;</span>Integer,Integer<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> <span style="color:#a6e22e">numberOfDice</span>(<span style="color:#66d9ef">int</span> n) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> 0;
-</span></span><span style="display:flex;"><span>        dfs(n,0);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> n<span style="color:#f92672">*</span>6<span style="color:#f92672">-</span>n<span style="color:#f92672">+</span>1;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span>N<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0;i<span style="color:#f92672">&lt;</span>N;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            result<span style="color:#f92672">[</span>i<span style="color:#f92672">]=</span>map.<span style="color:#a6e22e">get</span>(n<span style="color:#f92672">+</span>i);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> n,<span style="color:#66d9ef">int</span> temp){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(n<span style="color:#f92672">==</span>0){
-</span></span><span style="display:flex;"><span>            map.<span style="color:#a6e22e">put</span>(temp,map.<span style="color:#a6e22e">getOrDefault</span>(temp,0)<span style="color:#f92672">+</span>1);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>1;i<span style="color:#f92672">&lt;=</span>6;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            dfs(n<span style="color:#f92672">-</span>1,temp<span style="color:#f92672">+</span>i);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>链接：https://www.acwing.com/solution/content/80458/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">numberOfDice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="o">*</span><span class="n">6</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">N</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]=</span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">temp</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="n">0</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="n">map</span><span class="p">.</span><span class="na">getOrDefault</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="n">0</span><span class="p">)</span><span class="o">+</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">6</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">1</span><span class="p">,</span><span class="n">temp</span><span class="o">+</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>链接：https://www.acwing.com/solution/content/80458/
 后面看到递归的写法：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[][]</span> dict;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> <span style="color:#a6e22e">numberOfDice</span>(<span style="color:#66d9ef">int</span> n) {
-</span></span><span style="display:flex;"><span>        List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;</span>();
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>n;i<span style="color:#f92672">&lt;=</span>6<span style="color:#f92672">*</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            result.<span style="color:#a6e22e">add</span>(dfs(n,i));
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result.<span style="color:#a6e22e">stream</span>().<span style="color:#a6e22e">mapToInt</span>(Integer::intValue).<span style="color:#a6e22e">toArray</span>();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> n,<span style="color:#66d9ef">int</span> sum){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(sum<span style="color:#f92672">&lt;</span>0)<span style="color:#66d9ef">return</span> 0;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(n<span style="color:#f92672">==</span>0){
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> sum<span style="color:#f92672">==</span>0<span style="color:#f92672">?</span>1:0;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ans <span style="color:#f92672">=</span> 0;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>1;i<span style="color:#f92672">&lt;=</span>6;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">+=</span>dfs(n<span style="color:#f92672">-</span>1,sum<span style="color:#f92672">-</span>i);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[][]</span> dict;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> <span style="color:#a6e22e">numberOfDice</span>(<span style="color:#66d9ef">int</span> n) {
-</span></span><span style="display:flex;"><span>        dict <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span>n<span style="color:#f92672">+</span>1<span style="color:#f92672">][</span>6<span style="color:#f92672">*</span>n<span style="color:#f92672">+</span>1<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>        List<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;</span>();
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> row:dict){
-</span></span><span style="display:flex;"><span>            Arrays.<span style="color:#a6e22e">fill</span>(row,<span style="color:#f92672">-</span>1);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>n;i<span style="color:#f92672">&lt;=</span>6<span style="color:#f92672">*</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            result.<span style="color:#a6e22e">add</span>(dfs(n,i));
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result.<span style="color:#a6e22e">stream</span>().<span style="color:#a6e22e">mapToInt</span>(Integer::intValue).<span style="color:#a6e22e">toArray</span>();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> n,<span style="color:#66d9ef">int</span> sum){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(sum<span style="color:#f92672">&lt;</span>0)<span style="color:#66d9ef">return</span> 0;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(n<span style="color:#f92672">==</span>0){
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> sum<span style="color:#f92672">==</span>0<span style="color:#f92672">?</span>1:0;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(dict<span style="color:#f92672">[</span>n<span style="color:#f92672">][</span>sum<span style="color:#f92672">]!=-</span>1)<span style="color:#66d9ef">return</span> dict<span style="color:#f92672">[</span>n<span style="color:#f92672">][</span>sum<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ans <span style="color:#f92672">=</span> 0;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>1;i<span style="color:#f92672">&lt;=</span>6;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">+=</span>dfs(n<span style="color:#f92672">-</span>1,sum<span style="color:#f92672">-</span>i);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        dict<span style="color:#f92672">[</span>n<span style="color:#f92672">][</span>sum<span style="color:#f92672">]=</span>ans;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>dp写法：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> <span style="color:#a6e22e">numberOfDice</span>(<span style="color:#66d9ef">int</span> n) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span><span style="color:#f92672">[][]</span> dp <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span>n<span style="color:#f92672">+</span>1<span style="color:#f92672">][</span>6<span style="color:#f92672">*</span>n<span style="color:#f92672">+</span>1<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>        dp<span style="color:#f92672">[</span>0<span style="color:#f92672">][</span>0<span style="color:#f92672">]=</span>1;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 投掷次数从1开始</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>1;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// sum为0不存在，所以从1开始</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j<span style="color:#f92672">=</span>1;j<span style="color:#f92672">&lt;=</span>6<span style="color:#f92672">*</span>n;j<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 有1~6个点数</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> k<span style="color:#f92672">=</span>1;k<span style="color:#f92672">&lt;=</span>6;k<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span>(j<span style="color:#f92672">&gt;=</span>k){
-</span></span><span style="display:flex;"><span>                        dp<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]=</span>dp<span style="color:#f92672">[</span>i<span style="color:#f92672">][</span>j<span style="color:#f92672">]+</span>dp<span style="color:#f92672">[</span>i<span style="color:#f92672">-</span>1<span style="color:#f92672">][</span>j<span style="color:#f92672">-</span>k<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>                    }
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> result <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span>6<span style="color:#f92672">*</span>n<span style="color:#f92672">-</span>n<span style="color:#f92672">+</span>1<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>n;i<span style="color:#f92672">&lt;=</span>6<span style="color:#f92672">*</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>            result<span style="color:#f92672">[</span>i<span style="color:#f92672">-</span>n<span style="color:#f92672">]=</span>dp<span style="color:#f92672">[</span>n<span style="color:#f92672">][</span>i<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="summery">summery</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">dict</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">numberOfDice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">6</span><span class="o">*</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">i</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">mapToInt</span><span class="p">(</span><span class="n">Integer</span><span class="p">::</span><span class="n">intValue</span><span class="p">).</span><span class="na">toArray</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">sum</span><span class="o">&lt;</span><span class="n">0</span><span class="p">)</span><span class="k">return</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="n">0</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="o">==</span><span class="n">0</span><span class="o">?</span><span class="n">1</span><span class="p">:</span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">6</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ans</span><span class="o">+=</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">1</span><span class="p">,</span><span class="n">sum</span><span class="o">-</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>上面这种做法会有很多重复计算，于是采用下面记忆化搜索的方式优化：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">dict</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">numberOfDice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">+</span><span class="n">1</span><span class="o">][</span><span class="n">6</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="n">1</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">row</span><span class="p">:</span><span class="n">dict</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Arrays</span><span class="p">.</span><span class="na">fill</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="o">-</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">6</span><span class="o">*</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">result</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">i</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">mapToInt</span><span class="p">(</span><span class="n">Integer</span><span class="p">::</span><span class="n">intValue</span><span class="p">).</span><span class="na">toArray</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">sum</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">sum</span><span class="o">&lt;</span><span class="n">0</span><span class="p">)</span><span class="k">return</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="n">0</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">sum</span><span class="o">==</span><span class="n">0</span><span class="o">?</span><span class="n">1</span><span class="p">:</span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">dict</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">sum</span><span class="o">]!=-</span><span class="n">1</span><span class="p">)</span><span class="k">return</span><span class="w"> </span><span class="n">dict</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">sum</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">6</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">ans</span><span class="o">+=</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">1</span><span class="p">,</span><span class="n">sum</span><span class="o">-</span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">dict</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">sum</span><span class="o">]=</span><span class="n">ans</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>dp写法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Solution</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="nf">numberOfDice</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[][]</span><span class="w"> </span><span class="n">dp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">+</span><span class="n">1</span><span class="o">][</span><span class="n">6</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="n">1</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">dp</span><span class="o">[</span><span class="n">0</span><span class="o">][</span><span class="n">0</span><span class="o">]=</span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 投掷次数从1开始</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// sum为0不存在，所以从1开始</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="o">=</span><span class="n">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">6</span><span class="o">*</span><span class="n">n</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c1">// 有1~6个点数</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="n">1</span><span class="p">;</span><span class="n">k</span><span class="o">&lt;=</span><span class="n">6</span><span class="p">;</span><span class="n">k</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="p">(</span><span class="n">j</span><span class="o">&gt;=</span><span class="n">k</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]=</span><span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]+</span><span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="n">1</span><span class="o">][</span><span class="n">j</span><span class="o">-</span><span class="n">k</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">int</span><span class="o">[</span><span class="n">6</span><span class="o">*</span><span class="n">n</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="n">1</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">6</span><span class="o">*</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="n">n</span><span class="o">]=</span><span class="n">dp</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="summery">summery</h3>
 <ol>
 <li>经典的递归优化</li>
 <li>List转int[]可以使用这种写法：<code>list.stream().mapToInt(Integer::intValue).toArray()</code></li>
@@ -459,7 +462,7 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
       <div class="divider"></div>
       <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
         
-        <a class="group btn btn-outline" href="/posts/debug/log_of_install_mysql/" title="Homebrew启动Mysql踩坑记录">
+        <a class="group btn btn-outline" href="/posts/problem-solving/log_of_install_mysql/" title="Homebrew启动Mysql踩坑记录">
           <ion-icon name="chevron-back"></ion-icon>
           <div class="inline-flex flex-col items-start">
             <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">Previous page</span>
@@ -573,13 +576,20 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
 <img style="display: inline-block;margin:0;" alt="Visual Studio Code" src="https://img.shields.io/badge/-Visual_Studio_Code-43853d?style=flat-square" />
 <p>
 <ul>
-<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="./img/Penguin.png" alt="Penguin" width="15%" /><br></li>
+<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="/img/Penguin.png" alt="Penguin" width="15%" /><br></li>
 <li>🗺️ I&rsquo;m fond of exploring and transcending my own boundaries. <br></li>
 <li>📚 Reading is my favorite thing to do. <br></li>
 <li>📨 Find me through E-mail: <strong><a href="mailto:18136892032@163.com">18136892032@163.com</a></strong><br></li>
 <li>💛 My motto: No time to sorrow, we&rsquo;re building tomorrow.<br></li>
 </ul>
-
+<div align="center">
+<p><strong>Code Cycle</strong><br></p>
+<img style="display: inline-block;margin:0;" src="/img/Face with Spiral Eyes.png" width="10%" alt="Broken system!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Relieved Face.png" width="10%" alt="It's working!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Astonished Face.png" width="10%" alt="It's working but you don't know how!"/><br>
+</div>  
     </div>
   </div>
   <div class="divider divider-vertical"></div>
@@ -614,6 +624,21 @@ class Solution { public int[][] dict; public int[] numberOfDice(int n) { List&lt
 
 
 
+<script>
+  window.customSyntaxHighlighting = {
+    light: "/css/syntax-light.min.css",
+    dark: "/css/syntax-dark.min.css"
+  }
+
+  document.addEventListener('alpine:initialized', () => {
+    var isDark = Alpine.store('darkMode').isDark()
+    var customSyntaxHighlightingUrl = isDark ? window.customSyntaxHighlighting.dark : window.customSyntaxHighlighting.light
+
+    document
+      .querySelector('link[data-custom-syntax-highlighting]')
+      .setAttribute('href', customSyntaxHighlightingUrl)
+  })
+</script>
 
 
 

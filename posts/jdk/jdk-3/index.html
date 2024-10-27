@@ -66,10 +66,17 @@ public T get() { Thread t = Thread.currentThread(); // 拿到对应currentThread
     
 
 
+<link rel="stylesheet" data-custom-syntax-highlighting />
 <style>
-  pre {
+  .chroma {
     padding: 1em;
+    background-color: var(--dream-pre-bg, #f5f5f5);
+    border-radius: .5em;
     overflow: auto;
+  }
+
+  html.dark .chroma {
+    background-color: var(--dream-pre-bg-dark, #262626);
   }
 </style>
 
@@ -338,87 +345,87 @@ public T get() { Thread t = Thread.currentThread(); // 拿到对应currentThread
 
       <p><code>Provide thread-local variables, wish to associate state with a thread(e.g., a user ID or Transaction ID).</code></p>
 <p>每个Thread拥有一个ThreadLocalMap，实际是一个<code>Entry[] table</code>，Entry是一个key-value结构，key是一个弱引用。所以get()或set()时，是通过CurrentThread得到ThreadLocalMap，然后以this为key操作的过程。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Entry</span> <span style="color:#66d9ef">extends</span> WeakReference<span style="color:#f92672">&lt;</span>ThreadLocal<span style="color:#f92672">&lt;?&gt;&gt;</span> {
-</span></span><span style="display:flex;"><span>    Object value;
-</span></span><span style="display:flex;"><span>    Entry(ThreadLocal<span style="color:#f92672">&lt;?&gt;</span> k, Object v) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>(k);
-</span></span><span style="display:flex;"><span>        value <span style="color:#f92672">=</span> v;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>先来看下get():</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> T <span style="color:#a6e22e">get</span>() {
-</span></span><span style="display:flex;"><span>    Thread t <span style="color:#f92672">=</span> Thread.<span style="color:#a6e22e">currentThread</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 拿到对应currentThread的map数组</span>
-</span></span><span style="display:flex;"><span>    ThreadLocalMap map <span style="color:#f92672">=</span> getMap(t);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (map <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
-</span></span><span style="display:flex;"><span>        ThreadLocalMap.<span style="color:#a6e22e">Entry</span> e <span style="color:#f92672">=</span> map.<span style="color:#a6e22e">getEntry</span>(<span style="color:#66d9ef">this</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (e <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">@SuppressWarnings</span>(<span style="color:#e6db74">&#34;unchecked&#34;</span>)
-</span></span><span style="display:flex;"><span>            T result <span style="color:#f92672">=</span> (T)e.<span style="color:#a6e22e">value</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> result;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 初始化map数组</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> setInitialValue();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>进入getEntry():</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> Entry <span style="color:#a6e22e">getEntry</span>(ThreadLocal<span style="color:#f92672">&lt;?&gt;</span> key) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// threadLocalHashCode很神奇的数字</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> key.<span style="color:#a6e22e">threadLocalHashCode</span> <span style="color:#f92672">&amp;</span> (table.<span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> 1);
-</span></span><span style="display:flex;"><span>    Entry e <span style="color:#f92672">=</span> table<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (e <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">&amp;&amp;</span> e.<span style="color:#a6e22e">get</span>() <span style="color:#f92672">==</span> key)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> e;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 因为是线性探测，第一下可能没找到，往后接着找</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> getEntryAfterMiss(key, i, e);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>set()相对复杂一点:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set</span>(T value) {
-</span></span><span style="display:flex;"><span>    Thread t <span style="color:#f92672">=</span> Thread.<span style="color:#a6e22e">currentThread</span>();
-</span></span><span style="display:flex;"><span>    ThreadLocalMap map <span style="color:#f92672">=</span> getMap(t);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (map <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
-</span></span><span style="display:flex;"><span>        map.<span style="color:#a6e22e">set</span>(<span style="color:#66d9ef">this</span>, value);
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 初始化map并把第一个value放进去，这时候不会冲突</span>
-</span></span><span style="display:flex;"><span>        createMap(t, value);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>详细看下set(key,value):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set</span>(ThreadLocal<span style="color:#f92672">&lt;?&gt;</span> key, Object value) {
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// We don&#39;t use a fast path as with get() because it is at</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// least as common to use set() to create new entries as</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// it is to replace existing ones, in which case, a fast</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// path would fail more often than not.</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    Entry<span style="color:#f92672">[]</span> tab <span style="color:#f92672">=</span> table;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> tab.<span style="color:#a6e22e">length</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> key.<span style="color:#a6e22e">threadLocalHashCode</span> <span style="color:#f92672">&amp;</span> (len<span style="color:#f92672">-</span>1);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 往后找到第一个为null的位置</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (Entry e <span style="color:#f92672">=</span> tab<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span>;
-</span></span><span style="display:flex;"><span>            e <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>            e <span style="color:#f92672">=</span> tab<span style="color:#f92672">[</span>i <span style="color:#f92672">=</span> nextIndex(i, len)<span style="color:#f92672">]</span>) {
-</span></span><span style="display:flex;"><span>        ThreadLocal<span style="color:#f92672">&lt;?&gt;</span> k <span style="color:#f92672">=</span> e.<span style="color:#a6e22e">get</span>();
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 如果key相同，直接替换</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (k <span style="color:#f92672">==</span> key) {
-</span></span><span style="display:flex;"><span>            e.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> value;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 如果这个位置key为null，说明它被GC了，需要做一个清理</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (k <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span>) {
-</span></span><span style="display:flex;"><span>            replaceStaleEntry(key, value, i);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    tab<span style="color:#f92672">[</span>i<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Entry(key, value);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sz <span style="color:#f92672">=</span> <span style="color:#f92672">++</span>size;
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// re-pack and/or re-size the table</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>cleanSomeSlots(i, sz) <span style="color:#f92672">&amp;&amp;</span> sz <span style="color:#f92672">&gt;=</span> threshold)
-</span></span><span style="display:flex;"><span>        rehash();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>每个ThreadLocal对象都有一个threadLocalHashCode，每次获取都是增加<code>0x61c88647</code>，通过它获得的散列分布特别好，是个神奇的数字。这样一来哈希冲突的可能性大大降低，然后这里JDK使用的是线性探测法解决冲突。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Entry</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">WeakReference</span><span class="o">&lt;</span><span class="n">ThreadLocal</span><span class="o">&lt;?&gt;&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Entry</span><span class="p">(</span><span class="n">ThreadLocal</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">k</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>先来看下get():</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">get</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Thread</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 拿到对应currentThread的map数组</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ThreadLocalMap</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getMap</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">map</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ThreadLocalMap</span><span class="p">.</span><span class="na">Entry</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">getEntry</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&#34;unchecked&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">T</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="na">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 初始化map数组</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">setInitialValue</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>进入getEntry():</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="n">Entry</span><span class="w"> </span><span class="nf">getEntry</span><span class="p">(</span><span class="n">ThreadLocal</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// threadLocalHashCode很神奇的数字</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">threadLocalHashCode</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">table</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Entry</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">get</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">e</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">else</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 因为是线性探测，第一下可能没找到，往后接着找</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">getEntryAfterMiss</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>set()相对复杂一点:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Thread</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">ThreadLocalMap</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getMap</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">map</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">map</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 初始化map并把第一个value放进去，这时候不会冲突</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">createMap</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>详细看下set(key,value):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="n">ThreadLocal</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// We don&#39;t use a fast path as with get() because it is at</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// least as common to use set() to create new entries as</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// it is to replace existing ones, in which case, a fast</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// path would fail more often than not.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Entry</span><span class="o">[]</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">threadLocalHashCode</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="o">-</span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 往后找到第一个为null的位置</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Entry</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab</span><span class="o">[</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nextIndex</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="o">]</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ThreadLocal</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 如果key相同，直接替换</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// 如果这个位置key为null，说明它被GC了，需要做一个清理</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">replaceStaleEntry</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">return</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">tab</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Entry</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">++</span><span class="n">size</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// re-pack and/or re-size the table</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">cleanSomeSlots</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">sz</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">sz</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">threshold</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">rehash</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>每个ThreadLocal对象都有一个threadLocalHashCode，每次获取都是增加<code>0x61c88647</code>，通过它获得的散列分布特别好，是个神奇的数字。这样一来哈希冲突的可能性大大降低，然后这里JDK使用的是线性探测法解决冲突。</p>
 <p>接着是为什么要使用弱引用，这是为了有效回收没用的ThreadLocal，因为线程池中线程长时间不会销毁，如果是强引用的话线程的ThreadLocal占的内存就一直不会释放。</p>
 <p>还有一个问题：当弱引用被GC后，value和Entry还在会造成内存泄漏，ThreadLocal在设计上考虑到了这种情况，这也是为什么在set过程中扫描到key为null需要去做清理。但在实际使用中，在ThreadLocal使用前后都调用remove清理，同时对异常情况也要在finally中清理。这样可以有效避免内存泄漏，以及业务上的逻辑问题。</p>
 <p>另一个问题是常常声明为static：我的理解是ThreadLocal本质是一个key，对于不同的Thread过来会有相应的Map对应，使用的时候要注意remove，static的话避免资源浪费。</p>
@@ -542,13 +549,20 @@ public T get() { Thread t = Thread.currentThread(); // 拿到对应currentThread
 <img style="display: inline-block;margin:0;" alt="Visual Studio Code" src="https://img.shields.io/badge/-Visual_Studio_Code-43853d?style=flat-square" />
 <p>
 <ul>
-<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="./img/Penguin.png" alt="Penguin" width="15%" /><br></li>
+<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="/img/Penguin.png" alt="Penguin" width="15%" /><br></li>
 <li>🗺️ I&rsquo;m fond of exploring and transcending my own boundaries. <br></li>
 <li>📚 Reading is my favorite thing to do. <br></li>
 <li>📨 Find me through E-mail: <strong><a href="mailto:18136892032@163.com">18136892032@163.com</a></strong><br></li>
 <li>💛 My motto: No time to sorrow, we&rsquo;re building tomorrow.<br></li>
 </ul>
-
+<div align="center">
+<p><strong>Code Cycle</strong><br></p>
+<img style="display: inline-block;margin:0;" src="/img/Face with Spiral Eyes.png" width="10%" alt="Broken system!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Relieved Face.png" width="10%" alt="It's working!"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="display: inline-block;margin:0;" src="/img/Astonished Face.png" width="10%" alt="It's working but you don't know how!"/><br>
+</div>  
     </div>
   </div>
   <div class="divider divider-vertical"></div>
@@ -583,6 +597,21 @@ public T get() { Thread t = Thread.currentThread(); // 拿到对应currentThread
 
 
 
+<script>
+  window.customSyntaxHighlighting = {
+    light: "/css/syntax-light.min.css",
+    dark: "/css/syntax-dark.min.css"
+  }
+
+  document.addEventListener('alpine:initialized', () => {
+    var isDark = Alpine.store('darkMode').isDark()
+    var customSyntaxHighlightingUrl = isDark ? window.customSyntaxHighlighting.dark : window.customSyntaxHighlighting.light
+
+    document
+      .querySelector('link[data-custom-syntax-highlighting]')
+      .setAttribute('href', customSyntaxHighlightingUrl)
+  })
+</script>
 
 
 
