@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en"
+  x-data
+  :class="$store.darkMode.class()"
+  :data-theme="$store.darkMode.theme()">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homebrew启动Mysql踩坑记录 | PeterWang&#39;s Blog</title>
+
+    
+
+<link rel="canonical" href="https://peterwangll.github.io/posts/debug/log_of_install_mysql/" />
+
+
+
+<meta name="author" content="Peter Wang" />
+<meta name="description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。 " />
+
+
+<meta name="keywords" content="Debug">
+
+
+
+<meta name="generator" content="Hugo 0.136.5">
+
+
+<meta property="og:url" content="https://peterwangll.github.io/posts/debug/log_of_install_mysql/">
+  <meta property="og:site_name" content="PeterWang&#39;s Blog">
+  <meta property="og:title" content="Homebrew启动Mysql踩坑记录">
+  <meta property="og:description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-10-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-10-07T00:00:00+00:00">
+    <meta property="article:tag" content="Debug">
+
+
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Homebrew启动Mysql踩坑记录">
+  <meta name="twitter:description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。">
+
+
+
+
+  
+
+<link rel="stylesheet" href="/css/output.min.css" />
+
+
+
+
+    
+
+
+<style>
+  pre {
+    padding: 1em;
+    overflow: auto;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+    
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+    <div id="dream-global-bg"></div>
+
+    
+<nav class="mt-4 lg:mt-8 py-4">
+
+  
+  <div class="container flex justify-between max-w-[65ch] mx-auto px-4 md:px-0">
+  
+    <section class="flex items-center gap-4">
+      <div class="avatar cursor-pointer hover:online" @click="flip = !flip" title="Flip it!">
+        <div class="h-10 rounded-full">
+          <img src="/img/avator.jpg" alt="PeterWang&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="https://peterwangll.github.io/" class="text-lg font-semibold cursor-pointer">
+          PeterWang&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">No time to sorrow, we&#39;re building tomorrow</div>
+        
+      </div>
+      
+    </section>
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul class="dropdown-content menu w-36 bg-base-100 rounded-box z-[1] shadow-md">
+        
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="About">
+    <ion-icon name="information-circle"></ion-icon>About</div>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="Archives">
+    <ion-icon name="archive"></ion-icon>
+    Archives
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="All Categories">
+    <ion-icon name="grid"></ion-icon>
+    All Categories
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="All Tags">
+    <ion-icon name="pricetags"></ion-icon>
+    All Tags
+  </a>
+</li>
+
+
+
+
+
+
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+      
+      
+      <div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="About">About</div>
+      
+      
+
+      
+      
+
+      
+
+      
+      
+
+
+
+
+
+      
+      
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/posts" title="Archives">
+  <ion-icon class="group-hover:text-primary-content" name="archive"></ion-icon>
+</a>
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/categories" title="All Categories">
+  <ion-icon class="group-hover:text-primary-content" name="grid"></ion-icon>
+</a>
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/tags" title="All Tags">
+  <ion-icon class="group-hover:text-primary-content" name="pricetags"></ion-icon>
+</a>
+
+
+      
+
+      
+
+      
+    </section>
+  </div>
+</nav>
+
+
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
+<div class="mt-4 px-4">
+  
+  <div class="relative" x-data="{ height: '' }" x-init="height = $el.scrollHeight + 'px'">
+  
+    
+    <div class="absolute right-0 lg:w-36 xl:w-48 hidden lg:block" :style="{ height }">
+      <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#起因">起因</a></li>
+        <li><a href="#解决">解决</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      <div class="dream-adsense px-5">
+      
+      </div>
+    </div>
+    
+    <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
+      
+  <meta itemprop="name" content="Homebrew启动Mysql踩坑记录">
+  <meta itemprop="description" content="起因 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行brew services run mysql时仍然会显示成功，但是brew services list显示的是状态却是stopped。尝试了重新启动和卸载均无效。
+解决 查看日志，在/usr/local/var/mysql/xxx.err的错误日志文件报错信息为：Failed to find valid data directory. 以此为线索查看解决方案：mysqld --initialize，This shall initialse the data directory in the path where you have installed MySql server. command not found: mysqld，查看mysql安装路径为/usr/local/opt/mysql/bin/，注意mysql需要加上具体的版本号，比如/usr/local/opt/mysql@8.0/bin/，发现是有mysqld的，需要在~/.zshrc中添加对应的路径。 此时重新运行mysqld --initialize，依然失败，报错信息提示/usr/local/var/mysql已经存在，使用sudo rm -rf /usr/local/var/mysql删除后重新执行，成功。 记住保存好临时的密码，重新启动mysql服务，成功。 mysql -u root -p,然后输入刚刚的临时密码，执行ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;newpassword&#39;;，执行FLUSH PRIVILEGES;使密码修改生效。">
+  <meta itemprop="datePublished" content="2024-10-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-10-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="50">
+  <meta itemprop="keywords" content="Debug">
+
+      <header>
+        <h1 itemprop="headline">Homebrew启动Mysql踩坑记录</h1>
+        <p class="text-sm">
+          
+            Monday, Oct 7, 2024
+          
+
+          | <span>1 minute read</span>
+
+          
+        </p>
+        <div class="flex justify-between">
+          <div class="flex items-center">
+  
+  <span>@</span>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    <span itemprop="name">Peter Wang</span>
+  
+  </span>
+</div>
+
+
+          <div class="flex items-center gap-2">
+  
+  
+
+  
+  
+  
+  
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://x.com/intent/post?text=Homebrew%e5%90%af%e5%8a%a8Mysql%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95&amp;url=https://peterwangll.github.io/posts/debug/log_of_install_mysql/" target="_blank" rel="noopener noreferrer"
+      title="Share on X">
+      <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://facebook.com/sharer/sharer.php?u=https://peterwangll.github.io/posts/debug/log_of_install_mysql/" target="_blank" rel="noopener noreferrer"
+      title="Share on Facebook">
+      <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://wa.me/?text=Homebrew%e5%90%af%e5%8a%a8Mysql%e8%b8%a9%e5%9d%91%e8%ae%b0%e5%bd%95%20https://peterwangll.github.io/posts/debug/log_of_install_mysql/" target="_blank" rel="noopener noreferrer"
+      title="Share on WhatsApp">
+      <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
+    </a>
+  
+
+  
+  
+</div>
+
+        </div>
+      </header>
+
+      
+
+      <h3 id="起因">起因</h3>
+<p>原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行<code>brew services run mysql</code>时仍然会显示成功，但是<code>brew services list</code>显示的是状态却是<code>stopped</code>。尝试了重新启动和卸载均无效。</p>
+<h3 id="解决">解决</h3>
+<ol>
+<li>查看日志，在<code>/usr/local/var/mysql/xxx.err</code>的错误日志文件报错信息为：Failed to find valid data directory.</li>
+<li>以此为线索查看解决方案：<code>mysqld --initialize</code>，This shall initialse the data directory in the path where you have installed MySql server.</li>
+<li><code>command not found: mysqld</code>，查看mysql安装路径为<code>/usr/local/opt/mysql/bin/</code>，注意mysql需要加上具体的版本号，比如<code>/usr/local/opt/mysql@8.0/bin/</code>，发现是有<code>mysqld</code>的，需要在<code>~/.zshrc</code>中添加对应的路径。</li>
+<li>此时重新运行<code>mysqld --initialize</code>，依然失败，报错信息提示<code>/usr/local/var/mysql</code>已经存在，使用<code>sudo rm -rf /usr/local/var/mysql</code>删除后重新执行，成功。</li>
+<li>记住保存好临时的密码，重新启动mysql服务，成功。</li>
+<li><code>mysql -u root -p</code>,然后输入刚刚的临时密码，执行<code>ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpassword';</code>，执行<code>FLUSH PRIVILEGES;</code>使密码修改生效。</li>
+</ol>
+
+
+      
+      <div class="divider"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        
+        <a class="group btn btn-outline" href="/posts/algorithm/algorithm-3/" title="后序遍历的魅力">
+          <ion-icon name="chevron-back"></ion-icon>
+          <div class="inline-flex flex-col items-start">
+            <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">Previous page</span>
+            <span class="max-w-48 truncate">后序遍历的魅力</span>
+          </div>
+        </a>
+        
+
+        
+        <a class="group btn btn-outline" href="/posts/algorithm/algorithm-2/" title="骰子的点数">
+          <div class="inline-flex flex-col items-end">
+            <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">Next page</span>
+            <span class="max-w-48 truncate">骰子的点数</span>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </a>
+        
+      </div>
+      
+    </article>
+  </div>
+
+  
+</div>
+
+
+            
+            <footer class="flex justify-between items-center gap-2 max-w-[65ch] mx-auto px-4 md:px-0 py-12">
+            
+              <div>
+  
+  <p>
+    © 2024 PeterWang&#39;s Blog
+  </p>
+  
+
+  
+  <p class="text-sm">
+    🍊
+    <span class="text-base-content/60">
+      无限进步
+    </span>
+  </p>
+  
+</div>
+
+              <div
+  x-data="{ icons: [
+    { name: 'moon', status: 'y' },
+    { name: 'sunny', status: 'n' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center h-[32px] px-2 gap-2 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+            </footer>
+          </div>
+        </div>
+        <div class="back">
+          <div class="container">
+            
+            <div class="max-w-[65ch] mt-8 mx-auto px-4">
+  
+  
+  
+  <div>
+    <div class="mb-4 text-lg font-medium"></div>
+
+    <div class="prose dark:prose-invert">
+      <h3>Welcome to my page!</h3>I'm Peter, a learner of back-end development from 🇨🇳 <b>Suzhou, China</b>, currently a senior student from <img src="/img/University Icon.png" width="10%" alt="University Icon"/><b>Nanjing University of Information Science & Technology</b>.
+<h3>Things I code with:</h3>
+<p>
+<img style="display: inline-block;margin:0;" alt="Java" src="https://img.shields.io/badge/Java-45b8d8?style=flat-square" />
+<img style="display: inline-block;margin:0;" alt="Golang" src="https://img.shields.io/badge/-Golang-8DD6F9?style=flat-square&logo=go&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Python" src="https://img.shields.io/badge/-Python-46a2f1?style=flat-square&logo=python&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Spring" src="https://img.shields.io/badge/-Spring-2088FF?style=flat-square&logo=spring&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Maven" src="https://img.shields.io/badge/-Maven-007ACC?style=flat-square&logo=apachemaven&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="MySQL" src="https://img.shields.io/badge/-MySQL-5849BE?style=flat-square&logo=mysql&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Redis" src="https://img.shields.io/badge/-Redis-311C87?style=flat-square&logo=redis&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="RocketMQ" src="https://img.shields.io/badge/-RocketMQ-430098?style=flat-square&logo=apacherocketmq&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="ElasticSearch" src="https://img.shields.io/badge/-ElasticSearch-764ABC?style=flat-square&logo=elasticsearch&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="MongoDB" src="https://img.shields.io/badge/-MongoDB-B7178C?style=flat-square&logo=mongodb&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Nodejs" src="https://img.shields.io/badge/-Nodejs-E10098?style=flat-square&logo=nodedotjs&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="React" src="https://img.shields.io/badge/-React-CC6699?style=flat-square&logo=react&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-db7092?style=flat-square&logo=javascript&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="HTML5" src="https://img.shields.io/badge/-HTML5-ea2845?style=flat-square&logo=html5&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="CSS3" src="https://img.shields.io/badge/-CSS3-F05032?style=flat-square&logo=css3&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Git" src="https://img.shields.io/badge/-Git-FB542B?style=flat-square&logo=git&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Docker" src="https://img.shields.io/badge/-Docker-EC4A3F?style=flat-square&logo=docker&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Github Actions" src="https://img.shields.io/badge/-Github_Actions-F9A03C?style=flat-square&logo=githubactions&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Linux" src="https://img.shields.io/badge/-Linux-F7B93E?style=flat-square&logo=linux&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Markdown" src="https://img.shields.io/badge/-Markdown-13aa52?style=flat-square&logo=markdown&logoColor=white" />
+<img style="display: inline-block;margin:0;" alt="Visual Studio Code" src="https://img.shields.io/badge/-Visual_Studio_Code-43853d?style=flat-square" />
+<p>
+<ul>
+<li>👨🏻‍💻 I&rsquo;m currently looking for a job as a back-end development engineer. <img align="right" src="./img/Penguin.png" alt="Penguin" width="15%" /><br></li>
+<li>🗺️ I&rsquo;m fond of exploring and transcending my own boundaries. <br></li>
+<li>📚 Reading is my favorite thing to do. <br></li>
+<li>📨 Find me through E-mail: <strong><a href="mailto:18136892032@163.com">18136892032@163.com</a></strong><br></li>
+<li>💛 My motto: No time to sorrow, we&rsquo;re building tomorrow.<br></li>
+</ul>
+
+    </div>
+  </div>
+  <div class="divider divider-vertical"></div>
+  
+  
+
+  
+
+  
+</div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+  window.lightTheme = "emerald"
+  window.darkTheme = "forest"
+</script>
+
+
+
+
+
+  
+
+<script src="/js/main.min.js"></script>
+
+    
+
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    <script type="module" src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.4.0/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

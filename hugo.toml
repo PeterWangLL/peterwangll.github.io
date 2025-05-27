@@ -1,0 +1,76 @@
+baseurl = "https://peterwangll.github.io/"
+defaultContentLanguage = "en"
+languageCode = "en"
+title = "PeterWang's Blog"
+theme = "dream"
+
+# [services]
+# [services.disqus]
+# shortname = ""
+# [services.googleAnalytics]
+# ID = ""
+
+[params]
+zenMode = true
+
+lightTheme = "emerald"
+darkTheme = "forest"
+
+# backgroundImage = "me/background.jpg"
+# backgroundImageDark = ""
+
+author = "Peter Wang"
+description = "description"
+avatar = "img/avator.jpg"
+headerTitle = "PeterWang's Blog"
+motto = "No time to sorrow, we're building tomorrow"
+
+footerBottomText = ""
+
+# rss = true
+
+# utterancesRepo = ""
+
+# valine = true
+# LEANCLOUD_APP_ID = ""
+# LEANCLOUD_APP_KEY = ""
+
+# waline = true
+# walineServer = ""
+
+email = "18136892032@163.com"
+
+siteStartYear = 2024
+
+# favicon = "favicon.ico"
+
+# Syntax highlighting
+customSyntaxHighlighting = true
+
+# options
+# stickyNav = true
+# reorderNavItems = ["search", "rss", "posts", "categories", "tags"]
+# collapseNavItems = ["posts", "categories", "tags"]
+noDefaultSummaryCover = true
+showTableOfContents = true
+# showSummaryCoverInPost = true
+showPrevNextPost = true
+# reorderShares = ["x", "facebook", "whatsapp"]
+
+# [params.navItems]
+
+# [params.advanced]
+# customCSS = ["css/custom.css"]
+# customJS = []
+
+# [params.experimental]
+# jsDate = true
+# jsDateFormat = "yyyy年MM月dd日"
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+noClasses = false

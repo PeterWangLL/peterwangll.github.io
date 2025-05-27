@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on PeterWang&#39;s Blog</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on PeterWang&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 27 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ProblemSloving</title>
+      <link>http://localhost:1313/tags/problemsloving/</link>
+      <pubDate>Sun, 27 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/problemsloving/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OS</title>
+      <link>http://localhost:1313/tags/os/</link>
+      <pubDate>Sat, 19 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/os/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redis</title>
+      <link>http://localhost:1313/tags/redis/</link>
+      <pubDate>Fri, 18 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/redis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySQL</title>
+      <link>http://localhost:1313/tags/mysql/</link>
+      <pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NetWork</title>
+      <link>http://localhost:1313/tags/network/</link>
+      <pubDate>Thu, 17 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/network/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>JDK</title>
+      <link>http://localhost:1313/tags/jdk/</link>
+      <pubDate>Fri, 13 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/jdk/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
