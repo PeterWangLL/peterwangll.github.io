@@ -43,13 +43,37 @@
 {{ else }}
   <div id="waline"></div>
   <script type="module">
-    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    import { init } from 'https://cdn.jsdelivr.net/npm/@waline/client@3/dist/waline.js';
 
     init({
       el: '#waline',
       dark: 'html.dark',
       serverURL: {{ site.Params.walineServer }},
     });
+  </script>
+{{ end }}
+</article>
+{{ end }}
+
+{{ if site.Params.twikoo.enabled }}
+<article>
+{{ if fileExists "layouts/partials/twikoo.html" }}
+  {{ partialCached "twikoo.html" . }}
+{{ else }}
+  <div id="tcomment"></div>
+  <script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.min.js"></script>
+  <script>
+    twikoo.init({
+      envId: {{ site.Params.twikoo.envID }},
+      el: '#tcomment',
+      {{ with site.Params.twikoo.region }}
+        region: {{ . }},
+      {{ end }}
+      path: {{ .RelPermalink }},
+      {{ with site.Params.twikoo.lang }}
+        lang: {{ . }},
+      {{ end }}
+    })
   </script>
 {{ end }}
 </article>

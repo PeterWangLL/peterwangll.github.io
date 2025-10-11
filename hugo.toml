@@ -16,7 +16,7 @@ zenMode = true
 lightTheme = "emerald"
 darkTheme = "forest"
 
-# backgroundImage = "me/background.jpg"
+# backgroundImage = "img/global-background.jpg"
 # backgroundImageDark = ""
 
 author = "Peter Wang"
@@ -25,7 +25,7 @@ avatar = "img/avator.jpg"
 headerTitle = "PeterWang's Blog"
 motto = "No time to sorrow, we're building tomorrow"
 
-footerBottomText = ""
+footerBottomText = "🍊无限进步"
 
 # rss = true
 
@@ -48,30 +48,33 @@ siteStartYear = 2024
 customSyntaxHighlighting = true
 
 # options
-# stickyNav = true
-# reorderNavItems = ["search", "rss", "posts", "categories", "tags"]
+stickyNav = true
+# reorderNavItems = ["about", "search", "rss", "posts", "categories", "tags"]
 # collapseNavItems = ["posts", "categories", "tags"]
 noDefaultSummaryCover = true
 showTableOfContents = true
-# showSummaryCoverInPost = true
+showSummaryCoverInPost = true
+imageZoomableInPost = true
 showPrevNextPost = true
 # reorderShares = ["x", "facebook", "whatsapp"]
 
 # [params.navItems]
+
+# [params.twikoo]
+# enabled = true
+# envID = ""
+# region = ""
+# lang = ""
 
 # [params.advanced]
 # customCSS = ["css/custom.css"]
 # customJS = []
 
 # [params.experimental]
-# jsDate = true
-# jsDateFormat = "yyyy年MM月dd日"
+jsDate = true
+jsDateFormat = "yyyy年MM月dd日"
 
 [markup]
-[markup.goldmark]
-[markup.goldmark.renderer]
-unsafe = true
-
 [markup.highlight]
 noClasses = false
 

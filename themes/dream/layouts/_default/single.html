@@ -30,23 +30,16 @@
 {{ end }}
 
 {{ define "main" }}
-<div class="mt-4 px-4">
-  {{ if site.Params.showTableOfContents }}
-  <div class="relative" x-data="{ height: '' }" x-init="height = $el.scrollHeight + 'px'">
-  {{ else }}
-  <div>
-  {{ end }}
-    {{ if site.Params.showTableOfContents }}
-    <div class="absolute right-0 lg:w-36 xl:w-48 hidden lg:block" :style="{ height }">
-      {{ .TableOfContents }}
-
-      <div class="dream-adsense px-5">
-      {{ if fileExists "layouts/partials/adsense.html" }}
+<div class="lg:grid lg:grid-cols-4 gap-4 mt-4 px-4">
+  <div class="hidden lg:block">
+    {{ if fileExists "layouts/partials/adsense.html" }}
+      <div class="dream-adsense w-2/3">
         {{ partialCached "adsense.html" . }}
-      {{ end }}
       </div>
-    </div>
     {{ end }}
+  </div>
+
+  <div class="lg:col-span-2">
     <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
       {{ template "_internal/schema.html" . }}
 
@@ -70,27 +63,44 @@
             {{ end }}</span>
           {{ end }}
         </p>
+
+        {{ $hasAuthor := or .Params.author site.Params.author }}
         <div class="flex justify-between">
-          {{ partial "author.html" (dict "Params" .Params "template" "single") }}
+          {{ if $hasAuthor }}
+            {{ partial "author.html" (dict "Params" .Params "template" "single") }}
+          {{ end }}
 
           {{ partial "share.html" . }}
         </div>
       </header>
 
-      {{ if and .Params.Cover site.Params.showSummaryCoverInPost }}
-      <img src="{{ .Params.Cover }}" alt="{{ .Title }}" />
-      {{ end }}
+      <section id="dream-single-post-content" itemprop="articleBody">
+        {{ if and .Params.Cover site.Params.showSummaryCoverInPost }}
+          <figure>
+            <img class="z-30" src="{{ .Params.Cover }}" alt="{{ .Title }}" />
+            {{ with .Params.covercaption }}
+              <figcaption class="text-sm italic text-center mt-2">{{ . }}</figcaption>
+            {{ end }}
+          </figure>
+        {{ end }}
 
-      {{ .Content | emojify }}
+        {{ .Content | emojify }}
+
+        {{ if fileExists "layouts/partials/adsense-post-bottom.html" }}
+          <div class="dream-adsense-post-bottom">
+            {{ partialCached "adsense-post-bottom.html" . }}
+          </div>
+        {{ end }}
+      </section>
 
       {{ if site.Params.showPrevNextPost }}
       <div class="divider"></div>
       <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
         {{ with .NextInSection }}
-        <a class="group btn btn-outline" href="{{ .RelPermalink }}" title="{{ .Title }}">
+        <a role="button" class="btn btn-outline h-12" href="{{ .RelPermalink }}" title="{{ .Title }}">
           <ion-icon name="chevron-back"></ion-icon>
           <div class="inline-flex flex-col items-start">
-            <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">{{ T "prevPage" }}</span>
+            <span class="text-base-content/60 text-xs font-normal">{{ T "prevPage" }}</span>
             <span class="max-w-48 truncate">{{ .LinkTitle }}</span>
           </div>
         </a>
@@ -99,9 +109,9 @@
         {{ end }}
 
         {{ with .PrevInSection }}
-        <a class="group btn btn-outline" href="{{ .RelPermalink }}" title="{{ .Title }}">
+        <a role="button" class="btn btn-outline h-12" href="{{ .RelPermalink }}" title="{{ .Title }}">
           <div class="inline-flex flex-col items-end">
-            <span class="text-base-content/60 group-hover:text-neutral-content/60 text-xs font-normal">{{ T "nextPage" }}</span>
+            <span class="text-base-content/60 text-xs font-normal">{{ T "nextPage" }}</span>
             <span class="max-w-48 truncate">{{ .LinkTitle }}</span>
           </div>
           <ion-icon name="chevron-forward"></ion-icon>
@@ -111,43 +121,78 @@
         {{ end }}
       </div>
       {{ end }}
+
+      {{ if or site.Config.Services.Disqus.Shortname site.Params.utterancesRepo site.Params.valine site.Params.waline site.Params.twikoo.enabled }}
+      <div class="divider"></div>
+
+      <section class="space-y-4">
+        {{ partialCached "commentSystems.html" . .RelPermalink }}
+      </section>
+      {{ end }}
     </article>
   </div>
 
-  {{ if or site.Config.Services.Disqus.Shortname site.Params.utterancesRepo site.Params.valine site.Params.waline }}
-  <div class="divider max-w-[65ch] mx-auto"></div>
-
-  <section class="max-w-[65ch] mx-auto space-y-4">
-    {{ partialCached "commentSystems.html" . .RelPermalink }}
-  </section>
-  {{ end }}
+  <div
+    x-data="tocHighlighter()"
+    @scroll.window="debouncedScroll"
+    class="hidden lg:flex lg:flex-col lg:items-end"
+  >
+    {{ if site.Params.showTableOfContents }}
+      {{ .TableOfContents }}
+    {{ end }}
+  </div>
 </div>
 {{ end }}
 
 {{ define "js" }}
 
 {{ if site.Params.Experimental.jsDate }}
-{{ partial "luxon.html" . }}
+  {{ partial "luxon.html" . }}
 {{ end }}
 
 {{ if site.Params.customSyntaxHighlighting }}
-{{- $syntaxLightCSS := resources.Get "css/syntax-light.css" | minify -}}
-{{- $syntaxDarkCSS := resources.Get "css/syntax-dark.css" | minify -}}
-<script>
-  window.customSyntaxHighlighting = {
-    light: {{ $syntaxLightCSS.RelPermalink }},
-    dark: {{ $syntaxDarkCSS.RelPermalink }}
-  }
+  {{- $syntaxLightCSS := resources.Get "css/syntax-light.css" | minify -}}
+  {{- $syntaxDarkCSS := resources.Get "css/syntax-dark.css" | minify -}}
 
-  document.addEventListener('alpine:initialized', () => {
-    var isDark = Alpine.store('darkMode').isDark()
-    var customSyntaxHighlightingUrl = isDark ? window.customSyntaxHighlighting.dark : window.customSyntaxHighlighting.light
+  <script>
+    window.customSyntaxHighlighting = {
+      light: {{ $syntaxLightCSS.RelPermalink }},
+      dark: {{ $syntaxDarkCSS.RelPermalink }}
+    }
 
-    document
-      .querySelector('link[data-custom-syntax-highlighting]')
-      .setAttribute('href', customSyntaxHighlightingUrl)
-  })
-</script>
+    document.addEventListener('alpine:initialized', () => {
+      var isDark = Alpine.store('darkMode').isDark()
+      var customSyntaxHighlightingUrl = isDark ? window.customSyntaxHighlighting.dark : window.customSyntaxHighlighting.light
+
+      document
+        .querySelector('link[data-custom-syntax-highlighting]')
+        .setAttribute('href', customSyntaxHighlightingUrl)
+    })
+  </script>
+{{ end }}
+
+{{ $tocJs := resources.Get "js/toc.js" }}
+{{ if hugo.IsProduction }}
+  {{ $tocJs = $tocJs | minify }}
+{{ end }}
+<script src="{{ $tocJs.RelPermalink }}"></script>
+
+{{ if site.Params.imageZoomableInPost }}
+  {{ if fileExists "layouts/partials/medium-zoom.html" }}
+    {{ partialCached "medium-zoom.html" . }}
+  {{ else }}
+    <script type="module">
+      import mediumZoom from 'https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/+esm';
+      mediumZoom('#dream-single-post-content img', {
+        background: 'oklch(var(--b1))',
+        margin: 24,
+      })
+    </script>
+  {{ end }}
+{{ end }}
+
+{{ if .Params.math }}
+  {{ .Page.Store.Set "hasMathjax" true }}
 {{ end }}
 
 {{ end }}
