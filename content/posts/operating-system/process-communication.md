@@ -7,6 +7,7 @@ tags:
   - OS
 nolastmod: true
 cover: /img/pic-14.jpg
+draft: true
 ---
 
 ### 管道

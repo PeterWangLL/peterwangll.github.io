@@ -1,9 +1,8 @@
 ---
 title: 
 date: 2024-10-25
-draft: true
 ---
-<h3>Welcome to my page!</h3>I'm Peter, a learner of back-end development from 🇨🇳 <b>Suzhou, China</b>, currently a senior student from <img src="/img/University Icon.png" width="10%" alt="University Icon"/><b>Nanjing University of Information Science & Technology</b>.
+<h3>Welcome to my page!</h3>I'm Peter, a learner of back-end development from 🇨🇳 <b>Suzhou, China</b>, currently a senior student from <img src="/img/University-Icon.png" width="10%" alt="University Icon"/><b>Nanjing University of Information Science & Technology</b>.
 
 <h3>Things I code with:</h3>
 <p>
@@ -41,9 +40,9 @@ draft: true
 
 **Code Cycle**<br>
 
-<img style="display: inline-block;margin:0;" src="/img/Face with Spiral Eyes.png" width="10%" alt="Broken system!"/>
+<img style="display: inline-block;margin:0;" src="/img/Face-with-Spiral-Eyes.png" width="10%" alt="Broken system!"/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img style="display: inline-block;margin:0;" src="/img/Relieved Face.png" width="10%" alt="It's working!"/>
+<img style="display: inline-block;margin:0;" src="/img/Relieved-Face.png" width="10%" alt="It's working!"/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img style="display: inline-block;margin:0;" src="/img/Astonished Face.png" width="10%" alt="It's working but you don't know how!"/><br>
-</div>  
+<img style="display: inline-block;margin:0;" src="/img/Astonished-Face.png" width="10%" alt="It's working but you don't know how!"/><br>
+</div> 

@@ -7,6 +7,7 @@ tags:
   - MySQL
 nolastmod: true
 cover: /img/pic-12.jpg
+draft: true
 ---
 
 ```sql

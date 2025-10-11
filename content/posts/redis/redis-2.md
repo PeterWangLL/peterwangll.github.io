@@ -7,6 +7,7 @@ tags:
   - Redis
 nolastmod: true
 cover: /img/pic-18.jpg
+draft: true
 ---
 
 ### 简介

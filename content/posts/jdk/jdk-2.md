@@ -7,6 +7,7 @@ tags:
   - JDK
 nolastmod: true
 cover: /img/pic-8.jpg
+draft: true
 ---
 ### runState&workerCount
 `private final AtomicInteger ctl`: the main pool control state, 高3位用来表示线程池的runState，底29位用来表示线程数workCount。这种思想让我联想到了SDS中header的sdshdr5结构，flags低3位保存type，高5位在`type=sdshdr5`时表示len。

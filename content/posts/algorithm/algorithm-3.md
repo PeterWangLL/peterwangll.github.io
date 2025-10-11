@@ -5,6 +5,7 @@ categories:
   - Algorithm
 nolastmod: true
 cover: /img/pic-3.jpg
+draft: true
 ---
 两道题都是递归做后面的事情，再来处理当下的事情，很值得思考。
 ### 树中两个结点的最低公共祖先

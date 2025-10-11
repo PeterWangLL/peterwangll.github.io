@@ -7,6 +7,7 @@ tags:
   - Redis
 nolastmod: true
 cover: /img/pic-20.jpg
+draft: true
 ---
 本文会从以手稿+文字的形式说明，仅为个人总结。
 本文会讲述上半部分：包括数据结构、单线程模型、IO多路复用三个方面阐明Redis为什么那么快？

@@ -7,6 +7,7 @@ tags:
   - JDK
 nolastmod: true
 cover: /img/pic-7.jpg
+draft: true
 ---
 `Provides a framework for implementing blocking locks and related synchronizers (semaphores, events, etc) that rely on first-in-first-out (FIFO) wait queues.`
 

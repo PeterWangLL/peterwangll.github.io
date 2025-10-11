@@ -7,6 +7,7 @@ tags:
   - JDK
 nolastmod: true
 cover: /img/pic-9.jpg
+draft: true
 ---
 `Provide thread-local variables, wish to associate state with a thread(e.g., a user ID or Transaction ID).`
 

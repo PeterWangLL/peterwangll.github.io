@@ -5,6 +5,7 @@ categories:
   - Algorithm
 nolastmod: true
 cover: /img/pic-2.jpg
+draft: true
 ---
 ### description
 链接：https://www.acwing.com/problem/content/76/

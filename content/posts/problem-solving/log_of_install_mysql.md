@@ -7,6 +7,7 @@ tags:
   - ProblemSloving
 nolastmod: true
 cover: /img/pic-6.jpg
+draft: true
 ---
 ### 起因
 原来用Homebrew安装过mysql@8.0和@5.7均可使用，一段时间后当我运行`brew services run mysql`时仍然会显示成功，但是`brew services list`显示的是状态却是`stopped`。尝试了重新启动和卸载均无效。

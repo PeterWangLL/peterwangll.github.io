@@ -7,6 +7,7 @@ tags:
   - ProblemSloving
 nolastmod: true
 cover: /img/pic-22.jpg
+draft: true
 ---
 ### 博客搭建
 之前博客是使用Hexo搭建的，比较普通，正好听说了Hugo，就来试试。

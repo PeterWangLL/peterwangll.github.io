@@ -7,6 +7,7 @@ tags:
   - MySQL
 nolastmod: true
 cover: /img/pic-10.jpg
+draft: true
 ---
 从一条SQL语句的执行出发
 1. Server：连接-分析-优化-执行，重点是优化器

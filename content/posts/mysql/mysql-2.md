@@ -7,6 +7,7 @@ tags:
   - MySQL
 nolastmod: true
 cover: /img/pic-11.jpg
+draft: true
 ---
 多版本并发控制，在事务开启时，构建Read View——逻辑上的一致性视图。
 

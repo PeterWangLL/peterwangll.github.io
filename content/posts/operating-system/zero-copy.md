@@ -7,6 +7,7 @@ tags:
   - OS
 nolastmod: true
 cover: /img/pic-19.jpg
+draft: true
 ---
 
 从用户进程缓冲区到内核缓冲区，需要1次系统调用（2次上下文切换），反之亦然。最初外部设备到内核缓冲区也需要CPU亲力亲为，但是磁盘速度太慢了，对CPU是一种极大的浪费，于是有了DMA（Direct Memory Access）直接内存访问技术，将CPU解放出来。

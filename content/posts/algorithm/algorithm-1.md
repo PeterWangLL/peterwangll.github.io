@@ -5,6 +5,7 @@ categories:
   - Algorithm
 nolastmod: true
 cover: /img/pic-1.jpg
+draft: true
 ---
 链接：https://www.acwing.com/problem/content/47/
 输入一组数字（可能包含重复数字），输出其所有的排列方式。
