@@ -16,7 +16,7 @@ zenMode = true
 lightTheme = "emerald"
 darkTheme = "forest"
 
-# backgroundImage = "img/global-background.jpg"
+# backgroundImage = "me/background.jpg"
 # backgroundImageDark = ""
 
 author = "Peter Wang"
@@ -48,23 +48,16 @@ siteStartYear = 2024
 customSyntaxHighlighting = true
 
 # options
-stickyNav = true
-# reorderNavItems = ["about", "search", "rss", "posts", "categories", "tags"]
+# stickyNav = true
+# reorderNavItems = ["search", "rss", "posts", "categories", "tags"]
 # collapseNavItems = ["posts", "categories", "tags"]
 noDefaultSummaryCover = true
 showTableOfContents = true
-showSummaryCoverInPost = true
-imageZoomableInPost = true
+# showSummaryCoverInPost = true
 showPrevNextPost = true
 # reorderShares = ["x", "facebook", "whatsapp"]
 
 # [params.navItems]
-
-# [params.twikoo]
-# enabled = true
-# envID = ""
-# region = ""
-# lang = ""
 
 # [params.advanced]
 # customCSS = ["css/custom.css"]
@@ -75,6 +68,10 @@ jsDate = true
 jsDateFormat = "yyyy年MM月dd日"
 
 [markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+
 [markup.highlight]
 noClasses = false
 
