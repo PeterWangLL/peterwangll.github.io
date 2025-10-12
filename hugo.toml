@@ -51,11 +51,11 @@ customSyntaxHighlighting = true
 # stickyNav = true
 # reorderNavItems = ["search", "rss", "posts", "categories", "tags"]
 # collapseNavItems = ["posts", "categories", "tags"]
-noDefaultSummaryCover = true
+# noDefaultSummaryCover = true
 showTableOfContents = true
-# showSummaryCoverInPost = true
+showSummaryCoverInPost = true
 showPrevNextPost = true
-# reorderShares = ["x", "facebook", "whatsapp"]
+reorderShares = ["whatsapp"]
 
 # [params.navItems]
 

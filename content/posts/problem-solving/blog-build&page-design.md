@@ -6,7 +6,7 @@ categories:
 tags:
   - ProblemSloving
 nolastmod: true
-cover: /img/pic-22.jpg
+cover: /img/cover.jpg
 draft: true
 ---
 ### 博客搭建
